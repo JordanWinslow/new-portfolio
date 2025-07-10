@@ -1,7 +1,7 @@
 import { portfolioItems } from '@/assets/data/portfolioItems'
 import { Accordion } from '@/components/ui/Accordion'
 import type { LayoutType } from '@/types/portfolio/LayoutType'
-import { ProjectAccordionItem } from './PortfolioAccordionItem'
+import { ProjectAccordionItem } from './ProjectAccordionItem'
 import { ProjectCard } from './ProjectCard'
 import { ProjectListItem } from './ProjectListItem'
 import { ProjectTableRow } from './ProjectTableRow'

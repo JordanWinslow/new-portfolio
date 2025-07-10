@@ -18,7 +18,6 @@ export function PortfolioLayoutControls({
           id: 'columns',
           icon: Columns,
           label: 'COLUMNS',
-          hideWhenMobile: true,
         },
         { id: 'list', icon: List, label: 'LIST' },
         { id: 'table', icon: Sheet, label: 'TABLE' },
@@ -34,7 +33,7 @@ export function PortfolioLayoutControls({
               isSelectedLayout
                 ? 'bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 text-white shadow-lg'
                 : 'text-gray-400 hover:text-white hover:bg-white/10'
-            }${control.hideWhenMobile ? ' hide-below-540' : ''}`}
+            }`}
             aria-label={`Switch to ${control.label} layout`}
           >
             <Icon size={20} />

@@ -1,16 +1,31 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { ArrowDown } from 'lucide-react'
 import { useRef, useState } from 'react'
+import CNBCRedesign from '@/assets/images/portfolio/CNBCRedesign.jpg'
+import containmentBreach from '@/assets/images/portfolio/containment-breach.gif'
+import ecosystem from '@/assets/images/portfolio/ecosystem.gif'
+import PokeTeam from '@/assets/images/portfolio/PokeTeam.jpg'
+import poketeamdemo from '@/assets/images/portfolio/poketeamdemo.gif'
 import { BackgroundDecorations } from '@/components/decorative/BackgroundDecorations'
 import { StarField } from '@/components/decorative/StarField'
 import { FadeTransition } from '@/components/FadeTransition'
 import { FixedNavigation } from '@/components/FixedNavigation'
-import PhoneStack from '@/components/portfolio/PhoneStack'
+import PhoneStackShowcase from '@/components/portfolio/PhoneStackShowcase'
 import { PortfolioGrid } from '@/components/portfolio/PortfolioGrid'
 import { PortfolioLayoutControls } from '@/components/portfolio/PortfolioLayoutControls'
 import { Button } from '@/components/ui/Button'
 import { useIntersectionObserver } from '@/lib/utils'
 import type { LayoutType } from '@/types/portfolio/LayoutType'
+
+const phoneImages = [
+  CNBCRedesign,
+  PokeTeam,
+  poketeamdemo,
+  ecosystem,
+  containmentBreach,
+  CNBCRedesign,
+  PokeTeam,
+]
 
 export const Route = createFileRoute('/portfolio')({
   component: Portfolio,
@@ -37,16 +52,14 @@ function Portfolio() {
     rootMargin: '-500px 0px 0px 0px',
   })
 
-  // Show scroll button when either featured work or starfield is visible
   const shouldShowScrollButton = isFeaturedWorkVisible || isStarfieldVisible
 
   const handleLayoutChange = (updatedLayout: LayoutType) => {
     setLayout(updatedLayout)
-    // Scroll to portfolio section to ensure it stays at the top when layout changes
-    handleScrollToPortfolio()
+    scrollToPortfolio()
   }
 
-  const handleScrollToPortfolio = () => {
+  const scrollToPortfolio = () => {
     if (portfolioRef.current) {
       const rect = portfolioRef.current.getBoundingClientRect()
       const scrollTop = window.scrollY + rect.top
@@ -94,7 +107,7 @@ function Portfolio() {
           <div className="fixed bottom-16 right-1/2 translate-x-1/2 z-50 transition-opacity duration-300 ease-in-out">
             <button
               type="button"
-              onClick={handleScrollToPortfolio}
+              onClick={scrollToPortfolio}
               className="w-14 h-14 rounded-full flex items-center justify-center border-[3px] border-transparent bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 bg-clip-padding animate-bounce hover:scale-110 transition-transform duration-200 ease-in-out cursor-pointer"
               style={{
                 background:
@@ -111,10 +124,6 @@ function Portfolio() {
 
         <section ref={starfieldRef} className="h-1500 relative overflow-hidden">
           <StarField />
-        </section>
-
-        <section className="my-40">
-          <PhoneStack />
         </section>
 
         <section
@@ -134,6 +143,10 @@ function Portfolio() {
             />
           </div>
         )}
+
+        <section className="my-40">
+          <PhoneStackShowcase images={phoneImages} />
+        </section>
 
         <section className="mt-8 py-32 relative overflow-hidden">
           <div className="relative z-10 text-center px-8">

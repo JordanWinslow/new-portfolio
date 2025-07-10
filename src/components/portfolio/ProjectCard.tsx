@@ -1,5 +1,6 @@
 import { ArrowUpRight, Github } from 'lucide-react'
 import type { IPortfolioItem } from '@/assets/data/portfolioItems'
+import { useResizeObserver } from '@/lib/utils'
 import { Button } from '../ui/Button'
 
 export const ProjectCard = ({
@@ -13,8 +14,17 @@ export const ProjectCard = ({
 }: IPortfolioItem & {
   variant: 'hoverToDisplay' | 'alwaysDisplay'
 }) => {
+  const [cardRef, isWideEnough] = useResizeObserver<HTMLDivElement>(
+    500,
+    'width',
+    'gt',
+  )
+
   return (
-    <div className="group relative gradient-border enhanced-shadow rounded-xl overflow-hidden bg-black backdrop-blur-sm transform transition-all duration-500 hover:scale-[1.02] hover-lift">
+    <div
+      ref={cardRef}
+      className="group relative gradient-border enhanced-shadow rounded-xl overflow-hidden bg-black backdrop-blur-sm transform transition-all duration-500 hover:scale-[1.02] hover-lift"
+    >
       <div className="aspect-video relative overflow-hidden">
         <img
           src={imageSrc}
@@ -35,16 +45,18 @@ export const ProjectCard = ({
                 {description}
               </p>
 
-              <div className="mb-6 flex flex-wrap gap-2">
-                {techItems.map((tech) => (
-                  <span
-                    key={tech}
-                    className="cursor-pointer px-3 py-1 text-xs font-mono bg-white/10 text-white/90 rounded-full border border-white/20 hover:border-purple-400/50 transition-all duration-300"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
+              {isWideEnough && (
+                <div className="mb-6 flex flex-wrap gap-2">
+                  {techItems.map((tech) => (
+                    <span
+                      key={tech}
+                      className="cursor-pointer px-3 py-1 text-xs font-mono bg-white/10 text-white/90 rounded-full border border-white/20 hover:border-purple-400/50 transition-all duration-300"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              )}
             </>
           )}
           <div className="flex gap-3">
