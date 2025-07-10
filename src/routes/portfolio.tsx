@@ -5,6 +5,7 @@ import { BackgroundDecorations } from '@/components/decorative/BackgroundDecorat
 import { StarField } from '@/components/decorative/StarField'
 import { FadeTransition } from '@/components/FadeTransition'
 import { FixedNavigation } from '@/components/FixedNavigation'
+import PhoneStack from '@/components/portfolio/PhoneStack'
 import { PortfolioGrid } from '@/components/portfolio/PortfolioGrid'
 import { PortfolioLayoutControls } from '@/components/portfolio/PortfolioLayoutControls'
 import { Button } from '@/components/ui/Button'
@@ -41,6 +42,8 @@ function Portfolio() {
 
   const handleLayoutChange = (updatedLayout: LayoutType) => {
     setLayout(updatedLayout)
+    // Scroll to portfolio section to ensure it stays at the top when layout changes
+    handleScrollToPortfolio()
   }
 
   const handleScrollToPortfolio = () => {
@@ -110,6 +113,10 @@ function Portfolio() {
           <StarField />
         </section>
 
+        <section className="my-40">
+          <PhoneStack />
+        </section>
+
         <section
           ref={portfolioRef}
           className="px-2 sm:px-8 py-16 relative z-10"
@@ -128,7 +135,7 @@ function Portfolio() {
           </div>
         )}
 
-        <section className="py-32 relative overflow-hidden">
+        <section className="mt-8 py-32 relative overflow-hidden">
           <div className="relative z-10 text-center px-8">
             <h2 className="font-mohave text-3xl md:text-4xl font-bold mb-6 text-white uppercase tracking-wide">
               READY TO COLLABORATE?

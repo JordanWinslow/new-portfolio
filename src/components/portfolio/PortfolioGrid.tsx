@@ -107,7 +107,7 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
           <div className="sm:hidden">
             <Accordion
               type="single"
-              defaultValue={portfolioItems[0].title}
+              defaultValue={portfolioItems[0]?.title || ''}
               collapsible
               className="w-full"
             >
