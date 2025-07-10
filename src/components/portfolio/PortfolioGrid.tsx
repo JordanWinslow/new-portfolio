@@ -1,7 +1,24 @@
 import { ArrowUpRight, Code2, Github } from 'lucide-react'
-import { portfolioItems } from '@/assets/data/portfolioItems'
+import {
+  type IPortfolioItem,
+  portfolioItems,
+} from '@/assets/data/portfolioItems'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/Accordion'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/Tooltip'
 import type { LayoutType } from '@/types/portfolio/LayoutType'
+import { ProjectAccordionItem } from './PortfolioAccordionItem'
 import { ProjectCard } from './ProjectCard'
+import { ProjectListItem } from './ProjectListItem'
+import { ProjectTableRow } from './ProjectTableRow'
 
 interface IPortfolioGridProps {
   layout: LayoutType
@@ -13,7 +30,16 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
       return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {portfolioItems.map((item) => (
-            <ProjectCard key={item.id} item={item} />
+            <ProjectCard
+              key={item.id}
+              variant="alwaysDisplay"
+              title={item.title}
+              description={item.description}
+              imageSrc={item.image}
+              techItems={item.tech}
+              githubLink={item.github}
+              demoLink={item.demo}
+            />
           ))}
         </div>
       )
@@ -22,7 +48,16 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
       return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {portfolioItems.map((item) => (
-            <ProjectCard key={item.id} item={item} />
+            <ProjectCard
+              key={item.id}
+              variant="hoverToDisplay"
+              title={item.title}
+              description={item.description}
+              imageSrc={item.image}
+              techItems={item.tech}
+              githubLink={item.github}
+              demoLink={item.demo}
+            />
           ))}
         </div>
       )
@@ -31,51 +66,15 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
       return (
         <div className="space-y-8">
           {portfolioItems.map((item) => (
-            <div
+            <ProjectListItem
               key={item.id}
-              className="gradient-border enhanced-shadow rounded-xl bg-black p-6 flex flex-col md:flex-row gap-6 hover:bg-black transition-all duration-300 hover-lift"
-            >
-              <div className="w-full md:w-64 h-48 md:h-auto relative overflow-hidden rounded-lg flex-shrink-0">
-                <img
-                  src={item.image || '/placeholder.svg'}
-                  alt={item.title}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-mohave text-xl font-bold text-white mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-gray-400 mb-4">{item.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {item.tech.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2 py-1 text-xs font-mono bg-white/10 text-white/80 rounded border border-white/20"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex gap-4">
-                  <a
-                    href={item.github}
-                    className="gradient-border-button flex items-center gap-2"
-                  >
-                    <Github size={16} />
-                    GITHUB
-                  </a>
-                  <a
-                    href={item.demo}
-                    className="gradient-border-button flex items-center gap-2"
-                  >
-                    <ArrowUpRight size={16} />
-                    LIVE DEMO
-                  </a>
-                </div>
-              </div>
-            </div>
+              title={item.title}
+              description={item.description}
+              imageSrc={item.image}
+              techItems={item.tech}
+              githubLink={item.github}
+              demoLink={item.demo}
+            />
           ))}
         </div>
       )
@@ -83,7 +82,8 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
     case 'table':
       return (
         <div className="gradient-border rounded-xl overflow-hidden bg-black">
-          <div className="overflow-x-auto">
+          {/* On Desktop view as a table */}
+          <div className="hidden sm:block overflow-x-auto">
             <table className="w-full">
               <thead className="bg-white/5">
                 <tr>
@@ -103,65 +103,35 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
               </thead>
               <tbody>
                 {portfolioItems.map((item) => (
-                  <tr
+                  <ProjectTableRow
                     key={item.id}
-                    className="border-t border-white/10 hover:bg-white/5 transition-colors duration-300"
-                  >
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-4">
-                        <img
-                          src={item.image || '/placeholder.svg'}
-                          alt={item.title}
-                          className="w-12 h-12 rounded object-cover"
-                          loading="lazy"
-                        />
-                        <span className="font-mohave font-semibold text-white">
-                          {item.title}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-gray-400 max-w-xs">
-                      <p className="line-clamp-2">{item.description}</p>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex flex-wrap gap-1">
-                        {item.tech.slice(0, 3).map((tech) => (
-                          <span
-                            key={tech}
-                            className="px-2 py-1 text-xs font-mono bg-white/10 text-white/90 rounded-full border border-white/20"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                        {item.tech.length > 3 && (
-                          <span className="px-2 py-1 text-xs text-gray-400">
-                            +{item.tech.length - 3}
-                          </span>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex gap-2">
-                        <a
-                          href={item.github}
-                          className="gradient-border-icon"
-                          title="View Code"
-                        >
-                          <Code2 size={16} />
-                        </a>
-                        <a
-                          href={item.demo}
-                          className="gradient-border-icon"
-                          title="Live Demo"
-                        >
-                          <ArrowUpRight size={16} />
-                        </a>
-                      </div>
-                    </td>
-                  </tr>
+                    title={item.title}
+                    description={item.description}
+                    imageSrc={item.image}
+                    techItems={item.tech}
+                    githubLink={item.github}
+                    demoLink={item.demo}
+                  />
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* On small screens, convert table to accordion*/}
+          <div className="sm:hidden">
+            <Accordion type="single" collapsible className="w-full">
+              {portfolioItems.map((item) => (
+                <ProjectAccordionItem
+                  key={item.id}
+                  title={item.title}
+                  description={item.description}
+                  imageSrc={item.image}
+                  techItems={item.tech}
+                  githubLink={item.github}
+                  demoLink={item.demo}
+                />
+              ))}
+            </Accordion>
           </div>
         </div>
       )

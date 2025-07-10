@@ -1,10 +1,9 @@
-import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
 import type * as React from 'react'
 import { cn } from 'src/lib/utils'
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive cursor-pointer font-mohave",
+  "font-mohave inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive cursor-pointer",
   {
     variants: {
       variant: {
@@ -15,7 +14,7 @@ const buttonVariants = cva(
         outline:
           'border-2 bg-background enhanced-shadow hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
         secondary:
-          'gradient-border bg-black text-white font-bold text-lg px-8 py-4 enhanced-shadow hover:scale-105 transition-all duration-300 border-transparent tracking-wider uppercase shadow-2xl hover-lift',
+          'gradient-border bg-black text-white font-bold text-lg px-8 py-4 enhanced-shadow hover:scale-105 transition-all duration-300 border-transparent tracking-widest uppercase shadow-2xl hover-lift',
         ghost:
           'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',
         link: 'text-primary underline-offset-4 hover:underline',
@@ -38,19 +37,21 @@ function Button({
   className,
   variant,
   size,
-  asChild = false,
+  Icon,
+  children,
   ...props
 }: React.ComponentProps<'button'> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
-  }) {
-  const Comp = asChild ? Slot : 'button'
+  VariantProps<typeof buttonVariants> & { Icon?: React.ReactNode }) {
   return (
-    <Comp
+    <button
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
+      style={{ lineHeight: 'normal' }}
       {...props}
-    />
+    >
+      {Icon && Icon}
+      <span style={{ transform: 'translateY(1px)' }}>{children}</span>
+    </button>
   )
 }
 

@@ -1,33 +1,51 @@
+import containmentBreachImage from '@/assets/images/portfolio/containment-breach.gif'
+import ecosystemSimImage from '@/assets/images/portfolio/ecosystem.gif'
+import pokeTeamImage from '@/assets/images/portfolio/poketeamdemo.gif'
+
+export interface IPortfolioItem {
+  imageSrc: string
+  title: string
+  description: string
+  techItems: string[]
+  githubLink?: string
+  demoLink?: string
+}
+
 export const portfolioItems = [
   {
     id: 1,
-    title: 'E-Commerce Platform',
+    title: 'Modern UI Horror RPG',
     description:
-      'A full-stack e-commerce solution with cart, checkout, and payment integration built with React and Node.js.',
-    image: '/placeholder.svg?height=400&width=600',
-    github: 'https://github.com',
-    demo: 'https://demo.com',
-    tech: ['React', 'Node.js', 'PostgreSQL', 'Stripe'],
+      'Extremely complex project designed, programmed and animated from scratch. Please see the demo video!',
+    image: containmentBreachImage,
+    demo: 'https://youtu.be/ckLU5tGdlTM?si=yBGFAIl2cy6taF_O',
+    tech: [
+      'GML',
+      'Systems Design',
+      'Engine Building',
+      'Desktop Applications',
+      'Performance Optimization',
+    ],
   },
   {
     id: 2,
-    title: 'AI Dashboard',
+    title: 'Ecosystem Simulator',
     description:
-      'Interactive dashboard for monitoring and visualizing AI model performance with real-time analytics.',
-    image: '/placeholder.svg?height=400&width=600',
-    github: 'https://github.com',
-    demo: 'https://demo.com',
-    tech: ['Next.js', 'Python', 'TensorFlow', 'D3.js'],
+      'Build-your-own-framework TypeScript project created to teach students web & object oriented programming fundamentals.',
+    image: ecosystemSimImage,
+    github: 'https://github.com/JordanWinslow/TypeScript-Ecosystem-Game',
+    demo: 'https://typescript-ecosystem-simulator.netlify.app/',
+    tech: ['TypeScript', 'HTML', 'CSS', 'OOP', 'Performance Optimization'],
   },
   {
     id: 3,
-    title: 'Social Media App',
+    title: 'PokeTeam',
     description:
-      'Feature-rich social platform with real-time messaging and content sharing capabilities.',
-    image: '/placeholder.svg?height=400&width=600',
-    github: 'https://github.com',
-    demo: 'https://demo.com',
-    tech: ['React Native', 'Firebase', 'WebRTC', 'Redux'],
+      'Responsive, mobile-first web app with infinite loading, local storage, & query caching',
+    image: pokeTeamImage,
+    github: 'https://github.com/JordanWinslow/poke-team',
+    demo: 'https://poke-team.netlify.app/',
+    tech: ['JavaScript', 'React', 'Redux', 'MaterialUI'],
   },
   {
     id: 4,

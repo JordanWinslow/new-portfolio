@@ -1,6 +1,6 @@
 import Spline from '@splinetool/react-spline'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/Button'
 import { Route as portfolioRoute } from '../routes/portfolio'
 
 export const Route = createFileRoute('/')({

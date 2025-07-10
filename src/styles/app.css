@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Mohave:ital,wght@0,300..700;1,300..700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mohave:ital,wght@0,300..700;1,300..700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=block');
 @import "tailwindcss" source("../");
 @import "tw-animate-css";
 
@@ -100,7 +100,12 @@
   }
 }
 
-/* Enhanced gradient borders and effects */
+@media (max-width: 539px) {
+  .hide-below-540 {
+    display: none;
+  }
+}
+
 .gradient-border {
   position: relative;
   border: 3px solid transparent;
@@ -137,11 +142,38 @@
 }
 
 @keyframes sparkle {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.2); }
+  0%, 100% { opacity: 0.3; transform: scale(1) rotate(0deg); }
+  25% { opacity: 0.8; transform: scale(1.1) rotate(90deg); }
+  50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+  75% { opacity: 0.8; transform: scale(1.1) rotate(270deg); }
 }
 
-/* Enhanced shadows */
+/* Additional star animations */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-5px) rotate(90deg); }
+  50% { transform: translateY(-10px) rotate(180deg); }
+  75% { transform: translateY(-5px) rotate(270deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    opacity: 0.4; 
+    transform: scale(1);
+    filter: drop-shadow(0 0 2px currentColor);
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.3);
+    filter: drop-shadow(0 0 8px currentColor);
+  }
+}
+
 .enhanced-shadow {
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8),
               0 0 0 1px rgba(255, 255, 255, 0.05),
@@ -155,7 +187,7 @@
               0 0 50px rgba(139, 92, 246, 0.3);
 }
 
-/* Custom scrollbar */
+/* ----------------- Custom scrollbar ------------------ */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -180,4 +212,85 @@ html {
 
 * {
   -webkit-tap-highlight-color: transparent;
+}
+
+/* Gradient border buttons */
+.gradient-border-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(var(--background), var(--background)) padding-box,
+              linear-gradient(135deg, #8b5cf6, #ec4899, #f59e0b, #10b981) border-box;
+  border: 2px solid transparent;
+  border-radius: 0.5rem;
+  color: white;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.gradient-border-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
+}
+
+/* Gradient border icons */
+.gradient-border-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: linear-gradient(var(--background), var(--background)) padding-box,
+              linear-gradient(135deg, #8b5cf6, #ec4899, #f59e0b, #10b981) border-box;
+  border: 2px solid transparent;
+  border-radius: 0.5rem;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.gradient-border-icon:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+}
+
+/* Tooltip styling without hover effects */
+.tooltip-gradient-border {
+  border: 1px solid transparent;
+  background: linear-gradient(var(--background), var(--background)) padding-box,
+              linear-gradient(135deg, #8b5cf6, #ec4899, #f59e0b, #10b981) border-box;
+}
+
+/* Line clamp utilities for text truncation */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Line clamp utilities for text truncation */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
