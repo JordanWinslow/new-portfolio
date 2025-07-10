@@ -1,19 +1,5 @@
-import { ArrowUpRight, Code2, Github } from 'lucide-react'
-import {
-  type IPortfolioItem,
-  portfolioItems,
-} from '@/assets/data/portfolioItems'
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/Accordion'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/components/ui/Tooltip'
+import { portfolioItems } from '@/assets/data/portfolioItems'
+import { Accordion } from '@/components/ui/Accordion'
 import type { LayoutType } from '@/types/portfolio/LayoutType'
 import { ProjectAccordionItem } from './PortfolioAccordionItem'
 import { ProjectCard } from './ProjectCard'
@@ -119,7 +105,12 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
 
           {/* On small screens, convert table to accordion*/}
           <div className="sm:hidden">
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion
+              type="single"
+              defaultValue={portfolioItems[0].title}
+              collapsible
+              className="w-full"
+            >
               {portfolioItems.map((item) => (
                 <ProjectAccordionItem
                   key={item.id}

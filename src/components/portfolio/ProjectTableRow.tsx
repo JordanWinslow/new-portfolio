@@ -1,10 +1,10 @@
+import { ArrowUpRight, Code2 } from 'lucide-react'
+import type { IPortfolioItem } from '@/assets/data/portfolioItems'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '@radix-ui/react-tooltip'
-import { ArrowUpRight, Code2 } from 'lucide-react'
-import type { IPortfolioItem } from '@/assets/data/portfolioItems'
+} from '@/components/ui/Tooltip'
 
 export function ProjectTableRow({
   imageSrc,
