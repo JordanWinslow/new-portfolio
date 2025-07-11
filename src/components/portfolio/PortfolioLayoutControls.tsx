@@ -1,5 +1,5 @@
 import { Columns, Grid3x2, List, Sheet } from 'lucide-react'
-import type { LayoutType } from '@/types/portfolio/LayoutType'
+import type { LayoutType } from '@/components/portfolio/LayoutType'
 
 interface IPortfolioLayoutControlsProps {
   layout: LayoutType

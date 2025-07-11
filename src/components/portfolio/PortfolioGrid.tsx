@@ -1,6 +1,6 @@
 import { portfolioItems } from '@/assets/data/portfolioItems'
+import type { LayoutType } from '@/components/portfolio/LayoutType'
 import { Accordion } from '@/components/ui/Accordion'
-import type { LayoutType } from '@/types/portfolio/LayoutType'
 import { ProjectAccordionItem } from './ProjectAccordionItem'
 import { ProjectCard } from './ProjectCard'
 import { ProjectListItem } from './ProjectListItem'

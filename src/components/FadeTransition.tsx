@@ -1,5 +1,5 @@
 import type React from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface FadeTransitionProps {
   children: React.ReactNode
@@ -7,47 +7,38 @@ interface FadeTransitionProps {
   fadeOutDuration?: number // ms
   fadeInDelay?: number // ms
   isFadingOut?: boolean
-  onFadeOutEnd?: () => void
   className?: string
 }
 
 export const FadeTransition: React.FC<FadeTransitionProps> = ({
   children,
   fadeInDuration = 3000,
-  fadeOutDuration = 3000,
+  fadeOutDuration = 1000,
   fadeInDelay = 0,
   isFadingOut = false,
-  onFadeOutEnd,
   className = '',
 }) => {
-  const [visible, setVisible] = useState(false)
-  const [fadingOut, setFadingOut] = useState(false)
-  const fadeRef = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(true)
 
-  useEffect(() => {
-    const timer = setTimeout(() => setVisible(true), fadeInDelay)
-    return () => clearTimeout(timer)
-  }, [fadeInDelay])
-
+  // Handle fade out
   useEffect(() => {
     if (isFadingOut) {
-      setFadingOut(true)
-      const timer = setTimeout(() => {
-        if (onFadeOutEnd) onFadeOutEnd()
-      }, fadeOutDuration)
+      setVisible(false)
+    } else {
+      // When not fading out, fade in after delay
+      const timer = setTimeout(() => setVisible(true), fadeInDelay)
       return () => clearTimeout(timer)
     }
-  }, [isFadingOut, fadeOutDuration, onFadeOutEnd])
+  }, [isFadingOut, fadeInDelay])
 
   return (
     <div
-      ref={fadeRef}
       className={`transition-opacity ${className}`}
       style={{
-        opacity: fadingOut ? 0 : visible ? 1 : 0,
+        opacity: visible ? 1 : 0,
         transitionProperty: 'opacity',
-        transitionDuration: `${fadingOut ? fadeOutDuration : fadeInDuration}ms`,
-        transitionDelay: fadingOut ? '0ms' : `${fadeInDelay}ms`,
+        transitionDuration: `${isFadingOut ? fadeOutDuration : fadeInDuration}ms`,
+        transitionDelay: isFadingOut ? '0ms' : `${fadeInDelay}ms`,
       }}
     >
       {children}

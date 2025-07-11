@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { AchievementsButton } from '../achievements/AchievementsButton'
 import { Navigation } from './Navigation'
 
 export function FixedNavigation() {
@@ -15,14 +16,17 @@ export function FixedNavigation() {
   }, [])
 
   return (
-    <div
-      className={cn(
-        'fixed top-0 left-0 z-50 transition-all duration-300 ease-in-out',
-        isScrolled ? 'top-0 left-0' : 'top-8 left-8',
-      )}
-    >
-      <Navigation isScrolled={isScrolled} />
-    </div>
+    <>
+      <div
+        className={cn(
+          'fixed top-0 left-0 z-50 transition-all duration-300 ease-in-out',
+          isScrolled ? 'top-0 left-0' : 'top-8 left-8',
+        )}
+      >
+        <Navigation isScrolled={isScrolled} />
+      </div>
+      <AchievementsButton />
+    </>
   )
 }
 

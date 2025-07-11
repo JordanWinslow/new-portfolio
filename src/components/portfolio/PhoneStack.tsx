@@ -82,7 +82,7 @@ export const PhoneStack: React.FC<PhoneStackProps> = ({
     ({
       args: [phoneIndex],
       down,
-      movement: [moveX, moveY],
+      movement: [_moveX, moveY],
       velocity,
       direction: [xDirection],
       xy: [mouseX, mouseY],
