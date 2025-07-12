@@ -1,70 +1,105 @@
 import { motion } from 'framer-motion'
-import { Code2, Star } from 'lucide-react'
+import { ChevronDown, Sparkles } from 'lucide-react'
+import type { RefObject } from 'react'
+import JordanWinslowAvatar from '@/assets/images/JordanWinslowAvatar.jpg'
+import { useScrollToRef } from '@/lib/utils'
 
-export function AboutHero() {
+interface AboutHeroProps {
+  techSectionRef: RefObject<HTMLElement | null>
+}
+
+export function AboutHero({ techSectionRef }: AboutHeroProps) {
+  const scrollToRef = useScrollToRef()
+
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      className="text-center"
+      transition={{ duration: 1 }}
+      className="text-center space-y-10"
     >
-      <div className="max-w-4xl mx-auto">
-        {/* Name and Title */}
+      {/* Avatar */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.3, duration: 1, ease: 'easeOut' }}
+        className="flex justify-center"
+      >
+        <div className="relative">
+          <div className="w-40 h-40 lg:w-56 lg:h-56 rounded-full overflow-hidden shadow-2xl relative">
+            <div className="absolute inset-0 rounded-full bg-black/20 blur-xl transform scale-110"></div>
+            <img
+              src={JordanWinslowAvatar}
+              alt="Jordan Winslow"
+              className="w-full h-full object-cover relative z-10"
+            />
+          </div>
+          <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-gradient-to-br from-orange-500 to-pink-500 rounded-full flex items-center justify-center shadow-lg">
+            <Sparkles className="w-5 h-5 text-white" />
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Introduction */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6, duration: 1 }}
+        className="space-y-6"
+      >
+        <div className="space-y-4">
+          <motion.h1
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            className="font-mohave text-3xl lg:text-5xl font-bold text-white"
+          >
+            Hello, I'm Jordan Winslow!
+          </motion.h1>
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1, duration: 0.8 }}
+            className="flex items-center justify-center gap-3"
+          >
+            <div className="w-8 h-1 bg-gradient-to-r from-orange-500 to-pink-500 rounded-full" />
+            <span className="text-sm text-gray-300 font-medium uppercase tracking-wider">
+              Software Engineer, Designer & Game Developer
+            </span>
+            <div className="w-8 h-1 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full" />
+          </motion.div>
+        </div>
+
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
-          className="mb-8"
+          transition={{ delay: 1.2, duration: 0.8 }}
+          className="max-w-2xl mx-auto space-y-4"
         >
-          <h1 className="font-mohave text-5xl lg:text-7xl font-bold bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent uppercase tracking-wider mb-4">
-            Jordan Winslow
-          </h1>
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="w-16 h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full" />
-            <div className="text-lg text-gray-400 font-light">
-              SOFTWARE ENGINEER
-            </div>
-            <div className="w-16 h-1 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full" />
-          </div>
-        </motion.div>
-        {/* Avatar */}
-        <motion.div
-          initial={{ scale: 0, rotate: -180 }}
-          animate={{ scale: 1, rotate: 0 }}
-          transition={{ delay: 0.4, duration: 0.8, type: 'spring' }}
-          className="relative inline-block mb-12"
-        >
-          <div className="w-32 h-32 lg:w-40 lg:h-40 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 p-1">
-            <div className="w-full h-full rounded-full bg-black flex items-center justify-center">
-              <div className="w-24 h-24 lg:w-32 lg:h-32 rounded-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
-                <Code2 className="w-12 h-12 lg:w-16 lg:h-16 text-white" />
-              </div>
-            </div>
-          </div>
-          <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center">
-            <Star className="w-4 h-4 text-black" />
-          </div>
-        </motion.div>
-        {/* Description */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
-          className="space-y-6"
-        >
-          <p className="text-xl lg:text-2xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
-            Frontend focused software engineer and React expert with a 10+ year
-            track record developing cutting-edge TypeScript and Node
-            applications for high-stakes medical & defense contracts.
+          <p className="text-base lg:text-lg text-gray-300 leading-relaxed">
+            If you'd just like to know what technologies I have experience with,
+            feel free to jump straight to my tech stack below. Otherwise keep
+            scrolling to learn more about me and my values!
           </p>
-          <p className="text-lg lg:text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
-            Proven leadership in architectural innovation and mentoring teams to
-            success, with recognition from industry titans like Stanford
-            Healthcare for delivering game-changing healthcare integrations.
-          </p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.4, duration: 0.8 }}
+            className="flex justify-center"
+          >
+            <button
+              type="button"
+              onClick={() => scrollToRef(techSectionRef)}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-orange-500/20 to-pink-500/20 border border-orange-500/30 text-orange-300 hover:from-orange-500/30 hover:to-pink-500/30 hover:border-orange-400/50 hover:text-orange-200 transition-all duration-300 font-medium shadow-lg hover:shadow-xl hover:scale-105"
+            >
+              <span>View My Tech Stack</span>
+              <ChevronDown className="w-4 h-4" />
+            </button>
+          </motion.div>
         </motion.div>
-      </div>
+      </motion.div>
     </motion.section>
   )
 }

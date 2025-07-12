@@ -1,5 +1,5 @@
 import { type ClassValue, clsx } from 'clsx'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 export function cn(...inputs: ClassValue[]) {
@@ -91,4 +91,21 @@ export function useResizeObserver<T extends HTMLElement = HTMLDivElement>(
   }, [threshold, dimension, operator])
 
   return [ref, isAboveThreshold] as const
+}
+
+export function useScrollToRef() {
+  const scrollToRef = useCallback(
+    (ref: React.RefObject<HTMLElement | null>, options?: ScrollToOptions) => {
+      if (ref.current) {
+        ref.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+          ...options,
+        })
+      }
+    },
+    [],
+  )
+
+  return scrollToRef
 }

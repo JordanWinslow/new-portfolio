@@ -5,13 +5,11 @@ import {
   HeadContent,
   Outlet,
   Scripts,
-  useLocation,
 } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
-import { useEffect, useState } from 'react'
 import { AchievementsProvider } from '@/components/achievements/AchievementsContext'
-import { FadeTransition } from '@/components/FadeTransition'
-import { FixedNavigation } from '@/components/navigation/FixedNavigation'
+import { AppControlsHeader } from '@/components/navigation/AppControlsHeader'
+import { Fade } from '@/components/ui/Fade'
 import {
   FadeTransitionProvider,
   useFadeTransition,
@@ -29,7 +27,7 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'Jordan Winslow - Software Engineer & Frontend Expert',
+        title: 'Jordan Winslow - Software Engineer & Frontend Expert Portfolio',
       },
     ],
     links: [
@@ -43,51 +41,31 @@ export const Route = createRootRoute({
 })
 
 function RootComponent() {
-  const location = useLocation()
-  const [showNav, setShowNav] = useState(location.pathname !== '/')
-  const [hasShownNav, setHasShownNav] = useState(false)
-
-  // Handle navigation delay for index page - only show nav once after 5 seconds
-  useEffect(() => {
-    if (location.pathname === '/') {
-      if (!hasShownNav) {
-        setShowNav(false)
-        const timer = setTimeout(() => {
-          setShowNav(true)
-          setHasShownNav(true)
-        }, 5000)
-        return () => clearTimeout(timer)
-      }
-    } else {
-      setShowNav(true)
-    }
-  }, [location.pathname, hasShownNav])
-
   return (
     <FadeTransitionProvider>
       <AchievementsProvider>
         <RootDocument>
-          {showNav && <FixedNavigation />}
-          <FadeTransitionWrapper />
+          <AppControlsHeader />
+          <FadeTransitionOutlet />
         </RootDocument>
       </AchievementsProvider>
     </FadeTransitionProvider>
   )
 }
 
-function FadeTransitionWrapper() {
-  const { isFadingOut } = useFadeTransition()
-  const location = useLocation()
+function FadeTransitionOutlet() {
+  const { isFadingOut, fadeInDuration, fadeOutDuration, fadeInDelay } =
+    useFadeTransition()
 
   return (
-    <FadeTransition
-      fadeInDuration={3000}
-      fadeOutDuration={1000}
+    <Fade
+      fadeInDuration={fadeInDuration}
+      fadeOutDuration={fadeOutDuration}
+      fadeInDelay={fadeInDelay}
       isFadingOut={isFadingOut}
-      fadeInDelay={location.pathname === '/' ? 0 : 0} // Intro page fades in immediately
     >
       <Outlet />
-    </FadeTransition>
+    </Fade>
   )
 }
 

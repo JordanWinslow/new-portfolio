@@ -5,28 +5,33 @@ import { createContext, useCallback, useContext, useState } from 'react'
 interface FadeTransitionContextType {
   isFadingOut: boolean
   triggerFadeTransition: (to: string) => void
+  fadeInDuration: number
+  fadeOutDuration: number
+  fadeInDelay: number
 }
 
 const FadeTransitionContext = createContext<FadeTransitionContextType>({
   isFadingOut: false,
   triggerFadeTransition: () => {},
+  fadeInDuration: 800,
+  fadeOutDuration: 1000,
+  fadeInDelay: 200,
 })
 
-export function FadeTransitionProvider({
-  children,
-  fadeOutDuration = 1000,
-}: {
-  children: ReactNode
-  fadeOutDuration?: number
-}) {
+export function FadeTransitionProvider({ children }: { children: ReactNode }) {
   const [isFadingOut, setIsFadingOut] = useState(false)
   const navigate = useNavigate()
+
+  const fadeInDuration = 800
+  const fadeOutDuration = 1000
+  // safety buffer in case setTimeout is delayed for some reason
+  const fadeInDelay = 200
 
   const triggerFadeTransition = useCallback(
     (to: string) => {
       setIsFadingOut(true)
 
-      // Navigate after fade out completes
+      // Wait for fade out to complete, then navigate
       setTimeout(() => {
         navigate({
           to: to as `/` | `/about` | `/contact` | `/portfolio` | `/resume`,
@@ -34,15 +39,21 @@ export function FadeTransitionProvider({
         setIsFadingOut(false)
       }, fadeOutDuration)
     },
-    [navigate, fadeOutDuration],
+    [navigate],
   )
 
   return (
-    <FadeTransitionContext.Provider
-      value={{ isFadingOut, triggerFadeTransition }}
+    <FadeTransitionContext
+      value={{
+        isFadingOut,
+        triggerFadeTransition,
+        fadeInDuration,
+        fadeOutDuration,
+        fadeInDelay,
+      }}
     >
       {children}
-    </FadeTransitionContext.Provider>
+    </FadeTransitionContext>
   )
 }
 

@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Download } from 'lucide-react'
 import { useState } from 'react'
-import { FixedNavigation } from '@/components/navigation/FixedNavigation'
+import { AppControlsHeader } from '@/components/navigation/AppControlsHeader'
 import { Badge } from '@/components/ui/Badge'
 import {
   Card,
@@ -90,7 +90,7 @@ function Resume() {
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-x-hidden">
-      <FixedNavigation />
+      <AppControlsHeader />
 
       <div className="max-w-6xl mx-auto px-6 py-16">
         {/* Header */}

@@ -1,14 +1,15 @@
 import { useCallback, useState } from 'react'
+import phone1 from '@/assets/images/phonestack/phone-1.png'
+import phone2 from '@/assets/images/phonestack/phone-2.png'
+import phone3 from '@/assets/images/phonestack/phone-3.png'
+import phone4 from '@/assets/images/phonestack/phone-4.png'
+import phone5 from '@/assets/images/phonestack/phone-5.png'
 import { Slider } from '../ui/Slider'
 import PhoneStack from './PhoneStack'
 
-interface PhoneStackShowcaseProps {
-  images: string[]
-}
+const phoneImages = [phone1, phone2, phone3, phone4, phone5]
 
-export default function PhoneStackShowcase({
-  images,
-}: PhoneStackShowcaseProps) {
+export default function PhoneStackShowcase() {
   const [flickSpeed, setFlickSpeed] = useState(5)
   const [maxSpinDegrees, setMaxSpinDegrees] = useState(180)
 
@@ -46,7 +47,8 @@ export default function PhoneStackShowcase({
               <p className="text-lg text-gray-300 leading-relaxed">
                 Experience the power of modern React animations with this
                 interactive phone stack. Click and drag phones to see them
-                respond naturally, or flick them away with realistic physics.
+                respond naturally, or throw them off the screen with realistic
+                physics.
               </p>
             </div>
 
@@ -118,7 +120,7 @@ export default function PhoneStackShowcase({
           <div className="relative lg:mt-16">
             <div className="relative z-10">
               <PhoneStack
-                images={images}
+                images={phoneImages}
                 maxFlickVelocity={flickSpeed}
                 maxSpinDegrees={maxSpinDegrees}
               />

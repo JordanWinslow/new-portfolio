@@ -1,33 +1,35 @@
 import type React from 'react'
 import { useEffect, useState } from 'react'
 
-interface FadeTransitionProps {
+interface IFadeProps {
   children: React.ReactNode
-  fadeInDuration?: number // ms
+  fadeInDuration: number // ms
   fadeOutDuration?: number // ms
   fadeInDelay?: number // ms
   isFadingOut?: boolean
   className?: string
 }
 
-export const FadeTransition: React.FC<FadeTransitionProps> = ({
+export const Fade: React.FC<IFadeProps> = ({
   children,
-  fadeInDuration = 3000,
-  fadeOutDuration = 1000,
+  fadeInDuration,
+  fadeOutDuration = 0,
   fadeInDelay = 0,
   isFadingOut = false,
   className = '',
 }) => {
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(false)
 
-  // Handle fade out
   useEffect(() => {
     if (isFadingOut) {
       setVisible(false)
     } else {
-      // When not fading out, fade in after delay
-      const timer = setTimeout(() => setVisible(true), fadeInDelay)
-      return () => clearTimeout(timer)
+      if (fadeInDelay) {
+        const timer = setTimeout(() => setVisible(true), fadeInDelay)
+        return () => clearTimeout(timer)
+      } else {
+        setVisible(true)
+      }
     }
   }, [isFadingOut, fadeInDelay])
 

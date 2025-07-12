@@ -2,7 +2,7 @@ import { useLocation } from '@tanstack/react-router'
 import { Briefcase, Code2, FileText, Mail, User } from 'lucide-react'
 import type * as React from 'react'
 import { useRef } from 'react'
-import { InternalLink } from '@/components/InternalLink'
+import { InternalLink } from '@/components/navigation/InternalLink'
 import {
   NavigationMenu,
   NavigationMenuContent,
