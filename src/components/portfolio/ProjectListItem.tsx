@@ -10,7 +10,12 @@ export function ProjectListItem({
   demoLink,
 }: IPortfolioItem) {
   return (
-    <div className="gradient-border enhanced-shadow rounded-xl bg-black p-6 flex flex-col md:flex-row gap-6 hover:bg-black transition-all duration-300 hover-lift">
+    <div className="rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm p-6 flex flex-col md:flex-row gap-6 hover:border-white/20 hover:bg-gradient-to-br hover:from-white/10 hover:to-white/15 transition-all duration-300 hover-lift group relative">
+      {/* Background gradient on hover */}
+      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-purple-500/0 via-pink-500/0 to-orange-500/0 group-hover:from-purple-500/10 group-hover:via-pink-500/10 group-hover:to-orange-500/10 transition-all duration-300 pointer-events-none" />
+
+      {/* Glow effect on hover */}
+      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-purple-500/0 to-pink-500/0 group-hover:from-purple-500/20 group-hover:to-pink-500/20 transition-all duration-300 pointer-events-none blur-xl" />
       <div className="w-full md:w-64 h-48 md:h-auto relative overflow-hidden rounded-lg flex-shrink-0">
         <img
           src={imageSrc}
@@ -19,7 +24,7 @@ export function ProjectListItem({
           loading="lazy"
         />
       </div>
-      <div className="flex-1">
+      <div className="flex-1 relative z-10">
         <h3 className="font-mohave text-xl font-bold text-white mb-2">
           {title}
         </h3>

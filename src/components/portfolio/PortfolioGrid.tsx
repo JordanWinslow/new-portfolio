@@ -67,7 +67,7 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
 
     case 'table':
       return (
-        <div className="gradient-border rounded-xl overflow-hidden bg-black">
+        <div className="rounded-xl overflow-hidden border border-white/10 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm">
           {/* On Desktop view as a table */}
           <div className="hidden sm:block overflow-x-auto">
             <table className="w-full">

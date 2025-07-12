@@ -25,10 +25,13 @@ export const ProjectCard = ({
   return (
     <div
       ref={cardRef}
-      className="group relative gradient-border enhanced-shadow rounded-xl overflow-hidden bg-black backdrop-blur-sm transform transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-[1.02] hover:-translate-y-2 hover:shadow-[0_10px_25px_rgba(0,0,0,0.3)]"
+      className="group relative rounded-xl overflow-hidden border border-white/10 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm transform transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-[1.02] hover:-translate-y-2 hover:border-white/20 hover:bg-gradient-to-br hover:from-white/10 hover:to-white/15"
     >
-      {/* Gradient shadow on hover */}
-      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-purple-500/0 via-pink-500/0 to-orange-500/0 group-hover:from-purple-500/10 group-hover:via-pink-500/10 group-hover:to-orange-500/10 transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] pointer-events-none blur-xl" />
+      {/* Background gradient on hover */}
+      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-purple-500/0 via-pink-500/0 to-orange-500/0 group-hover:from-purple-500/10 group-hover:via-pink-500/10 group-hover:to-orange-500/10 transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] pointer-events-none" />
+
+      {/* Glow effect on hover */}
+      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-purple-500/0 to-pink-500/0 group-hover:from-purple-500/20 group-hover:to-pink-500/20 transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] pointer-events-none blur-xl" />
 
       <div className="aspect-video relative overflow-hidden">
         <img

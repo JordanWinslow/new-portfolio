@@ -15,8 +15,10 @@ export function ProjectTableRow({
   demoLink,
 }: IPortfolioItem) {
   return (
-    <tr className="border-t border-white/10 hover:bg-white/5 transition-colors duration-300">
-      <td className="px-6 py-4">
+    <tr className="border-t border-white/10 hover:bg-gradient-to-r hover:from-white/5 hover:to-white/10 transition-all duration-300 relative group">
+      {/* Background gradient on hover */}
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-pink-500/0 to-orange-500/0 group-hover:from-purple-500/5 group-hover:via-pink-500/5 group-hover:to-orange-500/5 transition-all duration-300 pointer-events-none" />
+      <td className="px-6 py-4 relative z-10">
         <div className="flex items-center gap-4">
           <img
             src={imageSrc}
@@ -29,7 +31,7 @@ export function ProjectTableRow({
         </div>
       </td>
 
-      <td className="px-6 py-4 text-gray-400 max-w-xs">
+      <td className="px-6 py-4 text-gray-400 max-w-xs relative z-10">
         <Tooltip delayDuration={1000}>
           <TooltipTrigger asChild>
             <p className="line-clamp-2 cursor-help overflow-hidden text-ellipsis whitespace-nowrap">
@@ -40,7 +42,7 @@ export function ProjectTableRow({
         </Tooltip>
       </td>
 
-      <td className="px-6 py-4">
+      <td className="px-6 py-4 relative z-10">
         <div className="flex flex-wrap gap-1">
           {techItems.slice(0, 3).map((tech) => (
             <span
@@ -58,7 +60,7 @@ export function ProjectTableRow({
           )}
         </div>
       </td>
-      <td className="px-6 py-4">
+      <td className="px-6 py-4 relative z-10">
         <div className="flex gap-2">
           {githubLink && (
             <a

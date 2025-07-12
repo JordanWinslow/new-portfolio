@@ -19,8 +19,10 @@ export function ProjectAccordionItem({
       value={title}
       className="border-b border-white/10 last:border-b-0"
     >
-      <AccordionTrigger className="px-6 py-4 hover:bg-white/5 transition-colors duration-300 [&[data-state=open]]:bg-white/5">
-        <div className="flex items-center gap-4 w-full">
+      <AccordionTrigger className="px-6 py-4 hover:bg-gradient-to-r hover:from-white/5 hover:to-white/10 transition-all duration-300 [&[data-state=open]]:bg-gradient-to-r [&[data-state=open]]:from-white/5 [&[data-state=open]]:to-white/10 group relative">
+        {/* Background gradient on hover */}
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-pink-500/0 to-orange-500/0 group-hover:from-purple-500/5 group-hover:via-pink-500/5 group-hover:to-orange-500/5 transition-all duration-300 pointer-events-none" />
+        <div className="flex items-center gap-4 w-full relative z-10">
           <img
             src={imageSrc}
             alt={title}
@@ -32,7 +34,7 @@ export function ProjectAccordionItem({
           </span>
         </div>
       </AccordionTrigger>
-      <AccordionContent className="px-6 pb-6">
+      <AccordionContent className="px-6 pb-6 bg-gradient-to-br from-white/2 to-white/5">
         <div className="space-y-6">
           <div className="w-full h-48 relative overflow-hidden rounded-lg">
             <img

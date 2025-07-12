@@ -92,10 +92,16 @@ export function AboutHero({ techSectionRef }: AboutHeroProps) {
             <button
               type="button"
               onClick={() => scrollToRef(techSectionRef)}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-orange-500/20 to-pink-500/20 border border-orange-500/30 text-orange-300 hover:from-orange-500/30 hover:to-pink-500/30 hover:border-orange-400/50 hover:text-orange-200 transition-all duration-300 font-medium shadow-lg hover:shadow-xl hover:scale-105"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/20 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm text-white font-mohave font-semibold text-lg uppercase tracking-wide hover:border-white/40 hover:bg-gradient-to-br hover:from-white/10 hover:to-white/15 transition-all duration-300 font-medium shadow-lg hover:shadow-xl hover:scale-105 group relative"
             >
-              <span>View My Tech Stack</span>
-              <ChevronDown className="w-4 h-4" />
+              {/* Background gradient on hover */}
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-purple-500/0 via-pink-500/0 to-orange-500/0 group-hover:from-purple-500/10 group-hover:via-pink-500/10 group-hover:to-orange-500/10 transition-all duration-300 pointer-events-none" />
+
+              {/* Glow effect on hover */}
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-purple-500/0 to-pink-500/0 group-hover:from-purple-500/20 group-hover:to-pink-500/20 transition-all duration-300 pointer-events-none blur-xl" />
+
+              <span className="relative z-10">View My Tech Stack</span>
+              <ChevronDown className="w-4 h-4 relative z-10" />
             </button>
           </motion.div>
         </motion.div>
