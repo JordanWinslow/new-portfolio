@@ -1,3 +1,4 @@
+import { send as sendEmail } from '@emailjs/browser'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AnimatePresence, motion } from 'framer-motion'
 import { AlertCircle, CheckCircle, RotateCcw, Send, X } from 'lucide-react'
@@ -12,8 +13,6 @@ import { Dialog, DialogContent } from '@/components/ui/Dialog'
 import { Input } from '@/components/ui/Input'
 import { Label } from '@/components/ui/Label'
 import { Textarea } from '@/components/ui/TextArea'
-
-// import emailjs from '@emailjs/browser' // Uncomment when you have EmailJS credentials
 
 const contactFormSchema = z.object({
   name: z.string().optional(),
@@ -108,53 +107,21 @@ export function CallToAction({
     setSubmitStatus('idle')
 
     try {
-      // Option 1: EmailJS Integration (recommended for client-side)
-      // Uncomment and configure when you have EmailJS credentials
-      /*
-      await emailjs.send(
+      // Send email using EmailJS
+      const templateParams = {
+        to_email: 'jwinsemail@gmail.com',
+        from_name: data.name || 'Anonymous',
+        from_email: data.email,
+        from_phone: data.phone || 'Not provided',
+        message: data.message,
+      }
+
+      await sendEmail(
         'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
         'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
-        {
-          to_email: 'jwinsemail@gmail.com',
-          from_name: data.name || 'Anonymous',
-          from_email: data.email,
-          from_phone: data.phone || 'Not provided',
-          message: data.message,
-        },
-        'YOUR_USER_ID' // Replace with your EmailJS user ID
+        templateParams,
+        'YOUR_USER_ID', // Replace with your EmailJS user ID
       )
-      */
-
-      // Option 2: Custom API endpoint (recommended for production)
-      /*
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: data.name || 'Anonymous',
-          email: data.email,
-          phone: data.phone || 'Not provided',
-          message: data.message,
-        }),
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to send email')
-      }
-      */
-
-      // Option 3: Simulate API call for now
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-
-      console.log('Form data to be sent:', {
-        to: 'jwinsemail@gmail.com',
-        from: data.email,
-        name: data.name || 'Anonymous',
-        phone: data.phone || 'Not provided',
-        message: data.message,
-      })
 
       setSubmitStatus('success')
       reset()

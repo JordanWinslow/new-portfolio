@@ -20,6 +20,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@hookform/resolvers": "^5.1.1",
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-avatar": "^1.1.10",
@@ -39,11 +40,13 @@
     "@tailwindcss/vite": "^4.1.11",
     "@tanstack/react-router": "^1.125.6",
     "@tanstack/react-start": "^1.125.6",
+    "@types/nodemailer": "^6.4.17",
     "@use-gesture/react": "^10.3.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.3",
     "lucide-react": "^0.525.0",
+    "nodemailer": "^7.0.5",
     "postcss": "^8.5.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
