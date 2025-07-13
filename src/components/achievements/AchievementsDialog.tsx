@@ -67,7 +67,7 @@ export function AchievementsDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[80vh] bg-black/95 backdrop-blur-md border-white/20 fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[9999] isolate shadow-2xl flex flex-col w-[95vw] h-[90vh] md:w-auto md:h-auto md:max-h-[80vh] md:max-w-4xl">
+      <DialogContent className="max-w-4xl max-h-[80vh] bg-black/95 backdrop-blur-md border-white/20 shadow-2xl flex flex-col w-[95vw] h-[90vh] md:w-auto md:h-auto md:max-h-[80vh] md:max-w-4xl">
         {/* Fixed Header */}
         <DialogHeader className="flex-shrink-0 p-4 md:p-0 border-b border-white/10 pb-4">
           <DialogTitle className="font-mohave text-xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-orange-500 bg-clip-text text-transparent uppercase tracking-wide">

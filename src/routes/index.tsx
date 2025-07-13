@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Code2 } from 'lucide-react'
 import { lazy, Suspense, useEffect } from 'react'
 import { AchievementId } from '@/assets/data/achievements'
+import homeAnimation from '@/assets/spline/home-animation.splinecode'
 import { useAchievements } from '@/components/achievements/AchievementsContext'
 import { InternalLink } from '@/components/navigation/InternalLink'
 import { Fade } from '@/components/ui/Fade'
@@ -34,7 +35,7 @@ function Home() {
             </div>
           }
         >
-          <InteractiveBackground scene="/home-animation.splinecode" />
+          <InteractiveBackground scene={homeAnimation} />
         </Suspense>
       </div>
 

@@ -18,6 +18,7 @@ import 'node:async_hooks';
 import 'tiny-invariant';
 import '@tanstack/react-router/ssr/server';
 
+const homeAnimation = "/assets/home-animation-CtnCK0-Y.splinecode";
 function LoadingSpinner({
   className,
   size = "md"
@@ -118,11 +119,11 @@ const SplitComponent = function Home() {
     return () => clearTimeout(timer);
   }, [unlockAchievement]);
   return /* @__PURE__ */ jsxs("div", { className: "relative w-full h-screen overflow-hidden bg-black font-mohave", children: [
-    /* @__PURE__ */ jsx("div", { className: "absolute inset-0 w-full h-full z-0 flex items-center justify-center", children: /* @__PURE__ */ jsx(Suspense, { fallback: /* @__PURE__ */ jsx("div", { className: "flex items-center justify-center w-full h-full", children: /* @__PURE__ */ jsx(LoadingSpinner, { size: "lg", className: "text-white" }) }), children: /* @__PURE__ */ jsx(InteractiveBackground, { scene: "/home-animation.splinecode" }) }) }),
+    /* @__PURE__ */ jsx("div", { className: "absolute inset-0 w-full h-full z-0 flex items-center justify-center", children: /* @__PURE__ */ jsx(Suspense, { fallback: /* @__PURE__ */ jsx("div", { className: "flex items-center justify-center w-full h-full", children: /* @__PURE__ */ jsx(LoadingSpinner, { size: "lg", className: "text-white" }) }), children: /* @__PURE__ */ jsx(InteractiveBackground, { scene: homeAnimation }) }) }),
     /* @__PURE__ */ jsx(PageLayout, {}),
     /* @__PURE__ */ jsx(Fade, { fadeInDelay: 3e3, fadeInDuration: 3e3, children: /* @__PURE__ */ jsx(PortfolioButton, {}) })
   ] });
 };
 
 export { SplitComponent as component };
-//# sourceMappingURL=index-Ba3sfM_f.mjs.map
+//# sourceMappingURL=index-Bn1AM9fB.mjs.map

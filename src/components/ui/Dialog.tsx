@@ -10,8 +10,15 @@ function Dialog({
 }: React.ComponentProps<typeof DialogPrimitive.Root>) {
   useEffect(() => {
     if (open) {
-      // Set scrollbar-gutter: stable and overflow: hidden on documentElement
-      document.documentElement.style.scrollbarGutter = 'stable'
+      // Check if there's a scrollbar on the page
+      const hasScrollbar =
+        document.documentElement.scrollHeight >
+        document.documentElement.clientHeight
+
+      // Only set scrollbar-gutter: stable if there's actually a scrollbar
+      if (hasScrollbar) {
+        document.documentElement.style.scrollbarGutter = 'stable'
+      }
       document.documentElement.style.overflow = 'hidden'
     } else {
       // Restore original styles
