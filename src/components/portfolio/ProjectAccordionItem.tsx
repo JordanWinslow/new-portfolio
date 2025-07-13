@@ -15,8 +15,10 @@ export function ProjectAccordionItem({
   demoLink,
   videoLink,
   onVideoClick,
+  onLinkClick,
 }: IPortfolioItem & {
   onVideoClick?: (videoUrl: string, title: string) => void
+  onLinkClick?: (link: string) => void
 }) {
   return (
     <AccordionItem
@@ -79,6 +81,9 @@ export function ProjectAccordionItem({
               {githubLink && (
                 <a
                   href={githubLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => onLinkClick?.(githubLink)}
                   className="gradient-border-button flex items-center gap-2"
                 >
                   <Github size={16} />
@@ -89,7 +94,10 @@ export function ProjectAccordionItem({
               {videoLink && onVideoClick && (
                 <button
                   type="button"
-                  onClick={() => onVideoClick(videoLink, title)}
+                  onClick={() => {
+                    onVideoClick(videoLink, title)
+                    onLinkClick?.(videoLink)
+                  }}
                   className="gradient-border-button flex items-center gap-2"
                 >
                   <Play size={16} />
@@ -100,6 +108,9 @@ export function ProjectAccordionItem({
               {demoLink && !videoLink && (
                 <a
                   href={demoLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => onLinkClick?.(demoLink)}
                   className="gradient-border-button flex items-center gap-2"
                 >
                   <ArrowUpRight size={16} />

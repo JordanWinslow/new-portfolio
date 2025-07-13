@@ -2,6 +2,7 @@ import InteractiveBackground from '@splinetool/react-spline'
 import { createFileRoute } from '@tanstack/react-router'
 import { Code2 } from 'lucide-react'
 import { useEffect } from 'react'
+import { AchievementId } from '@/assets/data/achievements'
 import { useAchievements } from '@/components/achievements/AchievementsContext'
 import { InternalLink } from '@/components/navigation/InternalLink'
 import { Fade } from '@/components/ui/Fade'
@@ -14,7 +15,11 @@ function Home() {
   const { unlockAchievement } = useAchievements()
 
   useEffect(() => {
-    unlockAchievement('first-steps')
+    const timer = setTimeout(() => {
+      unlockAchievement(AchievementId.firstSteps)
+    }, 20000)
+
+    return () => clearTimeout(timer)
   }, [unlockAchievement])
 
   return (

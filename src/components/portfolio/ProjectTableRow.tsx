@@ -15,13 +15,13 @@ export function ProjectTableRow({
   demoLink,
   videoLink,
   onVideoClick,
+  onLinkClick,
 }: IPortfolioItem & {
   onVideoClick?: (videoUrl: string, title: string) => void
+  onLinkClick?: (link: string) => void
 }) {
   return (
     <tr className="border-t border-white/10 hover:bg-gradient-to-r hover:from-white/5 hover:to-white/10 transition-all duration-300 relative group">
-      {/* Background gradient on hover */}
-      <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-pink-500/0 to-orange-500/0 group-hover:from-purple-500/5 group-hover:via-pink-500/5 group-hover:to-orange-500/5 transition-all duration-300 pointer-events-none" />
       <td className="px-6 py-4 relative z-10">
         <div className="flex items-center gap-4">
           <img
@@ -69,6 +69,9 @@ export function ProjectTableRow({
           {githubLink && (
             <a
               href={githubLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => onLinkClick?.(githubLink)}
               className="gradient-border-icon"
               title="View Code"
             >
@@ -79,7 +82,10 @@ export function ProjectTableRow({
           {videoLink && onVideoClick && (
             <button
               type="button"
-              onClick={() => onVideoClick(videoLink, title)}
+              onClick={() => {
+                onVideoClick(videoLink, title)
+                onLinkClick?.(videoLink)
+              }}
               className="gradient-border-icon"
               title="Watch Video"
             >
@@ -90,6 +96,9 @@ export function ProjectTableRow({
           {demoLink && !videoLink && (
             <a
               href={demoLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => onLinkClick?.(demoLink)}
               className="gradient-border-icon"
               title="Live Demo"
             >
@@ -98,6 +107,7 @@ export function ProjectTableRow({
           )}
         </div>
       </td>
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-pink-500/0 to-orange-500/0 group-hover:from-purple-500/5 group-hover:via-pink-500/5 group-hover:to-orange-500/5 transition-all duration-300 pointer-events-none" />
     </tr>
   )
 }

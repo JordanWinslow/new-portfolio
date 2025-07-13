@@ -10,7 +10,7 @@ import type { ReactNode } from 'react'
 import { AchievementsProvider } from '@/components/achievements/AchievementsContext'
 import { AppControlsHeader } from '@/components/navigation/AppControlsHeader'
 import { Fade } from '@/components/ui/Fade'
-import { Toaster } from '@/components/ui/sonner'
+import { Toaster } from '@/components/ui/Sonner'
 import {
   FadeTransitionProvider,
   useFadeTransition,

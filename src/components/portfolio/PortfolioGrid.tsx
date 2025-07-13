@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { AchievementId } from '@/assets/data/achievements'
 import { portfolioItems } from '@/assets/data/portfolioItems'
+import { useAchievements } from '@/components/achievements/AchievementsContext'
 import type { LayoutType } from '@/components/portfolio/LayoutType'
 import { Accordion } from '@/components/ui/Accordion'
 import { VideoModal } from '../ui/VideoModal'
@@ -13,6 +15,7 @@ interface IPortfolioGridProps {
 }
 
 export function PortfolioGrid({ layout }: IPortfolioGridProps) {
+  const { unlockAchievement } = useAchievements()
   const [videoModalState, setVideoModalState] = useState<{
     isOpen: boolean
     videoUrl: string
@@ -23,7 +26,48 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
     title: '',
   })
 
+  // Track unique project links clicked
+  const [clickedLinks, setClickedLinks] = useState<Set<string>>(new Set())
+
+  // Load clicked links from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem('portfolio-clicked-links')
+    if (saved) {
+      try {
+        const links = JSON.parse(saved)
+        setClickedLinks(new Set(links))
+      } catch {
+        setClickedLinks(new Set())
+      }
+    }
+  }, [])
+
+  // Save clicked links to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem(
+      'portfolio-clicked-links',
+      JSON.stringify([...clickedLinks]),
+    )
+  }, [clickedLinks])
+
+  const checkForAchievement = (link: string) => {
+    if (!link) return
+
+    setClickedLinks((prev) => {
+      const newSet = new Set(prev)
+      newSet.add(link)
+
+      // Check if we have 4 unique links
+      if (newSet.size >= 4) {
+        unlockAchievement(AchievementId.projectExplorer)
+      }
+
+      return newSet
+    })
+  }
+
   const handleVideoClick = (videoUrl: string, title: string) => {
+    checkForAchievement(videoUrl)
     setVideoModalState({
       isOpen: true,
       videoUrl,
@@ -56,6 +100,7 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
                 demoLink={item.demo}
                 videoLink={item.videoLink}
                 onVideoClick={handleVideoClick}
+                onLinkClick={checkForAchievement}
               />
             ))}
           </div>
@@ -84,6 +129,7 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
                 demoLink={item.demo}
                 videoLink={item.videoLink}
                 onVideoClick={handleVideoClick}
+                onLinkClick={checkForAchievement}
               />
             ))}
           </div>
@@ -111,6 +157,7 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
                 demoLink={item.demo}
                 videoLink={item.videoLink}
                 onVideoClick={handleVideoClick}
+                onLinkClick={checkForAchievement}
               />
             ))}
           </div>
@@ -126,7 +173,7 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
     case 'table':
       return (
         <>
-          <div className="gradient-border rounded-xl overflow-hidden bg-black">
+          <div className="rounded-xl overflow-hidden bg-black border border-white/10 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm transform transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:border-white/20 ">
             {/* On Desktop view as a table */}
             <div className="hidden sm:block overflow-x-auto">
               <table className="w-full">
@@ -158,6 +205,7 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
                       demoLink={item.demo}
                       videoLink={item.videoLink}
                       onVideoClick={handleVideoClick}
+                      onLinkClick={checkForAchievement}
                     />
                   ))}
                 </tbody>
@@ -183,6 +231,7 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
                     demoLink={item.demo}
                     videoLink={item.videoLink}
                     onVideoClick={handleVideoClick}
+                    onLinkClick={checkForAchievement}
                   />
                 ))}
               </Accordion>

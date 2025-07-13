@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion'
 import { Facebook, Github, Linkedin, Mail, Twitter } from 'lucide-react'
+import { AchievementId } from '@/assets/data/achievements'
+import { useAchievements } from '@/components/achievements/AchievementsContext'
 
 const contactMethods = [
   {
@@ -35,6 +37,12 @@ const contactMethods = [
 ]
 
 export function ContactMethodsGrid() {
+  const { unlockAchievement } = useAchievements()
+
+  const handleEmailClick = () => {
+    unlockAchievement(AchievementId.emailSender)
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -57,6 +65,9 @@ export function ContactMethodsGrid() {
                 href={method.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={
+                  method.title === 'Email' ? handleEmailClick : undefined
+                }
                 className="block relative bg-black/20 backdrop-blur-xl border border-white/10 rounded-xl p-4 hover:bg-black/30 transition-all duration-500 h-full overflow-hidden cursor-pointer"
                 whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}

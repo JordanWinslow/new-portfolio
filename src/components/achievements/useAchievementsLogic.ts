@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import type { Achievement } from '@/assets/data/achievements'
-import { getAchievementsArray } from '@/assets/data/achievements'
+import type { Achievement, AchievementIdType } from '@/assets/data/achievements'
+import { AchievementId, getAchievementsArray } from '@/assets/data/achievements'
 import { showAchievementNotification } from './AchievementNotification'
 
 // Track which achievements have been counted to prevent double incrementing due to strict mode or unforseen rendering issues
@@ -12,6 +12,42 @@ export function useAchievementsLogic() {
   )
   const [isInitialized, setIsInitialized] = useState(false)
   const [newAchievementsVisible, setNewAchievementsVisible] = useState(0)
+
+  // Check for complex achievements that depend on other achievements
+  const checkComplexAchievements = useCallback(
+    (currentAchievements: Record<string, Achievement>) => {
+      const achievementsToUnlock: AchievementIdType[] = []
+
+      // Check World Traveler - unlock when all navigation achievements are unlocked
+      // Note: firstSteps (The Cube) is excluded since users will naturally see that page
+      const navigationAchievements = [
+        AchievementId.portfolioExplorer,
+        AchievementId.aboutDiscoverer,
+        AchievementId.contactReacher,
+        AchievementId.resumeReader,
+      ]
+
+      const allNavigationUnlocked = navigationAchievements.every(
+        (id) => currentAchievements[id]?.unlocked,
+      )
+
+      if (
+        allNavigationUnlocked &&
+        !currentAchievements[AchievementId.worldTraveler]?.unlocked
+      ) {
+        achievementsToUnlock.push(AchievementId.worldTraveler)
+      }
+
+      // Add more complex achievement checks here in the future
+      // Example:
+      // if (allInteractionUnlocked && !currentAchievements[AchievementId.interactionMaster]?.unlocked) {
+      //   achievementsToUnlock.push(AchievementId.interactionMaster)
+      // }
+
+      return achievementsToUnlock
+    },
+    [],
+  )
 
   useEffect(() => {
     if (isInitialized) return
@@ -108,33 +144,65 @@ export function useAchievementsLogic() {
     )
   }, [newAchievementsVisible, isInitialized])
 
-  const unlockAchievement = useCallback((id: string) => {
-    setAchievements((prev) => {
-      const achievement = prev[id]
+  const unlockAchievement = useCallback(
+    (id: AchievementIdType) => {
+      setAchievements((prev) => {
+        const achievement = prev[id]
 
-      // Only proceed if achievement exists and is not already unlocked
-      if (achievement && !achievement.unlocked) {
-        const updated = {
-          ...prev,
-          [id]: {
-            ...achievement,
-            unlocked: true,
-            unlockedAt: new Date(),
-          },
+        // Only proceed if achievement exists and is not already unlocked
+        if (achievement && !achievement.unlocked) {
+          const updated = {
+            ...prev,
+            [id]: {
+              ...achievement,
+              unlocked: true,
+              unlockedAt: new Date(),
+            },
+          }
+
+          // Show notification and increment counter (only if not already counted)
+          if (!countedAchievements.has(id)) {
+            showAchievementNotification(achievement)
+            setNewAchievementsVisible((count) => count + 1)
+            countedAchievements.add(id)
+          }
+
+          // Check for complex achievements that should be unlocked
+          const complexAchievementsToUnlock = checkComplexAchievements(updated)
+
+          // Unlock any complex achievements that were triggered
+          let finalUpdated = updated
+          complexAchievementsToUnlock.forEach((complexId) => {
+            const complexAchievement = finalUpdated[complexId]
+            if (complexAchievement && !complexAchievement.unlocked) {
+              finalUpdated = {
+                ...finalUpdated,
+                [complexId]: {
+                  ...complexAchievement,
+                  unlocked: true,
+                  unlockedAt: new Date(),
+                },
+              }
+
+              // Show notification for complex achievement
+              if (!countedAchievements.has(complexId)) {
+                const complexAchievement = finalUpdated[complexId]
+                if (complexAchievement) {
+                  showAchievementNotification(complexAchievement)
+                  setNewAchievementsVisible((count) => count + 1)
+                  countedAchievements.add(complexId)
+                }
+              }
+            }
+          })
+
+          return finalUpdated
         }
-
-        // Show notification and increment counter (only if not already counted)
-        if (!countedAchievements.has(id)) {
-          showAchievementNotification(achievement)
-          setNewAchievementsVisible((count) => count + 1)
-          countedAchievements.add(id)
-        }
-
-        return updated
-      }
-      return prev
-    })
-  }, [])
+        return prev
+      })
+    },
+    [checkComplexAchievements],
+  )
 
   const markAchievementsAsViewed = useCallback(() => {
     setNewAchievementsVisible(0)

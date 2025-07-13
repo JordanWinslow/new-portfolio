@@ -2,13 +2,15 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { AnimatePresence, motion } from 'framer-motion'
 import { AlertCircle, CheckCircle, RotateCcw, Send, X } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
-import { createPortal } from 'react-dom'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { AchievementId } from '@/assets/data/achievements'
+import { useAchievements } from '@/components/achievements/AchievementsContext'
 import { Button } from '@/components/ui/Button'
+import { Dialog, DialogContent } from '@/components/ui/Dialog'
 import { Input } from '@/components/ui/Input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
+import { Label } from '@/components/ui/Label'
+import { Textarea } from '@/components/ui/TextArea'
 
 // import emailjs from '@emailjs/browser' // Uncomment when you have EmailJS credentials
 
@@ -48,6 +50,7 @@ export function CallToAction({
   secondaryButtonHref = '/about',
   className = '',
 }: CallToActionProps) {
+  const { unlockAchievement } = useAchievements()
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<
@@ -84,81 +87,6 @@ export function CallToAction({
   useEffect(() => {
     generateCaptcha()
   }, [generateCaptcha])
-
-  // Prevent body scroll when modal is open
-  useEffect(() => {
-    const preventScroll = (e: Event) => {
-      e.preventDefault()
-      e.stopPropagation()
-      return false
-    }
-
-    if (isFormOpen) {
-      // Save current scroll position
-      const scrollY = window.scrollY
-
-      // Prevent body scroll
-      document.body.style.overflow = 'hidden'
-      document.body.style.position = 'fixed'
-      document.body.style.width = '100%'
-      document.body.style.top = `-${scrollY}px`
-
-      // Prevent scroll events
-      document.addEventListener('wheel', preventScroll, {
-        passive: false,
-        capture: true,
-      })
-      document.addEventListener('touchmove', preventScroll, {
-        passive: false,
-        capture: true,
-      })
-      document.addEventListener('scroll', preventScroll, {
-        passive: false,
-        capture: true,
-      })
-    } else {
-      // Restore body scroll
-      const scrollY = document.body.style.top
-      document.body.style.overflow = ''
-      document.body.style.position = ''
-      document.body.style.width = ''
-      document.body.style.top = ''
-      if (scrollY) {
-        window.scrollTo({
-          top: parseInt(scrollY || '0') * -1,
-          behavior: 'instant',
-        })
-      }
-
-      // Remove scroll event listeners
-      document.removeEventListener('wheel', preventScroll, { capture: true })
-      document.removeEventListener('touchmove', preventScroll, {
-        capture: true,
-      })
-      document.removeEventListener('scroll', preventScroll, { capture: true })
-    }
-
-    return () => {
-      const scrollY = document.body.style.top
-      document.body.style.overflow = ''
-      document.body.style.position = ''
-      document.body.style.width = ''
-      document.body.style.top = ''
-      if (scrollY) {
-        window.scrollTo({
-          top: parseInt(scrollY || '0') * -1,
-          behavior: 'instant',
-        })
-      }
-
-      // Remove scroll event listeners
-      document.removeEventListener('wheel', preventScroll, { capture: true })
-      document.removeEventListener('touchmove', preventScroll, {
-        capture: true,
-      })
-      document.removeEventListener('scroll', preventScroll, { capture: true })
-    }
-  }, [isFormOpen])
 
   const onSubmit = async (data: ContactFormData) => {
     // Validate captcha
@@ -232,7 +160,6 @@ export function CallToAction({
       generateCaptcha()
       setCaptchaAttempts(0)
 
-      // Close dialog after 2 seconds
       setTimeout(() => {
         setIsFormOpen(false)
         setSubmitStatus('idle')
@@ -272,8 +199,263 @@ export function CallToAction({
     }
   }, [isFormOpen, handleClose])
 
+  const handleOpenForm = () => {
+    unlockAchievement(AchievementId.emailSender)
+    setIsFormOpen(true)
+  }
+
   return (
     <>
+      <Dialog open={isFormOpen} onOpenChange={handleClose}>
+        <DialogContent
+          className="bg-black/95 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl overflow-hidden sm:max-w-[60vw] sm:max-h-[90vh]"
+          showCloseButton={false}
+        >
+          <div className="flex items-center justify-between border-b border-white/10 pb-4">
+            <h2 className="font-mohave text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-orange-500 bg-clip-text text-transparent uppercase">
+              Start a Conversation
+            </h2>
+            <button
+              type="button"
+              onClick={handleClose}
+              className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+              disabled={isSubmitting}
+            >
+              <X className="w-5 h-5 text-white" />
+            </button>
+          </div>
+
+          {/* Content */}
+          <div className="pb-3 px-3 sm:p-6 overflow-y-auto max-h-[calc(100vh-120px-32px)] sm:max-h-[calc(90vh-120px)]">
+            <AnimatePresence mode="wait">
+              {submitStatus === 'success' ? (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  className="text-center py-12"
+                >
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{
+                      delay: 0.2,
+                      type: 'spring',
+                      stiffness: 200,
+                    }}
+                    className="w-20 h-20 mx-auto mb-6 rounded-full bg-green-500/20 flex items-center justify-center"
+                  >
+                    <CheckCircle className="w-10 h-10 text-green-400" />
+                  </motion.div>
+                  <h3 className="font-mohave text-xl font-bold text-white mb-2">
+                    Message Sent!
+                  </h3>
+                  <p className="text-gray-300">
+                    Thank you for reaching out. I'll get back to you soon!
+                  </p>
+                </motion.div>
+              ) : submitStatus === 'error' ? (
+                <motion.div
+                  key="error"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  className="text-center py-12"
+                >
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{
+                      delay: 0.2,
+                      type: 'spring',
+                      stiffness: 200,
+                    }}
+                    className="w-20 h-20 mx-auto mb-6 rounded-full bg-red-500/20 flex items-center justify-center"
+                  >
+                    <AlertCircle className="w-10 h-10 text-red-400" />
+                  </motion.div>
+                  <h3 className="font-mohave text-xl font-bold text-white mb-2">
+                    Something went wrong
+                  </h3>
+                  <p className="text-gray-300 mb-4">
+                    Please try again or contact me directly at
+                    jwinsemail@gmail.com
+                  </p>
+                  <Button
+                    onClick={() => setSubmitStatus('idle')}
+                    className="relative overflow-hidden bg-black/20 backdrop-blur-md border-2 border-transparent text-white font-mohave font-semibold px-6 py-2 rounded-lg transition-all duration-300 hover:scale-105 hover:-translate-y-1"
+                    style={{
+                      background:
+                        'linear-gradient(var(--background), var(--background)) padding-box, linear-gradient(135deg, #8b5cf6, #ec4899, #f59e0b, #10b981) border-box',
+                    }}
+                  >
+                    Try Again
+                  </Button>
+                </motion.div>
+              ) : (
+                <motion.form
+                  key="form"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="space-y-4"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="name" className="text-white font-medium">
+                        Name (Optional)
+                      </Label>
+                      <Input
+                        id="name"
+                        {...register('name')}
+                        className="bg-black/50 border-white/20 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500/20"
+                        placeholder="Your name"
+                      />
+                      {errors.name && (
+                        <p className="text-red-400 text-sm">
+                          {errors.name.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="email" className="text-white font-medium">
+                        Email *
+                      </Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        {...register('email')}
+                        className="bg-black/50 border-white/20 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500/20"
+                        placeholder="your.email@example.com"
+                        required
+                      />
+                      {errors.email && (
+                        <p className="text-red-400 text-sm">
+                          {errors.email.message}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="phone" className="text-white font-medium">
+                      Phone (Optional)
+                    </Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      {...register('phone')}
+                      className="bg-black/50 border-white/20 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500/20"
+                      placeholder="+1 (555) 123-4567"
+                    />
+                    {errors.phone && (
+                      <p className="text-red-400 text-sm">
+                        {errors.phone.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="message" className="text-white font-medium">
+                      Message *
+                    </Label>
+                    <Textarea
+                      id="message"
+                      {...register('message')}
+                      className="bg-black/50 border-white/20 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500/20 min-h-[120px] resize-none"
+                      placeholder="Tell me about your project or how I can help..."
+                      required
+                    />
+                    {errors.message && (
+                      <p className="text-red-400 text-sm">
+                        {errors.message.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="captcha" className="text-white font-medium">
+                      Security Check *
+                    </Label>
+                    <div className="flex items-center gap-4">
+                      <div className="flex-1">
+                        <Input
+                          id="captcha"
+                          {...register('captcha')}
+                          className="bg-black/50 border-white/20 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500/20"
+                          placeholder="Enter the answer"
+                          required
+                        />
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-white font-mono text-lg bg-white/10 px-3 py-2 rounded-lg">
+                          {captchaValue}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={generateCaptcha}
+                          className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                          disabled={isSubmitting}
+                        >
+                          <RotateCcw className="w-4 h-4 text-white" />
+                        </button>
+                      </div>
+                    </div>
+                    {errors.captcha && (
+                      <p className="text-red-400 text-sm">
+                        {errors.captcha.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="flex justify-end gap-4 pt-4">
+                    <Button
+                      type="button"
+                      onClick={handleClose}
+                      disabled={isSubmitting}
+                      className="px-6 py-3 bg-black/20 backdrop-blur-md border border-white/20 text-white font-semibold rounded-lg hover:bg-black/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="relative overflow-hidden bg-black/20 backdrop-blur-md border-2 border-transparent text-white font-mohave font-semibold px-6 py-2 rounded-lg transition-all duration-300 hover:scale-105 hover:-translate-y-1"
+                      style={{
+                        background:
+                          'linear-gradient(var(--background), var(--background)) padding-box, linear-gradient(135deg, #8b5cf6, #ec4899, #f59e0b, #10b981) border-box',
+                      }}
+                      Icon={
+                        isSubmitting ? (
+                          <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{
+                              duration: 1,
+                              repeat: Infinity,
+                              ease: 'linear',
+                            }}
+                            className="flex items-center"
+                          >
+                            <Send className="w-4 h-4" />
+                          </motion.div>
+                        ) : (
+                          <Send className="w-4 h-4 mr-2" />
+                        )
+                      }
+                    >
+                      Send Message
+                    </Button>
+                  </div>
+                </motion.form>
+              )}
+            </AnimatePresence>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -317,7 +499,7 @@ export function CallToAction({
               transition={{ delay: 0.6, duration: 0.8 }}
             >
               <motion.button
-                onClick={() => setIsFormOpen(true)}
+                onClick={handleOpenForm}
                 className="relative overflow-hidden bg-black text-white font-mohave font-semibold text-lg px-8 py-3 rounded-xl uppercase tracking-wide inline-flex items-center justify-center group border-2 border-white/20 hover:border-white/40 transition-all duration-0 min-w-[200px] cursor-pointer"
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
@@ -375,291 +557,6 @@ export function CallToAction({
           </div>
         </div>
       </motion.div>
-
-      {/* Contact Form Modal - Rendered via Portal */}
-      {isFormOpen &&
-        createPortal(
-          <div className="fixed inset-0 z-[999999] flex items-center justify-center">
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-              onClick={handleClose}
-            />
-
-            {/* Dialog Content */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              transition={{ duration: 0.2, ease: 'easeOut' }}
-              className="relative bg-black/95 backdrop-blur-xl border border-white/20 rounded-2xl w-full max-w-4xl mx-4 h-[90vh] overflow-hidden shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-white/10">
-                <h2 className="font-mohave text-2xl font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-orange-500 bg-clip-text text-transparent">
-                  Start a Conversation
-                </h2>
-                <button
-                  type="button"
-                  onClick={handleClose}
-                  className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-                  disabled={isSubmitting}
-                >
-                  <X className="w-5 h-5 text-white" />
-                </button>
-              </div>
-
-              {/* Content */}
-              <div className="p-6 overflow-y-auto h-[calc(90vh-80px)]">
-                <AnimatePresence mode="wait">
-                  {submitStatus === 'success' ? (
-                    <motion.div
-                      key="success"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      className="text-center py-12"
-                    >
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{
-                          delay: 0.2,
-                          type: 'spring',
-                          stiffness: 200,
-                        }}
-                        className="w-20 h-20 mx-auto mb-6 rounded-full bg-green-500/20 flex items-center justify-center"
-                      >
-                        <CheckCircle className="w-10 h-10 text-green-400" />
-                      </motion.div>
-                      <h3 className="font-mohave text-xl font-bold text-white mb-2">
-                        Message Sent!
-                      </h3>
-                      <p className="text-gray-300">
-                        Thank you for reaching out. I'll get back to you soon!
-                      </p>
-                    </motion.div>
-                  ) : submitStatus === 'error' ? (
-                    <motion.div
-                      key="error"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      className="text-center py-12"
-                    >
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{
-                          delay: 0.2,
-                          type: 'spring',
-                          stiffness: 200,
-                        }}
-                        className="w-20 h-20 mx-auto mb-6 rounded-full bg-red-500/20 flex items-center justify-center"
-                      >
-                        <AlertCircle className="w-10 h-10 text-red-400" />
-                      </motion.div>
-                      <h3 className="font-mohave text-xl font-bold text-white mb-2">
-                        Something went wrong
-                      </h3>
-                      <p className="text-gray-300 mb-4">
-                        Please try again or contact me directly at
-                        jwinsemail@gmail.com
-                      </p>
-                      <Button
-                        onClick={() => setSubmitStatus('idle')}
-                        className="relative overflow-hidden bg-black/20 backdrop-blur-md border-2 border-transparent text-white font-mohave font-semibold px-6 py-2 rounded-lg transition-all duration-300 hover:scale-105 hover:-translate-y-1"
-                        style={{
-                          background:
-                            'linear-gradient(var(--background), var(--background)) padding-box, linear-gradient(135deg, #8b5cf6, #ec4899, #f59e0b, #10b981) border-box',
-                        }}
-                      >
-                        Try Again
-                      </Button>
-                    </motion.div>
-                  ) : (
-                    <motion.form
-                      key="form"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      onSubmit={handleSubmit(onSubmit)}
-                      className="space-y-6"
-                    >
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                          <Label
-                            htmlFor="name"
-                            className="text-white font-medium"
-                          >
-                            Name (Optional)
-                          </Label>
-                          <Input
-                            id="name"
-                            {...register('name')}
-                            className="bg-black/50 border-white/20 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500/20"
-                            placeholder="Your name"
-                          />
-                          {errors.name && (
-                            <p className="text-red-400 text-sm">
-                              {errors.name.message}
-                            </p>
-                          )}
-                        </div>
-
-                        <div className="space-y-2">
-                          <Label
-                            htmlFor="email"
-                            className="text-white font-medium"
-                          >
-                            Email *
-                          </Label>
-                          <Input
-                            id="email"
-                            type="email"
-                            {...register('email')}
-                            className="bg-black/50 border-white/20 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500/20"
-                            placeholder="your.email@example.com"
-                            required
-                          />
-                          {errors.email && (
-                            <p className="text-red-400 text-sm">
-                              {errors.email.message}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label
-                          htmlFor="phone"
-                          className="text-white font-medium"
-                        >
-                          Phone (Optional)
-                        </Label>
-                        <Input
-                          id="phone"
-                          type="tel"
-                          {...register('phone')}
-                          className="bg-black/50 border-white/20 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500/20"
-                          placeholder="+1 (555) 123-4567"
-                        />
-                        {errors.phone && (
-                          <p className="text-red-400 text-sm">
-                            {errors.phone.message}
-                          </p>
-                        )}
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label
-                          htmlFor="message"
-                          className="text-white font-medium"
-                        >
-                          Message *
-                        </Label>
-                        <Textarea
-                          id="message"
-                          {...register('message')}
-                          className="bg-black/50 border-white/20 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500/20 min-h-[120px] resize-none"
-                          placeholder="Tell me about your project or how I can help..."
-                          required
-                        />
-                        {errors.message && (
-                          <p className="text-red-400 text-sm">
-                            {errors.message.message}
-                          </p>
-                        )}
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label
-                          htmlFor="captcha"
-                          className="text-white font-medium"
-                        >
-                          Security Check *
-                        </Label>
-                        <div className="flex items-center gap-4">
-                          <div className="flex-1">
-                            <Input
-                              id="captcha"
-                              {...register('captcha')}
-                              className="bg-black/50 border-white/20 text-white placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500/20"
-                              placeholder="Enter the answer"
-                              required
-                            />
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-white font-mono text-lg bg-white/10 px-3 py-2 rounded-lg">
-                              {captchaValue}
-                            </span>
-                            <button
-                              type="button"
-                              onClick={generateCaptcha}
-                              className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-                              disabled={isSubmitting}
-                            >
-                              <RotateCcw className="w-4 h-4 text-white" />
-                            </button>
-                          </div>
-                        </div>
-                        {errors.captcha && (
-                          <p className="text-red-400 text-sm">
-                            {errors.captcha.message}
-                          </p>
-                        )}
-                      </div>
-
-                      <div className="flex justify-end gap-4 pt-4">
-                        <Button
-                          type="button"
-                          onClick={handleClose}
-                          disabled={isSubmitting}
-                          className="px-6 py-3 bg-black/20 backdrop-blur-md border border-white/20 text-white font-semibold rounded-lg hover:bg-black/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                          Cancel
-                        </Button>
-                        <Button
-                          type="submit"
-                          disabled={isSubmitting}
-                          className="relative overflow-hidden bg-black/20 backdrop-blur-md border-2 border-transparent text-white font-mohave font-semibold px-6 py-2 rounded-lg transition-all duration-300 hover:scale-105 hover:-translate-y-1"
-                          style={{
-                            background:
-                              'linear-gradient(var(--background), var(--background)) padding-box, linear-gradient(135deg, #8b5cf6, #ec4899, #f59e0b, #10b981) border-box',
-                          }}
-                          Icon={
-                            isSubmitting ? (
-                              <motion.div
-                                animate={{ rotate: 360 }}
-                                transition={{
-                                  duration: 1,
-                                  repeat: Infinity,
-                                  ease: 'linear',
-                                }}
-                                className="flex items-center"
-                              >
-                                <Send className="w-4 h-4" />
-                              </motion.div>
-                            ) : (
-                              <Send className="w-4 h-4 mr-2" />
-                            )
-                          }
-                        >
-                          Send Message
-                        </Button>
-                      </div>
-                    </motion.form>
-                  )}
-                </AnimatePresence>
-              </div>
-            </motion.div>
-          </div>,
-          document.body,
-        )}
     </>
   )
 }

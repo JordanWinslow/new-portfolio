@@ -14,6 +14,8 @@ import {
 import { useDrag } from '@use-gesture/react'
 import type React from 'react'
 import { useRef } from 'react'
+import { AchievementId } from '@/assets/data/achievements'
+import { useAchievements } from '@/components/achievements/AchievementsContext'
 
 export interface PhoneStackProps {
   images: string[]
@@ -48,6 +50,7 @@ export const PhoneStack: React.FC<PhoneStackProps> = ({
   phoneHeight = DEFAULT_PHONE_HEIGHT,
   stackOffsetY = DEFAULT_STACK_OFFSET_Y,
 }) => {
+  const { unlockAchievement } = useAchievements()
   const containerRef = useRef<HTMLDivElement>(null)
   const flickedPhonesRef = useRef<Set<number>>(new Set())
 
@@ -170,6 +173,9 @@ export const PhoneStack: React.FC<PhoneStackProps> = ({
       })
 
       if (last && flickedPhonesRef.current.size === images.length) {
+        // Unlock phoneMaster achievement when all phones have been flicked
+        unlockAchievement(AchievementId.phoneMaster)
+
         setTimeout(() => {
           flickedPhonesRef.current.clear()
           setSprings((index: number) => getInitialPosition(index))

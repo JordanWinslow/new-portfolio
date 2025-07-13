@@ -10,8 +10,11 @@ export function ProjectListItem({
   demoLink,
   videoLink,
   onVideoClick,
+  onLinkClick,
 }: IPortfolioItem & {
   onVideoClick?: (videoUrl: string, title: string) => void
+  // hacky way to handle achievements because I have spent long enough on this portfolio already haha
+  onLinkClick?: (link: string) => void
 }) {
   return (
     <div className="rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm p-6 flex flex-col md:flex-row gap-6 hover:border-white/20 hover:bg-gradient-to-br hover:from-white/10 hover:to-white/15 transition-all duration-300 hover-lift group relative">
@@ -47,6 +50,9 @@ export function ProjectListItem({
           {githubLink && (
             <a
               href={githubLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => onLinkClick?.(githubLink)}
               className="gradient-border-button flex items-center gap-2"
             >
               <Github size={16} />
@@ -56,7 +62,10 @@ export function ProjectListItem({
           {videoLink && onVideoClick && (
             <button
               type="button"
-              onClick={() => onVideoClick(videoLink, title)}
+              onClick={() => {
+                onVideoClick(videoLink, title)
+                onLinkClick?.(videoLink)
+              }}
               className="gradient-border-button flex items-center gap-2"
             >
               <Play size={16} />
@@ -66,6 +75,9 @@ export function ProjectListItem({
           {demoLink && !videoLink && (
             <a
               href={demoLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => onLinkClick?.(demoLink)}
               className="gradient-border-button flex items-center gap-2"
             >
               <ArrowUpRight size={16} />

@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useEffect } from 'react'
+import { AchievementId } from '@/assets/data/achievements'
 import { useAchievements } from '@/components/achievements/AchievementsContext'
 import { CallToAction } from '@/components/contact/CallToAction'
 import { ContactBackground } from '@/components/contact/ContactBackground'
@@ -17,7 +18,7 @@ function Contact() {
   const { unlockAchievement } = useAchievements()
 
   useEffect(() => {
-    unlockAchievement('contact-reacher')
+    unlockAchievement(AchievementId.contactReacher)
   }, [unlockAchievement])
 
   return (

@@ -19,14 +19,58 @@ import {
   Palette,
   Rocket,
   Search,
-  Settings,
   Smartphone,
-  Sparkles,
   Target,
   Timer,
   User,
   Users,
 } from 'lucide-react'
+
+// Type-safe achievement IDs enum - keys match the achievement structure exactly
+export const AchievementId = {
+  // Navigation achievements
+  firstSteps: 'first-steps',
+  portfolioExplorer: 'portfolio-explorer',
+  aboutDiscoverer: 'about-discoverer',
+  contactReacher: 'contact-reacher',
+  resumeReader: 'resume-reader',
+  worldTraveler: 'world-traveler',
+
+  // Interaction achievements
+  layoutExplorer: 'layout-explorer',
+  scrollMaster: 'scroll-master',
+  resumeDownloader: 'resume-downloader',
+  emailSender: 'email-sender',
+  projectExplorer: 'project-explorer',
+  phoneMaster: 'phone-master',
+
+  // Exploration achievements
+  techExplorer: 'tech-explorer',
+  techSearcher: 'tech-searcher',
+  techFilterer: 'tech-filterer',
+  hoverExplorer: 'hover-explorer',
+
+  // Social achievements
+  socialButterfly: 'social-butterfly',
+  networker: 'networker',
+  codeExplorer: 'code-explorer',
+
+  // Mastery achievements
+  detailSeeker: 'detail-seeker',
+  completionist: 'completionist',
+  deepDiver: 'deep-diver',
+
+  // Easter egg achievements
+  coffeeBreak: 'coffee-break',
+  gamerSpirit: 'gamer-spirit',
+  heartFinder: 'heart-finder',
+  lightbulbMoment: 'lightbulb-moment',
+  rocketLauncher: 'rocket-launcher',
+} as const
+
+// Type for achievement IDs
+export type AchievementIdType =
+  (typeof AchievementId)[keyof typeof AchievementId]
 
 export interface Achievement {
   id: string
@@ -51,22 +95,20 @@ export interface Achievement {
 export const achievements: Record<string, Record<string, Achievement>> = {
   navigation: {
     firstSteps: {
-      id: 'first-steps',
-      title: 'First Steps',
-      description:
-        "Welcome to the portfolio! You've taken your first step into a larger world.",
+      id: AchievementId.firstSteps,
+      title: 'The Cube',
+      description: 'Pretty cool huh?',
       icon: Home,
       unlocked: false,
       category: 'navigation',
       rarity: 'common',
-      unlockCondition: 'Visit the homepage',
+      unlockCondition: 'Spend 20 seconds on the Intro Page',
       points: 10,
     },
     portfolioExplorer: {
-      id: 'portfolio-explorer',
+      id: AchievementId.portfolioExplorer,
       title: 'Portfolio Explorer',
-      description:
-        "You've discovered the showcase of my work. Time to dive deep!",
+      description: 'Thanks for checking out my portfolio!',
       icon: Palette,
       unlocked: false,
       category: 'navigation',
@@ -75,9 +117,9 @@ export const achievements: Record<string, Record<string, Achievement>> = {
       points: 15,
     },
     aboutDiscoverer: {
-      id: 'about-discoverer',
+      id: AchievementId.aboutDiscoverer,
       title: 'About Discoverer',
-      description: 'Getting to know me better? I appreciate the interest!',
+      description: 'Thanks for getting to know me a bit!',
       icon: User,
       unlocked: false,
       category: 'navigation',
@@ -86,9 +128,9 @@ export const achievements: Record<string, Record<string, Achievement>> = {
       points: 15,
     },
     contactReacher: {
-      id: 'contact-reacher',
+      id: AchievementId.contactReacher,
       title: 'Contact Reacher',
-      description: "Ready to connect? I'm excited to hear from you!",
+      description: "Let's get in touch!",
       icon: Mail,
       unlocked: false,
       category: 'navigation',
@@ -97,10 +139,9 @@ export const achievements: Record<string, Record<string, Achievement>> = {
       points: 15,
     },
     resumeReader: {
-      id: 'resume-reader',
+      id: AchievementId.resumeReader,
       title: 'Resume Reader',
-      description:
-        'Taking a look at my credentials. Professional curiosity is always welcome!',
+      description: 'If you like what you see, feel free to get in touch!',
       icon: FileText,
       unlocked: false,
       category: 'navigation',
@@ -109,10 +150,10 @@ export const achievements: Record<string, Record<string, Achievement>> = {
       points: 15,
     },
     worldTraveler: {
-      id: 'world-traveler',
+      id: AchievementId.worldTraveler,
       title: 'World Traveler',
       description:
-        "You've explored every corner of this portfolio. A true digital nomad!",
+        'This application was not simple to develop, thanks so much for exploring every part of it!',
       icon: Globe,
       unlocked: false,
       category: 'navigation',
@@ -123,10 +164,9 @@ export const achievements: Record<string, Record<string, Achievement>> = {
   },
   interaction: {
     layoutExplorer: {
-      id: 'layout-explorer',
+      id: AchievementId.layoutExplorer,
       title: 'Layout Explorer',
-      description:
-        "You've tried all the different ways to view my projects. Variety is the spice of life!",
+      description: 'Variety is the spice of life!',
       icon: Grid3X3,
       unlocked: false,
       category: 'interaction',
@@ -135,10 +175,9 @@ export const achievements: Record<string, Record<string, Achievement>> = {
       points: 60,
     },
     scrollMaster: {
-      id: 'scroll-master',
+      id: AchievementId.scrollMaster,
       title: 'Scroll Master',
-      description:
-        "You've scrolled through the entire portfolio. That's some serious dedication!",
+      description: "You've scrolled through the entire portfolio.",
       icon: ArrowDown,
       unlocked: false,
       category: 'interaction',
@@ -147,10 +186,9 @@ export const achievements: Record<string, Record<string, Achievement>> = {
       points: 25,
     },
     resumeDownloader: {
-      id: 'resume-downloader',
+      id: AchievementId.resumeDownloader,
       title: 'Resume Downloader',
-      description:
-        "You've downloaded my resume. I must have caught your attention!",
+      description: 'Thanks for your interest! Feel free to get in touch.',
       icon: Download,
       unlocked: false,
       category: 'interaction',
@@ -159,10 +197,9 @@ export const achievements: Record<string, Record<string, Achievement>> = {
       points: 40,
     },
     emailSender: {
-      id: 'email-sender',
+      id: AchievementId.emailSender,
       title: 'Email Sender',
-      description:
-        "You've opened your email client. Let's start a conversation!",
+      description: "I'm excited to hear from you!",
       icon: Mail,
       unlocked: false,
       category: 'interaction',
@@ -171,106 +208,83 @@ export const achievements: Record<string, Record<string, Achievement>> = {
       points: 25,
     },
     projectExplorer: {
-      id: 'project-explorer',
+      id: AchievementId.projectExplorer,
       title: 'Project Explorer',
       description:
-        "You've viewed multiple projects. I hope you like what you see!",
+        'Thanks for checking out my side projects. I hope you like what you see!',
       icon: Eye,
       unlocked: false,
       category: 'interaction',
       rarity: 'rare',
-      unlockCondition: 'View 3 different projects',
+      unlockCondition: 'Clicked 4 different project links',
       points: 75,
     },
-    phoneFlicker: {
-      id: 'phone-flicker',
-      title: 'Phone Flicker',
-      description:
-        "You've discovered the interactive phone stack! Physics is fun, isn't it?",
-      icon: Smartphone,
-      unlocked: false,
-      category: 'interaction',
-      rarity: 'common',
-      unlockCondition: 'Flick a phone in the interactive stack',
-      points: 30,
-    },
+
     phoneMaster: {
-      id: 'phone-master',
+      id: AchievementId.phoneMaster,
       title: 'Phone Master',
       description:
         "You've flicked all the phones! The stack reassembles just like magic.",
-      icon: Sparkles,
+      icon: Smartphone,
       unlocked: false,
       category: 'interaction',
       rarity: 'rare',
-      unlockCondition: 'Flick all phones in the stack',
+      unlockCondition: 'Flick all phones in the interactive stack',
       points: 80,
-    },
-    physicsTinkerer: {
-      id: 'physics-tinkerer',
-      title: 'Physics Tinkerer',
-      description:
-        "You've adjusted the phone stack settings. Experimentation leads to discovery!",
-      icon: Settings,
-      unlocked: false,
-      category: 'interaction',
-      rarity: 'rare',
-      unlockCondition: 'Adjust both flick speed and spin degrees',
-      points: 60,
     },
   },
   exploration: {
     techExplorer: {
-      id: 'tech-explorer',
+      id: AchievementId.techExplorer,
       title: 'Tech Explorer',
       description:
-        "You've explored the technology section. Knowledge is power!",
+        "You've explored the technology section. There's so much to discover!",
       icon: Code2,
       unlocked: false,
       category: 'exploration',
       rarity: 'common',
-      unlockCondition: 'Read through the technology information',
-      points: 35,
+      unlockCondition: 'Navigate to the tech section',
+      points: 20,
     },
     techSearcher: {
-      id: 'tech-searcher',
+      id: AchievementId.techSearcher,
       title: 'Tech Searcher',
       description:
-        "You've searched for specific technologies. Looking for something particular?",
+        "You've used the search functionality. Finding what you need is important!",
       icon: Search,
       unlocked: false,
       category: 'exploration',
-      rarity: 'rare',
-      unlockCondition: 'Search for a technology in the tech grid',
-      points: 45,
+      rarity: 'common',
+      unlockCondition: 'Use the search feature',
+      points: 25,
     },
     techFilterer: {
-      id: 'tech-filterer',
+      id: AchievementId.techFilterer,
       title: 'Tech Filterer',
-      description: "You've filtered the technology grid. Organization is key!",
+      description: "You've filtered the technology list. Organization is key!",
       icon: Target,
       unlocked: false,
       category: 'exploration',
-      rarity: 'rare',
-      unlockCondition: 'Use filters in the technology section',
-      points: 55,
+      rarity: 'common',
+      unlockCondition: 'Use the filter functionality',
+      points: 25,
     },
     hoverExplorer: {
-      id: 'hover-explorer',
+      id: AchievementId.hoverExplorer,
       title: 'Hover Explorer',
       description:
-        "You've hovered over many interactive elements. Attention to detail!",
+        "You've discovered hover effects throughout the site. Attention to detail!",
       icon: MousePointer,
       unlocked: false,
       category: 'exploration',
       rarity: 'rare',
       unlockCondition: 'Hover over 10 different interactive elements',
-      points: 80,
+      points: 50,
     },
   },
   social: {
     socialButterfly: {
-      id: 'social-butterfly',
+      id: AchievementId.socialButterfly,
       title: 'Social Butterfly',
       description:
         "You've clicked on all social links. Networking is everything!",
@@ -282,7 +296,7 @@ export const achievements: Record<string, Record<string, Achievement>> = {
       points: 90,
     },
     networker: {
-      id: 'networker',
+      id: AchievementId.networker,
       title: 'Networker',
       description:
         "You've connected on LinkedIn. Let's grow our professional network!",
@@ -294,7 +308,7 @@ export const achievements: Record<string, Record<string, Achievement>> = {
       points: 45,
     },
     codeExplorer: {
-      id: 'code-explorer',
+      id: AchievementId.codeExplorer,
       title: 'Code Explorer',
       description:
         "You've visited the GitHub repository. The code is open for exploration!",
@@ -308,7 +322,7 @@ export const achievements: Record<string, Record<string, Achievement>> = {
   },
   mastery: {
     detailSeeker: {
-      id: 'detail-seeker',
+      id: AchievementId.detailSeeker,
       title: 'Detail Seeker',
       description:
         "You've found hidden elements! Your attention to detail is impressive.",
@@ -321,7 +335,7 @@ export const achievements: Record<string, Record<string, Achievement>> = {
       secret: true,
     },
     completionist: {
-      id: 'completionist',
+      id: AchievementId.completionist,
       title: 'Completionist',
       description:
         "You've unlocked all achievements! You're a true portfolio master.",
@@ -333,7 +347,7 @@ export const achievements: Record<string, Record<string, Achievement>> = {
       points: 500,
     },
     deepDiver: {
-      id: 'deep-diver',
+      id: AchievementId.deepDiver,
       title: 'Deep Diver',
       description:
         "You've spent significant time exploring. I appreciate your thoroughness!",
@@ -347,7 +361,7 @@ export const achievements: Record<string, Record<string, Achievement>> = {
   },
   easterEggs: {
     coffeeBreak: {
-      id: 'coffee-break',
+      id: AchievementId.coffeeBreak,
       title: 'Coffee Break',
       description:
         'You found the coffee easter egg! ☕ Sometimes the best code is written with a good cup of coffee.',
@@ -360,7 +374,7 @@ export const achievements: Record<string, Record<string, Achievement>> = {
       secret: true,
     },
     gamerSpirit: {
-      id: 'gamer-spirit',
+      id: AchievementId.gamerSpirit,
       title: 'Gamer Spirit',
       description:
         'You discovered the gaming easter egg! 🎮 Because coding and gaming go hand in hand.',
@@ -373,7 +387,7 @@ export const achievements: Record<string, Record<string, Achievement>> = {
       secret: true,
     },
     heartFinder: {
-      id: 'heart-finder',
+      id: AchievementId.heartFinder,
       title: 'Heart Finder',
       description:
         'You found the heart easter egg! ❤️ Because passion drives great code.',
@@ -386,7 +400,7 @@ export const achievements: Record<string, Record<string, Achievement>> = {
       secret: true,
     },
     lightbulbMoment: {
-      id: 'lightbulb-moment',
+      id: AchievementId.lightbulbMoment,
       title: 'Lightbulb Moment',
       description:
         'You found the idea easter egg! 💡 Innovation starts with a single spark.',
@@ -399,7 +413,7 @@ export const achievements: Record<string, Record<string, Achievement>> = {
       secret: true,
     },
     rocketLauncher: {
-      id: 'rocket-launcher',
+      id: AchievementId.rocketLauncher,
       title: 'Rocket Launcher',
       description:
         'You found the rocket easter egg! 🚀 Ready to launch your next project?',

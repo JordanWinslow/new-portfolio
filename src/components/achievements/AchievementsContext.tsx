@@ -1,5 +1,5 @@
 import { createContext, type ReactNode, useContext } from 'react'
-import type { Achievement } from '@/assets/data/achievements'
+import type { Achievement, AchievementIdType } from '@/assets/data/achievements'
 import { useAchievementsLogic } from './useAchievementsLogic'
 
 interface AchievementsContextType {
@@ -7,7 +7,7 @@ interface AchievementsContextType {
   unlockedCount: number
   totalPoints: number
   newAchievementsVisible: number
-  unlockAchievement: (id: string) => void
+  unlockAchievement: (id: AchievementIdType) => void
   markAchievementsAsViewed: () => void
 }
 

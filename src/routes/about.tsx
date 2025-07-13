@@ -1,13 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { motion } from 'framer-motion'
 import { useEffect, useMemo, useRef } from 'react'
-import { techItems } from '@/assets/data/techItems'
+import { AchievementId } from '@/assets/data/achievements'
 import { AboutHero } from '@/components/about/AboutHero'
-import { AboutTechFilters } from '@/components/about/AboutTechFilters'
 import { BackgroundJourney } from '@/components/about/BackgroundJourney'
 import { LeadershipValues } from '@/components/about/LeadershipValues'
 import { PersonalInterests } from '@/components/about/PersonalInterests'
 import { useAchievements } from '@/components/achievements/AchievementsContext'
+import { TechGridSection } from '@/components/techgrid/TechGridSection'
 
 export const Route = createFileRoute('/about')({
   component: About,
@@ -18,7 +18,7 @@ function About() {
   const techSectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    unlockAchievement('about-discoverer')
+    unlockAchievement(AchievementId.aboutDiscoverer)
   }, [unlockAchievement])
 
   return (
@@ -36,23 +36,8 @@ function About() {
           <LeadershipValues />
         </div>
 
-        <section
-          id="tech-section"
-          ref={techSectionRef}
-          className="space-y-8 mt-20"
-        >
-          <div className="text-center">
-            <h2 className="font-mohave text-3xl lg:text-4xl font-bold text-white mb-6">
-              Technology Expertise
-            </h2>
-            <p className="text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed">
-              Below is a component I made to help you identify whether or not I
-              am familiar with the particular technologies you use. Feel free to
-              search for a specific technology or sort the grid with the
-              filters.
-            </p>
-          </div>
-          <AboutTechFilters allTechnologies={techItems} />
+        <section id="tech-section" ref={techSectionRef} className="mt-20">
+          <TechGridSection />
         </section>
       </div>
     </div>

@@ -13,9 +13,11 @@ export const ProjectCard = ({
   demoLink,
   videoLink,
   onVideoClick,
+  onLinkClick,
 }: IPortfolioItem & {
   variant: 'hoverToDisplay' | 'alwaysDisplay'
   onVideoClick?: (videoUrl: string, title: string) => void
+  onLinkClick?: (link: string) => void
 }) => {
   // Not enough room to display title, description and tech badges under 500px so I have decided to hide the
   // tech badges under 500px as this was the simplest solution.
@@ -72,7 +74,12 @@ export const ProjectCard = ({
           )}
           <div className="flex gap-3">
             {githubLink && (
-              <a href={githubLink} target="_blank" rel="noopener noreferrer">
+              <a
+                href={githubLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => onLinkClick?.(githubLink)}
+              >
                 <Button variant="secondary" Icon={<Github size={14} />}>
                   CODE
                 </Button>
@@ -82,13 +89,21 @@ export const ProjectCard = ({
               <Button
                 variant="secondary"
                 Icon={<Play size={14} />}
-                onClick={() => onVideoClick(videoLink, title)}
+                onClick={() => {
+                  onVideoClick(videoLink, title)
+                  onLinkClick?.(videoLink)
+                }}
               >
                 VIDEO
               </Button>
             )}
             {demoLink && !videoLink && (
-              <a href={demoLink} target="_blank" rel="noopener noreferrer">
+              <a
+                href={demoLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => onLinkClick?.(demoLink)}
+              >
                 <Button variant="secondary" Icon={<ArrowUpRight size={14} />}>
                   DEMO
                 </Button>

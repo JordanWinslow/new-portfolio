@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { motion } from 'framer-motion'
 import { ArrowDown } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
+import { AchievementId } from '@/assets/data/achievements'
 import { useAchievements } from '@/components/achievements/AchievementsContext'
 import { CallToAction } from '@/components/contact/CallToAction'
 import { BackgroundDecorations } from '@/components/decorative/BackgroundDecorations'
@@ -10,6 +11,7 @@ import type { LayoutType } from '@/components/portfolio/LayoutType'
 import PhoneStackShowcase from '@/components/portfolio/PhoneStackShowcase'
 import { PortfolioGrid } from '@/components/portfolio/PortfolioGrid'
 import { PortfolioLayoutControls } from '@/components/portfolio/PortfolioLayoutControls'
+import { TechGridSection } from '@/components/techgrid/TechGridSection'
 import { useIntersectionObserver, useScrollToRef } from '@/lib/utils'
 
 export const Route = createFileRoute('/portfolio')({
@@ -25,11 +27,12 @@ function Portfolio() {
   const portfolioRef = useRef<HTMLDivElement>(null)
   const featuredWorkRef = useRef<HTMLElement>(null)
   const starfieldRef = useRef<HTMLDivElement>(null)
+  const bottomRef = useRef<HTMLElement>(null)
 
   const scrollToRef = useScrollToRef()
 
   useEffect(() => {
-    unlockAchievement('portfolio-explorer')
+    unlockAchievement(AchievementId.portfolioExplorer)
   }, [unlockAchievement])
 
   const isPortfolioVisible = useIntersectionObserver(portfolioRef, {
@@ -47,21 +50,31 @@ function Portfolio() {
     rootMargin: '-500px 0px 0px 0px',
   })
 
+  const isBottomVisible = useIntersectionObserver(bottomRef, {
+    threshold: 0,
+    rootMargin: '0px 0px -100px 0px',
+  })
+
+  if (isBottomVisible) {
+    unlockAchievement(AchievementId.scrollMaster)
+  }
+
   const shouldShowScrollButton = isFeaturedWorkVisible || isStarfieldVisible
 
   const handleLayoutChange = (updatedLayout: LayoutType) => {
     setLayout(updatedLayout)
+    // For achievements
     setUsedLayouts((prev) => {
       const newUsed = new Set(prev)
       newUsed.add(updatedLayout)
 
-      // Check if all layouts have been used
-      if (newUsed.size >= 3) {
-        unlockAchievement('layout-explorer')
+      if (newUsed.size >= 4) {
+        unlockAchievement(AchievementId.layoutExplorer)
       }
 
       return newUsed
     })
+
     scrollToRef(portfolioRef)
   }
 
@@ -197,7 +210,19 @@ function Portfolio() {
         <PhoneStackShowcase />
       </section>
 
-      <section className="px-6 py-16 relative z-10">
+      <section className="my-40">
+        <div className="px-6 py-16 relative z-10">
+          <div className="max-w-6xl mx-auto">
+            <TechGridSection
+              title="Technologies I Work With"
+              description="Here are the technologies I'm proficient in. Feel free to explore and filter by category or experience level."
+              interactive={true}
+            />
+          </div>
+        </div>
+      </section>
+
+      <section ref={bottomRef} className="px-6 py-16 relative z-10">
         <div className="max-w-6xl mx-auto">
           <CallToAction
             title="Ready to Start Your Next Project?"

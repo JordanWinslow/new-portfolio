@@ -43,7 +43,9 @@ export function showAchievementNotification(achievement: Achievement) {
           +{achievement.points} points
         </div>
       </div>
-      <div className="text-2xl">{rarityIcons[achievement.rarity]}</div>
+      <div className="text-2xl animate-pulse">
+        {rarityIcons[achievement.rarity]}
+      </div>
     </div>,
     {
       duration: 4000,
