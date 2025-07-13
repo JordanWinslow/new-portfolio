@@ -226,14 +226,14 @@ const TechGridComponent = ({
 
   // Add categoryIcons and experienceIcons
   const categoryIcons = {
-    Frontend: Layers,
-    Backend: Layers,
-    DevOps: Layers,
-    Design: Layers,
-    Database: Layers,
-    Cloud: Layers,
+    Frontend: Globe,
+    Backend: Shield,
+    DevOps: Zap,
+    Design: Palette,
+    Database: Database,
+    Cloud: Cloud,
     Tools: Layers,
-    Languages: Layers,
+    Languages: Code2,
   }
   const experienceIcons = {
     expert: Star,
@@ -527,16 +527,34 @@ const TechGridComponent = ({
                       return (
                         <label
                           key={category}
-                          className="flex items-center gap-2 cursor-pointer group"
+                          className="flex items-center gap-3 cursor-pointer group p-2 rounded-lg hover:bg-white/5 transition-all duration-200"
                         >
-                          <input
-                            type="checkbox"
-                            checked={selectedCategories.has(category)}
-                            onChange={() => handleCategoryToggle(category)}
-                            className="w-4 h-4 rounded border-white/20 bg-white/10 text-purple-500 focus:ring-purple-500 focus:ring-offset-0"
-                          />
-                          <IconComponent className="w-4 h-4 text-white/60 group-hover:text-white" />
-                          <span className="text-sm text-white/80 group-hover:text-white">
+                          <div className="relative">
+                            <input
+                              type="checkbox"
+                              checked={selectedCategories.has(category)}
+                              onChange={() => handleCategoryToggle(category)}
+                              className="sr-only"
+                            />
+                            <div
+                              className={`w-5 h-5 rounded-md border-2 transition-all duration-200 flex items-center justify-center ${
+                                selectedCategories.has(category)
+                                  ? 'border-pink-400 bg-pink-400/20'
+                                  : 'border-white/30 bg-white/5 group-hover:border-white/50'
+                              }`}
+                            >
+                              {selectedCategories.has(category) && (
+                                <motion.div
+                                  initial={{ scale: 0, opacity: 0 }}
+                                  animate={{ scale: 1, opacity: 1 }}
+                                  transition={{ duration: 0.2 }}
+                                  className="w-2 h-2 bg-pink-300 rounded-sm"
+                                />
+                              )}
+                            </div>
+                          </div>
+                          <IconComponent className="w-4 h-4 text-white/60 group-hover:text-white transition-colors duration-200" />
+                          <span className="text-sm text-white/80 group-hover:text-white transition-colors duration-200 font-medium">
                             {category}
                           </span>
                         </label>
@@ -559,16 +577,36 @@ const TechGridComponent = ({
                       return (
                         <label
                           key={experience}
-                          className="flex items-center gap-2 cursor-pointer group"
+                          className="flex items-center gap-3 cursor-pointer group p-2 rounded-lg hover:bg-white/5 transition-all duration-200"
                         >
-                          <input
-                            type="checkbox"
-                            checked={selectedExperiences.has(experience)}
-                            onChange={() => handleExperienceToggle(experience)}
-                            className="w-4 h-4 rounded border-white/20 bg-white/10 text-purple-500 focus:ring-purple-500 focus:ring-offset-0"
-                          />
-                          <IconComponent className="w-4 h-4 text-white/60 group-hover:text-white" />
-                          <span className="text-sm text-white/80 group-hover:text-white capitalize">
+                          <div className="relative">
+                            <input
+                              type="checkbox"
+                              checked={selectedExperiences.has(experience)}
+                              onChange={() =>
+                                handleExperienceToggle(experience)
+                              }
+                              className="sr-only"
+                            />
+                            <div
+                              className={`w-5 h-5 rounded-md border-2 transition-all duration-200 flex items-center justify-center ${
+                                selectedExperiences.has(experience)
+                                  ? 'border-pink-400 bg-pink-400/20'
+                                  : 'border-white/30 bg-white/5 group-hover:border-white/50'
+                              }`}
+                            >
+                              {selectedExperiences.has(experience) && (
+                                <motion.div
+                                  initial={{ scale: 0, opacity: 0 }}
+                                  animate={{ scale: 1, opacity: 1 }}
+                                  transition={{ duration: 0.2 }}
+                                  className="w-2 h-2 bg-pink-300 rounded-sm"
+                                />
+                              )}
+                            </div>
+                          </div>
+                          <IconComponent className="w-4 h-4 text-white/60 group-hover:text-white transition-colors duration-200" />
+                          <span className="text-sm text-white/80 group-hover:text-white transition-colors duration-200 font-medium capitalize">
                             {experience}
                           </span>
                         </label>
