@@ -1,8 +1,7 @@
 import { jsxs, jsx } from 'react/jsx-runtime';
-import InteractiveBackground from '@splinetool/react-spline';
 import { Code2 } from 'lucide-react';
-import { useEffect } from 'react';
-import { u as useAchievements, A as AchievementId, F as Fade, I as InternalLink } from './ssr.mjs';
+import { useEffect, Suspense, lazy } from 'react';
+import { u as useAchievements, A as AchievementId, F as Fade, c as cn, I as InternalLink } from './ssr.mjs';
 import '@tanstack/react-router';
 import 'sonner';
 import 'clsx';
@@ -19,6 +18,68 @@ import 'node:async_hooks';
 import 'tiny-invariant';
 import '@tanstack/react-router/ssr/server';
 
+function LoadingSpinner({
+  className,
+  size = "md"
+}) {
+  const sizeClasses = {
+    sm: "w-6 h-6",
+    md: "w-12 h-12",
+    lg: "w-16 h-16"
+  };
+  return /* @__PURE__ */ jsx("div", { className: cn("flex items-center justify-center", className), children: /* @__PURE__ */ jsxs("div", { className: cn("relative", sizeClasses[size]), children: [
+    /* @__PURE__ */ jsx(
+      "div",
+      {
+        className: cn(
+          "absolute inset-0 rounded-full border-2 border-white/20",
+          "animate-pulse",
+          sizeClasses[size]
+        )
+      }
+    ),
+    /* @__PURE__ */ jsx(
+      "div",
+      {
+        className: cn(
+          "absolute inset-1 rounded-full border-2 border-transparent",
+          "border-t-white border-r-white/60",
+          "animate-spin",
+          sizeClasses[size]
+        ),
+        style: {
+          animationDuration: "1.5s"
+        }
+      }
+    ),
+    /* @__PURE__ */ jsx(
+      "div",
+      {
+        className: cn(
+          "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+          "w-1 h-1 bg-white rounded-full",
+          "animate-pulse",
+          size === "lg" ? "w-2 h-2" : size === "sm" ? "w-0.5 h-0.5" : "w-1 h-1"
+        )
+      }
+    ),
+    /* @__PURE__ */ jsx(
+      "div",
+      {
+        className: cn(
+          "absolute inset-0 rounded-full",
+          "bg-white/10 blur-sm",
+          "animate-pulse",
+          sizeClasses[size]
+        ),
+        style: {
+          animationDuration: "2s"
+        }
+      }
+    )
+  ] }) });
+}
+const InteractiveBackground = lazy(() => import('@splinetool/react-spline'));
 const PortfolioButton = () => /* @__PURE__ */ jsx("div", { className: "fixed inset-0 flex items-center justify-center z-20 w-full h-screen pointer-events-none", children: /* @__PURE__ */ jsxs("div", { className: "relative flex items-center justify-center pulse-fade-group", children: [
   /* @__PURE__ */ jsx("div", { className: "absolute w-40 h-40 rounded-full bg-white opacity-40 blur-3xl z-10" }),
   /* @__PURE__ */ jsx(InternalLink, { to: "/portfolio", className: "cursor-pointer pointer-events-auto w-20 h-20 flex items-center justify-center rounded-full border-2 border-white/90 bg-black/80 shadow-2xl transition-all duration-300 focus:outline-none z-20", "aria-label": "View Portfolio", children: /* @__PURE__ */ jsx(Code2, { className: "text-white w-10 h-10 drop-shadow-lg transition duration-200" }) })
@@ -57,11 +118,11 @@ const SplitComponent = function Home() {
     return () => clearTimeout(timer);
   }, [unlockAchievement]);
   return /* @__PURE__ */ jsxs("div", { className: "relative w-full h-screen overflow-hidden bg-black font-mohave", children: [
-    /* @__PURE__ */ jsx("div", { className: "absolute inset-0 w-full h-full z-0 flex items-center justify-center", children: /* @__PURE__ */ jsx(InteractiveBackground, { scene: "./src/assets/spline/home-animation.splinecode" }) }),
+    /* @__PURE__ */ jsx("div", { className: "absolute inset-0 w-full h-full z-0 flex items-center justify-center", children: /* @__PURE__ */ jsx(Suspense, { fallback: /* @__PURE__ */ jsx("div", { className: "flex items-center justify-center w-full h-full", children: /* @__PURE__ */ jsx(LoadingSpinner, { size: "lg", className: "text-white" }) }), children: /* @__PURE__ */ jsx(InteractiveBackground, { scene: "./src/assets/spline/home-animation.splinecode" }) }) }),
     /* @__PURE__ */ jsx(PageLayout, {}),
     /* @__PURE__ */ jsx(Fade, { fadeInDelay: 3e3, fadeInDuration: 3e3, children: /* @__PURE__ */ jsx(PortfolioButton, {}) })
   ] });
 };
 
 export { SplitComponent as component };
-//# sourceMappingURL=index-CX14zZeZ.mjs.map
+//# sourceMappingURL=index-VQg3fOYM.mjs.map

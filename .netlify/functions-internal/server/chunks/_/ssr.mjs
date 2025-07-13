@@ -614,7 +614,7 @@ async function loadVirtualModule(id) {
     case VIRTUAL_MODULES.routeTree:
       return await Promise.resolve().then(() => routeTree_gen);
     case VIRTUAL_MODULES.startManifest:
-      return await import('./_tanstack-start-manifest_v-CNANtqts.mjs');
+      return await import('./_tanstack-start-manifest_v-Iv6HalOf.mjs');
     case VIRTUAL_MODULES.serverFnManifest:
       return await import('./_tanstack-start-server-fn-manifest_v-DtgTK7xl.mjs');
     default:
@@ -1423,8 +1423,11 @@ function useAchievementsLogic() {
   );
   const [isInitialized, setIsInitialized] = useState(false);
   const [newAchievementsVisible, setNewAchievementsVisible] = useState(0);
-  const [explorationTime, setExplorationTime] = useState(0);
   const intervalRef = useRef(null);
+  const explorationTimeRef = useRef(0);
+  const unlockAchievementRef = useRef(
+    null
+  );
   const checkComplexAchievements = useCallback(
     (currentAchievements) => {
       const achievementsToUnlock = [];
@@ -1533,10 +1536,19 @@ function useAchievementsLogic() {
   useEffect(() => {
     if (!isInitialized) return;
     intervalRef.current = setInterval(() => {
-      setExplorationTime((prevTime) => {
-        const newTime = prevTime + 1;
-        return newTime;
-      });
+      explorationTimeRef.current += 1;
+      if (explorationTimeRef.current >= 300) {
+        const deepDiverAchievement = achievements2[AchievementId.deepDiver];
+        if (deepDiverAchievement && !deepDiverAchievement.unlocked) {
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+          }
+          setTimeout(() => {
+            unlockAchievementRef.current?.(AchievementId.deepDiver);
+          }, 0);
+        }
+      }
     }, 1e3);
     return () => {
       if (intervalRef.current) {
@@ -1544,7 +1556,7 @@ function useAchievementsLogic() {
         intervalRef.current = null;
       }
     };
-  }, [isInitialized]);
+  }, [isInitialized, achievements2]);
   const unlockAchievement = useCallback(
     (id) => {
       setAchievements((prev) => {
@@ -1594,13 +1606,8 @@ function useAchievementsLogic() {
     [checkComplexAchievements]
   );
   useEffect(() => {
-    if (explorationTime >= 300 && isInitialized) {
-      const deepDiverAchievement = achievements2[AchievementId.deepDiver];
-      if (deepDiverAchievement && !deepDiverAchievement.unlocked) {
-        unlockAchievement(AchievementId.deepDiver);
-      }
-    }
-  }, [explorationTime, achievements2, isInitialized, unlockAchievement]);
+    unlockAchievementRef.current = unlockAchievement;
+  }, [unlockAchievement]);
   const markAchievementsAsViewed = useCallback(() => {
     setNewAchievementsVisible(0);
   }, []);
@@ -2457,7 +2464,7 @@ const Toaster = ({ ...props }) => {
     }
   );
 };
-const appCss = "/assets/app-DzfrXeLG.css";
+const appCss = "/assets/app-Ciwks2HL.css";
 const Route$5 = createRootRoute({
   head: () => ({
     meta: [{
@@ -2506,19 +2513,19 @@ const $$splitComponentImporter$4 = () => import('./resume-CoHoTcm2.mjs');
 const Route$4 = createFileRoute("/resume")({
   component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
-const $$splitComponentImporter$3 = () => import('./portfolio-CuW7XWBc.mjs');
+const $$splitComponentImporter$3 = () => import('./portfolio-BhS_-CMV.mjs');
 const Route$3 = createFileRoute("/portfolio")({
   component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
-const $$splitComponentImporter$2 = () => import('./contact-DuGr1qgi.mjs');
+const $$splitComponentImporter$2 = () => import('./contact-Cq54nbdN.mjs');
 const Route$2 = createFileRoute("/contact")({
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import('./about-CU75TaoN.mjs');
+const $$splitComponentImporter$1 = () => import('./about-CRxFh5r6.mjs');
 const Route$1 = createFileRoute("/about")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import('./index-CX14zZeZ.mjs');
+const $$splitComponentImporter = () => import('./index-VQg3fOYM.mjs');
 const Route = createFileRoute("/")({
   component: lazyRouteComponent($$splitComponentImporter, "component")
 });
@@ -2574,5 +2581,5 @@ const serverEntry = defineEventHandler(function(event) {
   return serverEntry$1({ request });
 });
 
-export { AchievementId as A, Button as B, Dialog as D, Fade as F, InternalLink as I, DialogContent as a, useResizeObserver as b, cn as c, useScrollToRef as d, serverEntry as default, useIntersectionObserver as e, Badge as f, useAchievements as u };
+export { AchievementId as A, Button as B, Dialog as D, Fade as F, InternalLink as I, useResizeObserver as a, useScrollToRef as b, cn as c, useIntersectionObserver as d, serverEntry as default, DialogContent as e, Badge as f, useAchievements as u };
 //# sourceMappingURL=ssr.mjs.map

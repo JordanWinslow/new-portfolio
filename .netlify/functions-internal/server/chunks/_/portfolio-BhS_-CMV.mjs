@@ -2,9 +2,9 @@ import { jsxs, jsx, Fragment } from 'react/jsx-runtime';
 import { motion } from 'framer-motion';
 import { ArrowDown, Grid3x2, Columns, List, Sheet, Code2, Play, ArrowUpRight, Github, ChevronDownIcon } from 'lucide-react';
 import * as React__default from 'react';
-import { useState, useRef, useEffect, useCallback } from 'react';
-import { u as useAchievements, d as useScrollToRef, A as AchievementId, e as useIntersectionObserver, b as useResizeObserver, B as Button, c as cn } from './ssr.mjs';
-import { C as CallToAction } from './CallToAction-DcIkmcV8.mjs';
+import { useState, useRef, useEffect, Suspense, lazy, useCallback } from 'react';
+import { u as useAchievements, b as useScrollToRef, A as AchievementId, d as useIntersectionObserver, a as useResizeObserver, B as Button, c as cn } from './ssr.mjs';
+import { C as CallToAction } from './CallToAction-DHajRL1y.mjs';
 import * as SliderPrimitive from '@radix-ui/react-slider';
 import { useSprings, animated, to } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
@@ -26,7 +26,6 @@ import '@tanstack/router-core/ssr/server';
 import 'node:async_hooks';
 import 'tiny-invariant';
 import '@tanstack/react-router/ssr/server';
-import '@emailjs/browser';
 import '@hookform/resolvers/zod';
 import 'react-hook-form';
 import 'zod';
@@ -1009,27 +1008,27 @@ const portfolioItems = [
   },
   {
     id: 4,
-    title: "3D Portfolio Visualizer",
-    description: "Three.js powered 3D visualization of projects and skills with interactive elements.",
-    image: "/placeholder.svg?height=400&width=600",
+    title: "Coming Soon",
+    description: "Coming soon",
+    image: pokeTeamImage,
     github: "https://github.com",
     demo: "https://demo.com",
     tech: ["Three.js", "WebGL", "React", "GSAP"]
   },
   {
     id: 5,
-    title: "Blockchain Explorer",
-    description: "Real-time blockchain data visualization and transaction tracking with advanced analytics.",
-    image: "/placeholder.svg?height=400&width=600",
+    title: "Coming Soon",
+    description: "Coming Soon",
+    image: containmentBreachImage,
     github: "https://github.com",
     demo: "https://demo.com",
     tech: ["Vue.js", "Web3.js", "Ethereum", "Chart.js"]
   },
   {
     id: 6,
-    title: "AR Product Viewer",
-    description: "Augmented reality application for interactive product visualization and virtual try-on.",
-    image: "/placeholder.svg?height=400&width=600",
+    title: "Coming Soon",
+    description: "Coming Soon",
+    image: ecosystemSimImage,
     github: "https://github.com",
     demo: "https://demo.com",
     tech: ["AR.js", "WebXR", "Three.js", "React"]
@@ -1088,36 +1087,6 @@ function AccordionContent({
       children: /* @__PURE__ */ jsx("div", { className: cn("pt-0 pb-4", className), children })
     }
   );
-}
-function VideoModal({
-  isOpen,
-  onClose,
-  videoUrl,
-  title
-}) {
-  useRef(null);
-  const getYouTubeVideoId = (url) => {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return (match == null ? void 0 : match[2]) && match[2].length === 11 ? match[2] : null;
-  };
-  getYouTubeVideoId(videoUrl);
-  useEffect(() => {
-    const handleEscape = (e) => {
-      if (e.key === "Escape" && isOpen) {
-        onClose();
-      }
-    };
-    if (isOpen) {
-      document.addEventListener("keydown", handleEscape);
-    }
-    return () => {
-      document.removeEventListener("keydown", handleEscape);
-    };
-  }, [isOpen, onClose]);
-  {
-    return null;
-  }
 }
 function ProjectAccordionItem({
   imageSrc,
@@ -1544,6 +1513,9 @@ function ProjectTableRow({
     /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-r from-purple-500/0 via-pink-500/0 to-orange-500/0 group-hover:from-purple-500/5 group-hover:via-pink-500/5 group-hover:to-orange-500/5 transition-all duration-300 pointer-events-none" })
   ] });
 }
+const VideoModal = lazy(
+  () => import('./VideoModal-DOfmeXm-.mjs').then((mod) => ({ default: mod.VideoModal }))
+);
 function PortfolioGrid({ layout }) {
   var _a;
   const { unlockAchievement } = useAchievements();
@@ -1615,7 +1587,7 @@ function PortfolioGrid({ layout }) {
           },
           item.id
         )) }),
-        /* @__PURE__ */ jsx(
+        /* @__PURE__ */ jsx(Suspense, { fallback: null, children: /* @__PURE__ */ jsx(
           VideoModal,
           {
             isOpen: videoModalState.isOpen,
@@ -1623,7 +1595,7 @@ function PortfolioGrid({ layout }) {
             videoUrl: videoModalState.videoUrl,
             title: videoModalState.title
           }
-        )
+        ) })
       ] });
     case "columns":
       return /* @__PURE__ */ jsxs(Fragment, { children: [
@@ -1643,7 +1615,7 @@ function PortfolioGrid({ layout }) {
           },
           item.id
         )) }),
-        /* @__PURE__ */ jsx(
+        /* @__PURE__ */ jsx(Suspense, { fallback: null, children: /* @__PURE__ */ jsx(
           VideoModal,
           {
             isOpen: videoModalState.isOpen,
@@ -1651,7 +1623,7 @@ function PortfolioGrid({ layout }) {
             videoUrl: videoModalState.videoUrl,
             title: videoModalState.title
           }
-        )
+        ) })
       ] });
     case "list":
       return /* @__PURE__ */ jsxs(Fragment, { children: [
@@ -1670,7 +1642,7 @@ function PortfolioGrid({ layout }) {
           },
           item.id
         )) }),
-        /* @__PURE__ */ jsx(
+        /* @__PURE__ */ jsx(Suspense, { fallback: null, children: /* @__PURE__ */ jsx(
           VideoModal,
           {
             isOpen: videoModalState.isOpen,
@@ -1678,7 +1650,7 @@ function PortfolioGrid({ layout }) {
             videoUrl: videoModalState.videoUrl,
             title: videoModalState.title
           }
-        )
+        ) })
       ] });
     case "table":
       return /* @__PURE__ */ jsxs(Fragment, { children: [
@@ -1731,7 +1703,7 @@ function PortfolioGrid({ layout }) {
             }
           ) })
         ] }),
-        /* @__PURE__ */ jsx(
+        /* @__PURE__ */ jsx(Suspense, { fallback: null, children: /* @__PURE__ */ jsx(
           VideoModal,
           {
             isOpen: videoModalState.isOpen,
@@ -1739,7 +1711,7 @@ function PortfolioGrid({ layout }) {
             videoUrl: videoModalState.videoUrl,
             title: videoModalState.title
           }
-        )
+        ) })
       ] });
     default:
       return /* @__PURE__ */ jsx("div", { children: "Error - Invalid layout type" });
@@ -1920,4 +1892,4 @@ const SplitComponent = function Portfolio() {
 };
 
 export { SplitComponent as component };
-//# sourceMappingURL=portfolio-CuW7XWBc.mjs.map
+//# sourceMappingURL=portfolio-BhS_-CMV.mjs.map

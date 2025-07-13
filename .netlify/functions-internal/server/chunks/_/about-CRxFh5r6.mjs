@@ -1,7 +1,7 @@
 import { jsxs, jsx } from 'react/jsx-runtime';
 import { motion } from 'framer-motion';
 import { useRef, useEffect, useMemo } from 'react';
-import { u as useAchievements, A as AchievementId, d as useScrollToRef } from './ssr.mjs';
+import { u as useAchievements, A as AchievementId, b as useScrollToRef } from './ssr.mjs';
 import { Sparkles, ChevronDown, BookOpen, Music, Gamepad2, Heart, Zap, Users } from 'lucide-react';
 import { T as TechGridSection } from './TechGridSection-DjT9rnVL.mjs';
 import '@tanstack/react-router';
@@ -387,4 +387,4 @@ const SplitComponent = function About() {
 };
 
 export { SplitComponent as component };
-//# sourceMappingURL=about-CU75TaoN.mjs.map
+//# sourceMappingURL=about-CRxFh5r6.mjs.map

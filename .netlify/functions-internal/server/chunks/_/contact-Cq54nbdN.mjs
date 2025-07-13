@@ -1,7 +1,7 @@
 import { jsxs, jsx } from 'react/jsx-runtime';
 import { useEffect, useMemo, useState } from 'react';
 import { u as useAchievements, A as AchievementId } from './ssr.mjs';
-import { C as CallToAction } from './CallToAction-DcIkmcV8.mjs';
+import { C as CallToAction } from './CallToAction-DHajRL1y.mjs';
 import { motion } from 'framer-motion';
 import { Mail, Github, Linkedin, Facebook, Twitter } from 'lucide-react';
 import '@tanstack/react-router';
@@ -19,7 +19,6 @@ import '@tanstack/router-core/ssr/server';
 import 'node:async_hooks';
 import 'tiny-invariant';
 import '@tanstack/react-router/ssr/server';
-import '@emailjs/browser';
 import '@hookform/resolvers/zod';
 import 'react-hook-form';
 import 'zod';
@@ -399,4 +398,4 @@ const SplitComponent = function Contact() {
 };
 
 export { SplitComponent as component };
-//# sourceMappingURL=contact-DuGr1qgi.mjs.map
+//# sourceMappingURL=contact-Cq54nbdN.mjs.map

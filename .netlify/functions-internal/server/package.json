@@ -4,7 +4,6 @@
   "type": "module",
   "private": true,
   "dependencies": {
-    "@emailjs/browser": "4.4.1",
     "@floating-ui/core": "1.7.2",
     "@floating-ui/dom": "1.7.2",
     "@floating-ui/react-dom": "2.1.4",
