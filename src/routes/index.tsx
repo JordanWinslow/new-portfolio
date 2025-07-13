@@ -34,7 +34,7 @@ function Home() {
             </div>
           }
         >
-          <InteractiveBackground scene="./src/assets/spline/home-animation.splinecode" />
+          <InteractiveBackground scene="/home-animation.splinecode" />
         </Suspense>
       </div>
 

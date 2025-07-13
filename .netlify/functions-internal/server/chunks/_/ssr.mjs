@@ -614,7 +614,7 @@ async function loadVirtualModule(id) {
     case VIRTUAL_MODULES.routeTree:
       return await Promise.resolve().then(() => routeTree_gen);
     case VIRTUAL_MODULES.startManifest:
-      return await import('./_tanstack-start-manifest_v-D5YoJrha.mjs');
+      return await import('./_tanstack-start-manifest_v-XNC5nChY.mjs');
     case VIRTUAL_MODULES.serverFnManifest:
       return await import('./_tanstack-start-server-fn-manifest_v-DtgTK7xl.mjs');
     default:
@@ -2464,7 +2464,7 @@ const Toaster = ({ ...props }) => {
     }
   );
 };
-const appCss = "/assets/app-BhNA6zF3.css";
+const appCss = "/assets/app-Ciwks2HL.css";
 const Route$5 = createRootRoute({
   head: () => ({
     meta: [{
@@ -2525,7 +2525,7 @@ const $$splitComponentImporter$1 = () => import('./about-CRxFh5r6.mjs');
 const Route$1 = createFileRoute("/about")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import('./index-VQg3fOYM.mjs');
+const $$splitComponentImporter = () => import('./index-Ba3sfM_f.mjs');
 const Route = createFileRoute("/")({
   component: lazyRouteComponent($$splitComponentImporter, "component")
 });
