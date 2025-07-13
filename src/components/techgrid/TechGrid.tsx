@@ -64,7 +64,7 @@ function useTechGridFilters() {
     new Set(),
   )
   const [showFilters, setShowFilters] = useState(false)
-  const [filterChangeCount, setFilterChangeCount] = useState(0)
+  const [_, setFilterChangeCount] = useState(0)
   const { unlockAchievement } = useAchievements()
 
   // Debounce search input
