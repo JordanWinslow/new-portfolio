@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { AchievementId } from '@/assets/data/achievements'
 import { useAchievements } from '@/components/achievements/AchievementsContext'
+import { InternalLink } from '@/components/navigation/InternalLink'
 import { Button } from '@/components/ui/Button'
 import { Dialog, DialogContent } from '@/components/ui/Dialog'
 import { Input } from '@/components/ui/Input'
@@ -524,7 +525,6 @@ export function CallToAction({
                   }}
                 />
 
-                {/* Content */}
                 <div className="relative z-10 flex items-center">
                   <Send className="w-5 h-5 mr-3" />
                   {primaryButtonText}
@@ -532,26 +532,29 @@ export function CallToAction({
               </motion.button>
 
               {secondaryButtonHref && (
-                <motion.a
-                  href={secondaryButtonHref}
-                  className="relative overflow-hidden bg-black/20 backdrop-blur-md border-2 border-transparent text-white font-mohave font-semibold text-lg px-8 py-3 rounded-xl uppercase tracking-wide inline-flex items-center justify-center transition-all duration-0 min-w-[200px] cursor-pointer"
-                  style={{
-                    background:
-                      'linear-gradient(var(--background), var(--background)) padding-box, linear-gradient(135deg, #8b5cf6, #ec4899, #f59e0b, #10b981) border-box',
-                  }}
+                <motion.div
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <svg
-                    className="w-5 h-5 mr-3 text-white"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
+                  <InternalLink
+                    to={secondaryButtonHref}
+                    className="relative overflow-hidden bg-black/20 backdrop-blur-md border-2 border-transparent text-white font-mohave font-semibold text-lg px-8 py-3 rounded-xl uppercase tracking-wide inline-flex items-center justify-center transition-all duration-0 min-w-[200px] cursor-pointer"
+                    style={{
+                      background:
+                        'linear-gradient(var(--background), var(--background)) padding-box, linear-gradient(135deg, #8b5cf6, #ec4899, #f59e0b, #10b981) border-box',
+                    }}
                   >
-                    <title>About me</title>
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                  </svg>
-                  {secondaryButtonText}
-                </motion.a>
+                    <svg
+                      className="w-5 h-5 mr-3 text-white"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <title>About me</title>
+                      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                    </svg>
+                    {secondaryButtonText}
+                  </InternalLink>
+                </motion.div>
               )}
             </motion.div>
           </div>

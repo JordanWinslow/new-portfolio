@@ -1,7 +1,15 @@
 import { motion } from 'framer-motion'
 import { Gamepad2, Heart, Zap } from 'lucide-react'
+import { AchievementId } from '@/assets/data/achievements'
+import { useAchievements } from '@/components/achievements/AchievementsContext'
 
 export function PersonalInterests() {
+  const { unlockAchievement } = useAchievements()
+
+  const handleHeartClick = () => {
+    unlockAchievement(AchievementId.heartFinder)
+  }
+
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
@@ -45,7 +53,14 @@ export function PersonalInterests() {
           className="group p-6 rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm hover:border-white/20 transition-all duration-300"
         >
           <div className="flex items-center gap-3 mb-3">
-            <Heart className="w-6 h-6 text-green-400" />
+            <button
+              type="button"
+              onClick={handleHeartClick}
+              className="bg-transparent border-none p-0 cursor-pointer hover:scale-110 transition-transform duration-200"
+              aria-label="Heart easter egg"
+            >
+              <Heart className="w-6 h-6 text-green-400" />
+            </button>
             <h3 className="font-semibold text-white">Nature & Adventure</h3>
           </div>
           <p className="text-gray-300 text-sm leading-relaxed">

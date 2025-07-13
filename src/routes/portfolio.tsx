@@ -114,13 +114,15 @@ function Portfolio() {
             className="space-y-4"
           >
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              This application and all components therein was coded from scratch
-              in July 2025 to showcase emerging Frontend technology and
-              demonstrate my expertise. You can view the code{' '}
+              This application, it's design, and all components herein were
+              created from scratch in 5 days in July 2025 to showcase emerging
+              Frontend technologies and demonstrate my expertise. You can view
+              the code{' '}
               <motion.a
                 href="https://github.com/JordanWinslow/new-portfolio"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => unlockAchievement(AchievementId.codeExplorer)}
                 className="text-orange-400 hover:text-orange-300 transition-colors underline decoration-orange-400/30 hover:decoration-orange-300/50"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.2 }}
@@ -130,8 +132,8 @@ function Portfolio() {
             </p>
 
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              Below, you can see 6 projects I have worked on and see demos or
-              view source code. There are also easter eggs hidden in this
+              Below, you can see 6 side-projects I have worked on and see demos
+              or view source code. There are also easter eggs hidden in this
               application that you can unlock by experimenting with the UI!
             </p>
 

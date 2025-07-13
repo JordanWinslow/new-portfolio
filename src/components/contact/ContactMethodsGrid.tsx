@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Facebook, Github, Linkedin, Mail, Twitter } from 'lucide-react'
+import { useState } from 'react'
 import { AchievementId } from '@/assets/data/achievements'
 import { useAchievements } from '@/components/achievements/AchievementsContext'
 
@@ -26,21 +27,40 @@ const contactMethods = [
     title: 'Facebook',
     description: 'Connect socially',
     icon: Facebook,
-    href: 'https://facebook.com/jordanwinslow',
+    href: 'https://www.facebook.com/profile.php?id=61573754030578',
   },
   {
     title: 'Twitter',
     description: 'Follow for updates',
     icon: Twitter,
-    href: 'https://twitter.com/jordanwinslow',
+    href: 'https://x.com/LiminalFDN',
   },
 ]
 
 export function ContactMethodsGrid() {
   const { unlockAchievement } = useAchievements()
+  const [clickedSocialLinks, setClickedSocialLinks] = useState<Set<string>>(
+    new Set(),
+  )
 
   const handleEmailClick = () => {
     unlockAchievement(AchievementId.emailSender)
+  }
+
+  const handleSocialLinkClick = (title: string) => {
+    if (title === 'Email') return // Skip email as it's handled separately
+
+    setClickedSocialLinks((prev) => {
+      const newSet = new Set(prev)
+      newSet.add(title)
+
+      // Unlock socialButterfly achievement when 3 unique social links are clicked
+      if (newSet.size >= 3) {
+        unlockAchievement(AchievementId.socialButterfly)
+      }
+
+      return newSet
+    })
   }
 
   return (
@@ -66,7 +86,9 @@ export function ContactMethodsGrid() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={
-                  method.title === 'Email' ? handleEmailClick : undefined
+                  method.title === 'Email'
+                    ? handleEmailClick
+                    : () => handleSocialLinkClick(method.title)
                 }
                 className="block relative bg-black/20 backdrop-blur-xl border border-white/10 rounded-xl p-4 hover:bg-black/30 transition-all duration-500 h-full overflow-hidden cursor-pointer"
                 whileHover={{ y: -2, scale: 1.02 }}

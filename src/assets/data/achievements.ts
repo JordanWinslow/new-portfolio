@@ -1,7 +1,5 @@
 import {
   ArrowDown,
-  Code2,
-  Coffee,
   Crown,
   Download,
   Eye,
@@ -12,12 +10,8 @@ import {
   Grid3X3,
   Heart,
   Home,
-  Lightbulb,
-  Linkedin,
   Mail,
-  MousePointer,
   Palette,
-  Rocket,
   Search,
   Smartphone,
   Target,
@@ -45,14 +39,11 @@ export const AchievementId = {
   phoneMaster: 'phone-master',
 
   // Exploration achievements
-  techExplorer: 'tech-explorer',
   techSearcher: 'tech-searcher',
   techFilterer: 'tech-filterer',
-  hoverExplorer: 'hover-explorer',
 
   // Social achievements
   socialButterfly: 'social-butterfly',
-  networker: 'networker',
   codeExplorer: 'code-explorer',
 
   // Mastery achievements
@@ -61,11 +52,8 @@ export const AchievementId = {
   deepDiver: 'deep-diver',
 
   // Easter egg achievements
-  coffeeBreak: 'coffee-break',
   gamerSpirit: 'gamer-spirit',
   heartFinder: 'heart-finder',
-  lightbulbMoment: 'lightbulb-moment',
-  rocketLauncher: 'rocket-launcher',
 } as const
 
 // Type for achievement IDs
@@ -158,7 +146,7 @@ export const achievements: Record<string, Record<string, Achievement>> = {
       unlocked: false,
       category: 'navigation',
       rarity: 'rare',
-      unlockCondition: 'Visit all pages in the portfolio',
+      unlockCondition: 'Visit all pages in the application',
       points: 50,
     },
   },
@@ -234,79 +222,42 @@ export const achievements: Record<string, Record<string, Achievement>> = {
     },
   },
   exploration: {
-    techExplorer: {
-      id: AchievementId.techExplorer,
-      title: 'Tech Explorer',
-      description:
-        "You've explored the technology section. There's so much to discover!",
-      icon: Code2,
-      unlocked: false,
-      category: 'exploration',
-      rarity: 'common',
-      unlockCondition: 'Navigate to the tech section',
-      points: 20,
-    },
     techSearcher: {
       id: AchievementId.techSearcher,
       title: 'Tech Searcher',
-      description:
-        "You've used the search functionality. Finding what you need is important!",
+      description: "Did you find what you're looking for?",
       icon: Search,
       unlocked: false,
       category: 'exploration',
       rarity: 'common',
-      unlockCondition: 'Use the search feature',
+      unlockCondition: 'Use the tech grid search feature',
       points: 25,
     },
     techFilterer: {
       id: AchievementId.techFilterer,
-      title: 'Tech Filterer',
-      description: "You've filtered the technology list. Organization is key!",
+      title: 'So Many Buttons',
+      description: 'You really like seeing the tech grid animations huh!?',
       icon: Target,
       unlocked: false,
       category: 'exploration',
       rarity: 'common',
-      unlockCondition: 'Use the filter functionality',
+      unlockCondition: 'Change filters 7 times in the tech grid',
       points: 25,
-    },
-    hoverExplorer: {
-      id: AchievementId.hoverExplorer,
-      title: 'Hover Explorer',
-      description:
-        "You've discovered hover effects throughout the site. Attention to detail!",
-      icon: MousePointer,
-      unlocked: false,
-      category: 'exploration',
-      rarity: 'rare',
-      unlockCondition: 'Hover over 10 different interactive elements',
-      points: 50,
     },
   },
   social: {
     socialButterfly: {
       id: AchievementId.socialButterfly,
       title: 'Social Butterfly',
-      description:
-        "You've clicked on all social links. Networking is everything!",
+      description: 'Networking is everything!',
       icon: Users,
       unlocked: false,
       category: 'social',
       rarity: 'rare',
-      unlockCondition: 'Click on all social media links',
+      unlockCondition: 'Click on 3 social media links',
       points: 90,
     },
-    networker: {
-      id: AchievementId.networker,
-      title: 'Networker',
-      description:
-        "You've connected on LinkedIn. Let's grow our professional network!",
-      icon: Linkedin,
-      unlocked: false,
-      category: 'social',
-      rarity: 'common',
-      unlockCondition: 'Click on the LinkedIn profile link',
-      points: 45,
-    },
+
     codeExplorer: {
       id: AchievementId.codeExplorer,
       title: 'Code Explorer',
@@ -325,12 +276,12 @@ export const achievements: Record<string, Record<string, Achievement>> = {
       id: AchievementId.detailSeeker,
       title: 'Detail Seeker',
       description:
-        "You've found hidden elements! Your attention to detail is impressive.",
+        "You've found all the easter eggs! Your attention to detail is impressive.",
       icon: Eye,
       unlocked: false,
       category: 'mastery',
       rarity: 'epic',
-      unlockCondition: 'Discover hidden interactive elements',
+      unlockCondition: 'Find all the hidden interactive elements',
       points: 100,
       secret: true,
     },
@@ -355,34 +306,20 @@ export const achievements: Record<string, Record<string, Achievement>> = {
       unlocked: false,
       category: 'mastery',
       rarity: 'epic',
-      unlockCondition: 'Spend 5 minutes exploring the portfolio',
+      unlockCondition: 'Spend 5 minutes exploring this application',
       points: 120,
     },
   },
   easterEggs: {
-    coffeeBreak: {
-      id: AchievementId.coffeeBreak,
-      title: 'Coffee Break',
-      description:
-        'You found the coffee easter egg! ☕ Sometimes the best code is written with a good cup of coffee.',
-      icon: Coffee,
-      unlocked: false,
-      category: 'easter-eggs',
-      rarity: 'epic',
-      unlockCondition: 'Find the hidden coffee reference',
-      points: 150,
-      secret: true,
-    },
     gamerSpirit: {
       id: AchievementId.gamerSpirit,
-      title: 'Gamer Spirit',
-      description:
-        'You discovered the gaming easter egg! 🎮 Because coding and gaming go hand in hand.',
+      title: 'WHEEEEEEEEEeeeeeeeeeeeee',
+      description: 'Wheeeeeeeeeeeeeeeeeeeeeee',
       icon: Gamepad2,
       unlocked: false,
       category: 'easter-eggs',
       rarity: 'epic',
-      unlockCondition: 'Find the hidden gaming reference',
+      unlockCondition: 'Weeeeeeeeeeeeeeeeeeeeee',
       points: 150,
       secret: true,
     },
@@ -396,32 +333,6 @@ export const achievements: Record<string, Record<string, Achievement>> = {
       category: 'easter-eggs',
       rarity: 'epic',
       unlockCondition: 'Find the hidden heart reference',
-      points: 150,
-      secret: true,
-    },
-    lightbulbMoment: {
-      id: AchievementId.lightbulbMoment,
-      title: 'Lightbulb Moment',
-      description:
-        'You found the idea easter egg! 💡 Innovation starts with a single spark.',
-      icon: Lightbulb,
-      unlocked: false,
-      category: 'easter-eggs',
-      rarity: 'epic',
-      unlockCondition: 'Find the hidden lightbulb reference',
-      points: 150,
-      secret: true,
-    },
-    rocketLauncher: {
-      id: AchievementId.rocketLauncher,
-      title: 'Rocket Launcher',
-      description:
-        'You found the rocket easter egg! 🚀 Ready to launch your next project?',
-      icon: Rocket,
-      unlocked: false,
-      category: 'easter-eggs',
-      rarity: 'epic',
-      unlockCondition: 'Find the hidden rocket reference',
       points: 150,
       secret: true,
     },

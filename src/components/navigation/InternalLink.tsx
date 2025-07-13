@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { useCallback } from 'react'
 import { useFadeTransition } from '@/contexts/FadeTransitionContext'
 
@@ -6,6 +6,7 @@ interface InternalLinkProps {
   to: string
   children: ReactNode
   className?: string
+  style?: CSSProperties
   onClick?: () => void
 }
 
@@ -28,6 +29,7 @@ export const InternalLink = ({
   to,
   children,
   className,
+  style,
   onClick,
 }: InternalLinkProps) => {
   const { triggerFadeTransition } = useFadeTransition()
@@ -46,7 +48,7 @@ export const InternalLink = ({
   )
 
   return (
-    <a href={to} onClick={handleClick} className={className}>
+    <a href={to} onClick={handleClick} className={className} style={style}>
       {children}
     </a>
   )

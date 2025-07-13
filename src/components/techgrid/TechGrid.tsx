@@ -17,7 +17,9 @@ import {
   Zap,
 } from 'lucide-react'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { AchievementId } from '@/assets/data/achievements'
 import { techItems } from '@/assets/data/techItems'
+import { useAchievements } from '@/components/achievements/AchievementsContext'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
@@ -62,11 +64,20 @@ function useTechGridFilters() {
     new Set(),
   )
   const [showFilters, setShowFilters] = useState(false)
+  const [filterChangeCount, setFilterChangeCount] = useState(0)
+  const { unlockAchievement } = useAchievements()
 
   // Debounce search input
   const debouncedSetSearch = useMemo(
-    () => debounce((val: string) => setDebouncedSearch(val), 800),
-    [],
+    () =>
+      debounce((val: string) => {
+        setDebouncedSearch(val)
+        // Unlock techSearcher achievement when search is used
+        if (val.trim().length > 0) {
+          unlockAchievement(AchievementId.techSearcher)
+        }
+      }, 800),
+    [unlockAchievement],
   )
   const handleSearchChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,29 +108,51 @@ function useTechGridFilters() {
     [debouncedSearch, selectedCategories, selectedExperiences],
   )
 
-  const handleCategoryToggle = useCallback((category: string) => {
-    setSelectedCategories((prev) => {
-      const newSet = new Set(prev)
-      if (newSet.has(category)) {
-        newSet.delete(category)
-      } else {
-        newSet.add(category)
-      }
-      return newSet
-    })
-  }, [])
+  const handleCategoryToggle = useCallback(
+    (category: string) => {
+      setSelectedCategories((prev) => {
+        const newSet = new Set(prev)
+        if (newSet.has(category)) {
+          newSet.delete(category)
+        } else {
+          newSet.add(category)
+        }
+        return newSet
+      })
+      // Increment filter change count and check for achievement
+      setFilterChangeCount((prev) => {
+        const newCount = prev + 1
+        if (newCount >= 7) {
+          unlockAchievement(AchievementId.techFilterer)
+        }
+        return newCount
+      })
+    },
+    [unlockAchievement],
+  )
 
-  const handleExperienceToggle = useCallback((experience: string) => {
-    setSelectedExperiences((prev) => {
-      const newSet = new Set(prev)
-      if (newSet.has(experience)) {
-        newSet.delete(experience)
-      } else {
-        newSet.add(experience)
-      }
-      return newSet
-    })
-  }, [])
+  const handleExperienceToggle = useCallback(
+    (experience: string) => {
+      setSelectedExperiences((prev) => {
+        const newSet = new Set(prev)
+        if (newSet.has(experience)) {
+          newSet.delete(experience)
+        } else {
+          newSet.add(experience)
+        }
+        return newSet
+      })
+      // Increment filter change count and check for achievement
+      setFilterChangeCount((prev) => {
+        const newCount = prev + 1
+        if (newCount >= 7) {
+          unlockAchievement(AchievementId.techFilterer)
+        }
+        return newCount
+      })
+    },
+    [unlockAchievement],
+  )
 
   const clearFilters = useCallback(() => {
     const allCategories = new Set(techItems.map((item) => item.category))
@@ -128,7 +161,15 @@ function useTechGridFilters() {
     setSelectedExperiences(allExperiences)
     setSearchTerm('')
     setDebouncedSearch('')
-  }, [])
+    // Increment filter change count and check for achievement
+    setFilterChangeCount((prev) => {
+      const newCount = prev + 1
+      if (newCount >= 7) {
+        unlockAchievement(AchievementId.techFilterer)
+      }
+      return newCount
+    })
+  }, [unlockAchievement])
 
   const categories = useMemo(
     () => Array.from(new Set(techItems.map((item) => item.category))),

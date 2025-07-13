@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import type { Achievement, AchievementIdType } from '@/assets/data/achievements'
 import { AchievementId, getAchievementsArray } from '@/assets/data/achievements'
 import { showAchievementNotification } from './AchievementNotification'
@@ -12,6 +12,8 @@ export function useAchievementsLogic() {
   )
   const [isInitialized, setIsInitialized] = useState(false)
   const [newAchievementsVisible, setNewAchievementsVisible] = useState(0)
+  const [explorationTime, setExplorationTime] = useState(0)
+  const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
   // Check for complex achievements that depend on other achievements
   const checkComplexAchievements = useCallback(
@@ -36,6 +38,40 @@ export function useAchievementsLogic() {
         !currentAchievements[AchievementId.worldTraveler]?.unlocked
       ) {
         achievementsToUnlock.push(AchievementId.worldTraveler)
+      }
+
+      // Check Detail Seeker - unlock when all easter egg achievements are unlocked
+      const easterEggAchievements = [
+        AchievementId.gamerSpirit,
+        AchievementId.heartFinder,
+      ]
+
+      const allEasterEggsUnlocked = easterEggAchievements.every(
+        (id) => currentAchievements[id]?.unlocked,
+      )
+
+      if (
+        allEasterEggsUnlocked &&
+        !currentAchievements[AchievementId.detailSeeker]?.unlocked
+      ) {
+        achievementsToUnlock.push(AchievementId.detailSeeker)
+      }
+
+      // Check Completionist - unlock when all other achievements are unlocked
+      const allAchievementIds = Object.values(AchievementId)
+      const otherAchievements = allAchievementIds.filter(
+        (id) => id !== AchievementId.completionist,
+      )
+
+      const allOtherAchievementsUnlocked = otherAchievements.every(
+        (id) => currentAchievements[id]?.unlocked,
+      )
+
+      if (
+        allOtherAchievementsUnlocked &&
+        !currentAchievements[AchievementId.completionist]?.unlocked
+      ) {
+        achievementsToUnlock.push(AchievementId.completionist)
       }
 
       // Add more complex achievement checks here in the future
@@ -144,6 +180,27 @@ export function useAchievementsLogic() {
     )
   }, [newAchievementsVisible, isInitialized])
 
+  // Timer for deepDiver achievement - track exploration time
+  useEffect(() => {
+    if (!isInitialized) return
+
+    // Start the timer interval
+    intervalRef.current = setInterval(() => {
+      setExplorationTime((prevTime) => {
+        const newTime = prevTime + 1
+        return newTime
+      })
+    }, 1000)
+
+    // Cleanup function to prevent memory leaks
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+        intervalRef.current = null
+      }
+    }
+  }, [isInitialized])
+
   const unlockAchievement = useCallback(
     (id: AchievementIdType) => {
       setAchievements((prev) => {
@@ -203,6 +260,17 @@ export function useAchievementsLogic() {
     },
     [checkComplexAchievements],
   )
+
+  // Check for deepDiver achievement unlock
+  useEffect(() => {
+    if (explorationTime >= 300 && isInitialized) {
+      // 300 seconds = 5 minutes
+      const deepDiverAchievement = achievements[AchievementId.deepDiver]
+      if (deepDiverAchievement && !deepDiverAchievement.unlocked) {
+        unlockAchievement(AchievementId.deepDiver)
+      }
+    }
+  }, [explorationTime, achievements, isInitialized, unlockAchievement])
 
   const markAchievementsAsViewed = useCallback(() => {
     setNewAchievementsVisible(0)

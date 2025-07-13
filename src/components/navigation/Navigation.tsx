@@ -17,14 +17,13 @@ const routes = [
   {
     title: 'Intro Page',
     href: '/',
-    description:
-      'Welcome to my portfolio. Explore my work and get to know me better.',
+    description: 'The 3D landing page of my portfolio',
     icon: Code2,
   },
   {
     title: 'Portfolio',
     href: '/portfolio',
-    description: 'View my latest projects and work',
+    description: "Check out what I've built!",
     icon: Briefcase,
   },
   {
@@ -36,13 +35,13 @@ const routes = [
   {
     title: 'Contact',
     href: '/contact',
-    description: 'Get in touch for collaboration opportunities',
+    description: 'Get in touch!',
     icon: Mail,
   },
   {
     title: 'View Resume',
     href: '/resume',
-    description: 'Download my professional resume',
+    description: 'View or download my resume',
     icon: FileText,
   },
 ]

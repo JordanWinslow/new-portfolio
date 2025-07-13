@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { AchievementId } from '@/assets/data/achievements'
+import { useAchievements } from '@/components/achievements/AchievementsContext'
 
 interface Star {
   id: string
@@ -14,6 +16,7 @@ interface Star {
 
 export function StarField() {
   const [stars, setStars] = useState<Star[]>([])
+  const { unlockAchievement } = useAchievements()
 
   useEffect(() => {
     const generateStars = () => {
@@ -196,7 +199,14 @@ export function StarField() {
           {getStarSymbol(star.type)}
         </div>
       ))}
-      <div className="absolute right-1/2 top-1/2">Wheeeeeeeeeeeee</div>
+      <button
+        type="button"
+        className="pointer-events-auto absolute right-1/2 top-1/2 cursor-default bg-transparent border-none text-white"
+        onClick={() => unlockAchievement(AchievementId.gamerSpirit)}
+        aria-label="Gaming easter egg"
+      >
+        Wheeeeeeeeeeeee
+      </button>
     </div>
   )
 }
