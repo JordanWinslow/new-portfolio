@@ -7,9 +7,8 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-  plugins: [
-    tsConfigPaths(),
-    tanstackStart({ target: 'netlify' }),
-    tailwindcss(),
-  ],
+  plugins: [tsConfigPaths(), tanstackStart(), tailwindcss()],
+  build: {
+    chunkSizeWarningLimit: 3000,
+  },
 })

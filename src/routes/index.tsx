@@ -1,11 +1,13 @@
-import InteractiveBackground from '@splinetool/react-spline'
 import { createFileRoute } from '@tanstack/react-router'
 import { Code2 } from 'lucide-react'
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { AchievementId } from '@/assets/data/achievements'
 import { useAchievements } from '@/components/achievements/AchievementsContext'
 import { InternalLink } from '@/components/navigation/InternalLink'
 import { Fade } from '@/components/ui/Fade'
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
+
+const InteractiveBackground = lazy(() => import('@splinetool/react-spline'))
 
 export const Route = createFileRoute('/')({
   component: Home,
@@ -25,7 +27,15 @@ function Home() {
   return (
     <div className="relative w-full h-screen overflow-hidden bg-black font-mohave">
       <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-center">
-        <InteractiveBackground scene="./src/assets/spline/home-animation.splinecode" />
+        <Suspense
+          fallback={
+            <div className="flex items-center justify-center w-full h-full">
+              <LoadingSpinner size="lg" className="text-white" />
+            </div>
+          }
+        >
+          <InteractiveBackground scene="./src/assets/spline/home-animation.splinecode" />
+        </Suspense>
       </div>
 
       <PageLayout />

@@ -1,10 +1,14 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { AchievementId } from '@/assets/data/achievements'
 import { portfolioItems } from '@/assets/data/portfolioItems'
 import { useAchievements } from '@/components/achievements/AchievementsContext'
 import type { LayoutType } from '@/components/portfolio/LayoutType'
 import { Accordion } from '@/components/ui/Accordion'
-import { VideoModal } from '../ui/VideoModal'
+
+const VideoModal = lazy(() =>
+  import('../ui/VideoModal').then((mod) => ({ default: mod.VideoModal })),
+)
+
 import { ProjectAccordionItem } from './ProjectAccordionItem'
 import { ProjectCard } from './ProjectCard'
 import { ProjectListItem } from './ProjectListItem'
@@ -104,12 +108,14 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
               />
             ))}
           </div>
-          <VideoModal
-            isOpen={videoModalState.isOpen}
-            onClose={handleVideoClose}
-            videoUrl={videoModalState.videoUrl}
-            title={videoModalState.title}
-          />
+          <Suspense fallback={null}>
+            <VideoModal
+              isOpen={videoModalState.isOpen}
+              onClose={handleVideoClose}
+              videoUrl={videoModalState.videoUrl}
+              title={videoModalState.title}
+            />
+          </Suspense>
         </>
       )
 
@@ -133,12 +139,14 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
               />
             ))}
           </div>
-          <VideoModal
-            isOpen={videoModalState.isOpen}
-            onClose={handleVideoClose}
-            videoUrl={videoModalState.videoUrl}
-            title={videoModalState.title}
-          />
+          <Suspense fallback={null}>
+            <VideoModal
+              isOpen={videoModalState.isOpen}
+              onClose={handleVideoClose}
+              videoUrl={videoModalState.videoUrl}
+              title={videoModalState.title}
+            />
+          </Suspense>
         </>
       )
 
@@ -161,12 +169,14 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
               />
             ))}
           </div>
-          <VideoModal
-            isOpen={videoModalState.isOpen}
-            onClose={handleVideoClose}
-            videoUrl={videoModalState.videoUrl}
-            title={videoModalState.title}
-          />
+          <Suspense fallback={null}>
+            <VideoModal
+              isOpen={videoModalState.isOpen}
+              onClose={handleVideoClose}
+              videoUrl={videoModalState.videoUrl}
+              title={videoModalState.title}
+            />
+          </Suspense>
         </>
       )
 
@@ -237,12 +247,14 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
               </Accordion>
             </div>
           </div>
-          <VideoModal
-            isOpen={videoModalState.isOpen}
-            onClose={handleVideoClose}
-            videoUrl={videoModalState.videoUrl}
-            title={videoModalState.title}
-          />
+          <Suspense fallback={null}>
+            <VideoModal
+              isOpen={videoModalState.isOpen}
+              onClose={handleVideoClose}
+              videoUrl={videoModalState.videoUrl}
+              title={videoModalState.title}
+            />
+          </Suspense>
         </>
       )
     default:

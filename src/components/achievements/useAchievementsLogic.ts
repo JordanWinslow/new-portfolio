@@ -12,8 +12,11 @@ export function useAchievementsLogic() {
   )
   const [isInitialized, setIsInitialized] = useState(false)
   const [newAchievementsVisible, setNewAchievementsVisible] = useState(0)
-  const [explorationTime, setExplorationTime] = useState(0)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
+  const explorationTimeRef = useRef(0)
+  const unlockAchievementRef = useRef<((id: AchievementIdType) => void) | null>(
+    null,
+  )
 
   // Check for complex achievements that depend on other achievements
   const checkComplexAchievements = useCallback(
@@ -73,12 +76,6 @@ export function useAchievementsLogic() {
       ) {
         achievementsToUnlock.push(AchievementId.completionist)
       }
-
-      // Add more complex achievement checks here in the future
-      // Example:
-      // if (allInteractionUnlocked && !currentAchievements[AchievementId.interactionMaster]?.unlocked) {
-      //   achievementsToUnlock.push(AchievementId.interactionMaster)
-      // }
 
       return achievementsToUnlock
     },
@@ -186,10 +183,23 @@ export function useAchievementsLogic() {
 
     // Start the timer interval
     intervalRef.current = setInterval(() => {
-      setExplorationTime((prevTime) => {
-        const newTime = prevTime + 1
-        return newTime
-      })
+      explorationTimeRef.current += 1
+
+      // Check if deepDiver achievement should be unlocked (300 seconds = 5 minutes)
+      if (explorationTimeRef.current >= 300) {
+        const deepDiverAchievement = achievements[AchievementId.deepDiver]
+        if (deepDiverAchievement && !deepDiverAchievement.unlocked) {
+          // Clear the interval first to prevent multiple unlocks
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current)
+            intervalRef.current = null
+          }
+          // Use setTimeout to avoid calling unlockAchievement during render
+          setTimeout(() => {
+            unlockAchievementRef.current?.(AchievementId.deepDiver)
+          }, 0)
+        }
+      }
     }, 1000)
 
     // Cleanup function to prevent memory leaks
@@ -199,7 +209,7 @@ export function useAchievementsLogic() {
         intervalRef.current = null
       }
     }
-  }, [isInitialized])
+  }, [isInitialized, achievements])
 
   const unlockAchievement = useCallback(
     (id: AchievementIdType) => {
@@ -261,16 +271,10 @@ export function useAchievementsLogic() {
     [checkComplexAchievements],
   )
 
-  // Check for deepDiver achievement unlock
+  // Store the unlockAchievement function in a ref for use in the timer
   useEffect(() => {
-    if (explorationTime >= 300 && isInitialized) {
-      // 300 seconds = 5 minutes
-      const deepDiverAchievement = achievements[AchievementId.deepDiver]
-      if (deepDiverAchievement && !deepDiverAchievement.unlocked) {
-        unlockAchievement(AchievementId.deepDiver)
-      }
-    }
-  }, [explorationTime, achievements, isInitialized, unlockAchievement])
+    unlockAchievementRef.current = unlockAchievement
+  }, [unlockAchievement])
 
   const markAchievementsAsViewed = useCallback(() => {
     setNewAchievementsVisible(0)

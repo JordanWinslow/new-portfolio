@@ -173,7 +173,6 @@ export const PhoneStack: React.FC<PhoneStackProps> = ({
       })
 
       if (last && flickedPhonesRef.current.size === images.length) {
-        // Unlock phoneMaster achievement when all phones have been flicked
         unlockAchievement(AchievementId.phoneMaster)
 
         setTimeout(() => {

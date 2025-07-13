@@ -1,4 +1,3 @@
-import { send as sendEmail } from '@emailjs/browser'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AnimatePresence, motion } from 'framer-motion'
 import { AlertCircle, CheckCircle, RotateCcw, Send, X } from 'lucide-react'
@@ -107,31 +106,48 @@ export function CallToAction({
     setSubmitStatus('idle')
 
     try {
-      // Send email using EmailJS
-      const templateParams = {
-        to_email: 'jwinsemail@gmail.com',
-        from_name: data.name || 'Anonymous',
-        from_email: data.email,
-        from_phone: data.phone || 'Not provided',
-        message: data.message,
-      }
+      console.log('Sending email with data:', data)
 
-      await sendEmail(
-        'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
-        'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
-        templateParams,
-        'YOUR_USER_ID', // Replace with your EmailJS user ID
+      // Send email using EmailJS API directly
+      const response = await fetch(
+        `https://api.emailjs.com/api/v1.0/email/send`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            service_id: import.meta.env.VITE_EMAILJS_SERVICE_ID,
+            template_id: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+            user_id: import.meta.env.VITE_EMAILJS_API_KEY,
+            template_params: {
+              to_email: 'jwinsemail@gmail.com',
+              from_name: data.name || 'Anonymous',
+              from_email: data.email,
+              from_phone: data.phone || 'Not provided',
+              message: data.message,
+            },
+          }),
+        },
       )
 
-      setSubmitStatus('success')
-      reset()
-      generateCaptcha()
-      setCaptchaAttempts(0)
+      console.log('EmailJS response status:', response.status)
 
-      setTimeout(() => {
-        setIsFormOpen(false)
-        setSubmitStatus('idle')
-      }, 2000)
+      if (!response.ok) {
+        const errorData = await response.text()
+        console.error('EmailJS API error:', errorData)
+        setSubmitStatus('error')
+      } else {
+        setSubmitStatus('success')
+        reset()
+        generateCaptcha()
+        setCaptchaAttempts(0)
+
+        setTimeout(() => {
+          setIsFormOpen(false)
+          setSubmitStatus('idle')
+        }, 2000)
+      }
     } catch (error) {
       console.error('Email sending failed:', error)
       setSubmitStatus('error')
