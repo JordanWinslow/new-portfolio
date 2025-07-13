@@ -614,7 +614,7 @@ async function loadVirtualModule(id) {
     case VIRTUAL_MODULES.routeTree:
       return await Promise.resolve().then(() => routeTree_gen);
     case VIRTUAL_MODULES.startManifest:
-      return await import('./_tanstack-start-manifest_v-Iv6HalOf.mjs');
+      return await import('./_tanstack-start-manifest_v-D5YoJrha.mjs');
     case VIRTUAL_MODULES.serverFnManifest:
       return await import('./_tanstack-start-server-fn-manifest_v-DtgTK7xl.mjs');
     default:
@@ -2464,7 +2464,7 @@ const Toaster = ({ ...props }) => {
     }
   );
 };
-const appCss = "/assets/app-Ciwks2HL.css";
+const appCss = "/assets/app-BhNA6zF3.css";
 const Route$5 = createRootRoute({
   head: () => ({
     meta: [{
