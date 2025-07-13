@@ -183,7 +183,7 @@ function Portfolio() {
             className="space-y-4"
           >
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              This application, it's design, and all components herein were
+              This application, its design, and all components herein were
               created from scratch in 5 days in July 2025 to showcase emerging
               Frontend technologies and demonstrate my expertise. You can view
               the code{' '}
@@ -201,8 +201,8 @@ function Portfolio() {
             </p>
 
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              Below, you can see 6 side-projects I have worked on and see demos
-              or view source code. There are also easter eggs hidden in this
+              Below you can view 6 side-projects I have worked on along with
+              demos and source code. There are also easter eggs hidden in this
               application that you can unlock by experimenting with the UI!
             </p>
 
