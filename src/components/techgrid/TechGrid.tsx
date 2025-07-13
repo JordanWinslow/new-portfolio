@@ -139,10 +139,13 @@ function useTechGridFilters() {
   return {
     searchTerm,
     setSearchTerm,
+    setDebouncedSearch,
     showFilters,
     setShowFilters,
     selectedCategories,
+    setSelectedCategories,
     selectedExperiences,
+    setSelectedExperiences,
     handleCategoryToggle,
     handleExperienceToggle,
     clearFilters,
@@ -162,10 +165,14 @@ const TechGridComponent = ({
 }: TechGridProps) => {
   const {
     searchTerm,
+    setSearchTerm,
+    setDebouncedSearch,
     showFilters,
     setShowFilters,
     selectedCategories,
+    setSelectedCategories,
     selectedExperiences,
+    setSelectedExperiences,
     handleCategoryToggle,
     handleExperienceToggle,
     clearFilters,
@@ -440,7 +447,7 @@ const TechGridComponent = ({
                 />
               </div>
               {/* Filter Toggle */}
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 sm:gap-4">
                 <Button
                   variant="outline"
                   size="sm"
@@ -456,6 +463,20 @@ const TechGridComponent = ({
                 >
                   Filters
                 </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    setSelectedCategories(new Set())
+                    setSearchTerm('')
+                    setDebouncedSearch('')
+                  }}
+                  className="text-gray-400 hover:text-white"
+                  Icon={<X className="w-4 h-4" />}
+                >
+                  <span className="hidden sm:inline">Clear All</span>
+                  <span className="sm:hidden">Clear</span>
+                </Button>
                 {(searchTerm ||
                   selectedCategories.size < categories.length ||
                   selectedExperiences.size < 3) && (
@@ -466,7 +487,8 @@ const TechGridComponent = ({
                     className="text-gray-400 hover:text-white"
                     Icon={<X className="w-4 h-4" />}
                   >
-                    Clear
+                    <span className="hidden sm:inline">Reset</span>
+                    <span className="sm:hidden">Reset</span>
                   </Button>
                 )}
               </div>
