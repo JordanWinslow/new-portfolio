@@ -1,6 +1,9 @@
 import containmentBreachImage from '@/assets/images/portfolio/containment-breach.gif'
 import ecosystemSimImage from '@/assets/images/portfolio/ecosystem.gif'
+import gitFinderImage from '@/assets/images/portfolio/Gitfinder.jpg'
+import horrorRPG2Image from '@/assets/images/portfolio/horrorRPG2.webp'
 import pokeTeamImage from '@/assets/images/portfolio/poketeamdemo.gif'
+import theWatchersImage from '@/assets/images/portfolio/thewatchers.webp'
 
 export interface IPortfolioItem {
   imageSrc: string
@@ -50,29 +53,31 @@ export const portfolioItems = [
   },
   {
     id: 4,
-    title: 'Coming Soon',
-    description: 'Coming soon',
-    image: pokeTeamImage,
-    github: 'https://github.com',
-    demo: 'https://demo.com',
-    tech: ['Three.js', 'WebGL', 'React', 'GSAP'],
+    title: 'Git Finder',
+    description: 'Search application for github users I built 6 years ago',
+    image: gitFinderImage,
+    github:
+      'https://github.com/JordanWinslow/functional-react-github-user-finder',
+    demo: 'https://functional-react-gitfinder.netlify.app/',
+    tech: ['React', 'JavaScript', 'React Router', 'CSS'],
   },
   {
     id: 5,
-    title: 'Coming Soon',
-    description: 'Coming Soon',
-    image: containmentBreachImage,
-    github: 'https://github.com',
+    title: 'Horror RPG Game',
+    description:
+      'Short RPG I programmed & scored a long time ago with JavaScript tooling',
+    image: horrorRPG2Image,
     demo: 'https://demo.com',
-    tech: ['Vue.js', 'Web3.js', 'Ethereum', 'Chart.js'],
+    videoLink: 'https://youtu.be/Rf9wsKJSeII',
+    tech: ['JavaScript', 'HTML', 'CSS'],
   },
   {
     id: 6,
-    title: 'Coming Soon',
-    description: 'Coming Soon',
-    image: ecosystemSimImage,
-    github: 'https://github.com',
-    demo: 'https://demo.com',
-    tech: ['AR.js', 'WebXR', 'Three.js', 'React'],
+    title: 'Browser Based Visual Novel Game',
+    description:
+      'Short VN I programmed & scored a long time ago with JavaScript tooling',
+    image: theWatchersImage,
+    demo: 'https://jordanwinslow.itch.io/the-watchers-browser',
+    tech: ['JavaScript', 'HTML', 'CSS'],
   },
 ]

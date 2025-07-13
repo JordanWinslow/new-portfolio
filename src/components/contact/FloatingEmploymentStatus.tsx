@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 
-interface FloatingEmploymentStatusProps {
+export interface FloatingEmploymentStatusProps {
   isEmployed?: boolean
 }
 
@@ -35,6 +35,10 @@ export function FloatingEmploymentStatus({
       className="fixed top-24 right-6 z-50"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={() => setIsHovered(true)}
+      onTouchEnd={() => {
+        setTimeout(() => setIsHovered(false), 1000)
+      }}
     >
       <motion.div
         className="relative cursor-pointer"

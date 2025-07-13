@@ -15,6 +15,73 @@ import { TechGridSection } from '@/components/techgrid/TechGridSection'
 import { useIntersectionObserver, useScrollToRef } from '@/lib/utils'
 
 export const Route = createFileRoute('/portfolio')({
+  head: () => ({
+    title: "Portfolio - Jordan Winslow's Software Engineering Projects",
+    meta: [
+      {
+        name: 'description',
+        content:
+          "Explore Jordan Winslow's portfolio of innovative software projects. From React applications to full-stack solutions, discover cutting-edge web development projects with live demos and source code.",
+      },
+      {
+        name: 'keywords',
+        content:
+          'portfolio, software projects, React applications, web development, Jordan Winslow projects, frontend development, full-stack development',
+      },
+      {
+        name: 'author',
+        content: 'Jordan Winslow',
+      },
+      // Open Graph tags
+      {
+        property: 'og:title',
+        content: "Portfolio - Jordan Winslow's Software Engineering Projects",
+      },
+      {
+        property: 'og:description',
+        content:
+          "Explore Jordan Winslow's portfolio of innovative software projects. From React applications to full-stack solutions, discover cutting-edge web development projects with live demos and source code.",
+      },
+      {
+        property: 'og:type',
+        content: 'website',
+      },
+      {
+        property: 'og:url',
+        content: 'https://jordanwinslow.dev/portfolio',
+      },
+      {
+        property: 'og:image',
+        content: '/og-portfolio.png',
+      },
+      {
+        property: 'og:image:width',
+        content: '1200',
+      },
+      {
+        property: 'og:image:height',
+        content: '630',
+      },
+      // Twitter Card tags
+      {
+        name: 'twitter:card',
+        content: 'summary_large_image',
+      },
+      {
+        name: 'twitter:title',
+        content: "Portfolio - Jordan Winslow's Software Engineering Projects",
+      },
+      {
+        name: 'twitter:description',
+        content:
+          "Explore Jordan Winslow's portfolio of innovative software projects. From React applications to full-stack solutions, discover cutting-edge web development projects with live demos and source code.",
+      },
+      {
+        name: 'twitter:image',
+        content: '/og-portfolio.png',
+      },
+    ],
+  }),
   component: Portfolio,
 })
 

@@ -17,7 +17,10 @@ export function ProjectListItem({
   onLinkClick?: (link: string) => void
 }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm p-6 flex flex-col md:flex-row gap-6 hover:border-white/20 hover:bg-gradient-to-br hover:from-white/10 hover:to-white/15 transition-all duration-300 hover-lift group relative">
+    <div
+      className="rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm p-6 flex flex-col md:flex-row gap-6 hover:border-white/20 hover:bg-gradient-to-br hover:from-white/10 hover:to-white/15 transition-all duration-300 hover-lift group relative active:scale-[0.98] touch-manipulation"
+      style={{ touchAction: 'manipulation' }}
+    >
       {/* Background gradient on hover */}
       <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-purple-500/0 via-pink-500/0 to-orange-500/0 group-hover:from-purple-500/10 group-hover:via-pink-500/10 group-hover:to-orange-500/10 transition-all duration-300 pointer-events-none" />
 
@@ -40,7 +43,8 @@ export function ProjectListItem({
           {techItems.map((tech) => (
             <span
               key={tech}
-              className="cursor-pointer px-2 py-1 text-xs font-mono bg-white/10 text-white/80 rounded border border-white/20"
+              className="cursor-pointer px-2 py-1 text-xs font-mono bg-white/10 text-white/80 rounded border border-white/20 touch-manipulation"
+              style={{ touchAction: 'manipulation' }}
             >
               {tech}
             </span>
@@ -53,7 +57,8 @@ export function ProjectListItem({
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => onLinkClick?.(githubLink)}
-              className="gradient-border-button flex items-center gap-2"
+              className="gradient-border-button flex items-center gap-2 touch-manipulation"
+              style={{ touchAction: 'manipulation' }}
             >
               <Github size={16} />
               GITHUB
@@ -66,7 +71,8 @@ export function ProjectListItem({
                 onVideoClick(videoLink, title)
                 onLinkClick?.(videoLink)
               }}
-              className="gradient-border-button flex items-center gap-2"
+              className="gradient-border-button flex items-center gap-2 touch-manipulation"
+              style={{ touchAction: 'manipulation' }}
             >
               <Play size={16} />
               VIDEO
@@ -78,7 +84,8 @@ export function ProjectListItem({
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => onLinkClick?.(demoLink)}
-              className="gradient-border-button flex items-center gap-2"
+              className="gradient-border-button flex items-center gap-2 touch-manipulation"
+              style={{ touchAction: 'manipulation' }}
             >
               <ArrowUpRight size={16} />
               LIVE DEMO

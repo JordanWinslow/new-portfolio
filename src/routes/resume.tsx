@@ -7,6 +7,73 @@ import ResumeDownload from '@/assets/data/Jordan_Winslow_Software_Engineer_Front
 import { useAchievements } from '@/components/achievements/AchievementsContext'
 
 export const Route = createFileRoute('/resume')({
+  head: () => ({
+    title: 'Jordan Winslow - Software Engineer Resume & Experience',
+    meta: [
+      {
+        name: 'description',
+        content:
+          "Download Jordan Winslow's professional resume showcasing software engineering experience, technical skills, and achievements. View detailed work history, education, and expertise in React, TypeScript, and modern web technologies.",
+      },
+      {
+        name: 'keywords',
+        content:
+          'Jordan Winslow resume, software engineer resume, frontend developer CV, React developer experience, TypeScript skills, web development resume',
+      },
+      {
+        name: 'author',
+        content: 'Jordan Winslow',
+      },
+      // Open Graph tags
+      {
+        property: 'og:title',
+        content: 'Jordan Winslow - Software Engineer Resume & Experience',
+      },
+      {
+        property: 'og:description',
+        content:
+          "Download Jordan Winslow's professional resume showcasing software engineering experience, technical skills, and achievements. View detailed work history, education, and expertise in React, TypeScript, and modern web technologies.",
+      },
+      {
+        property: 'og:type',
+        content: 'website',
+      },
+      {
+        property: 'og:url',
+        content: 'https://jordanwinslow.dev/resume',
+      },
+      {
+        property: 'og:image',
+        content: '/og-resume.png',
+      },
+      {
+        property: 'og:image:width',
+        content: '1200',
+      },
+      {
+        property: 'og:image:height',
+        content: '630',
+      },
+      // Twitter Card tags
+      {
+        name: 'twitter:card',
+        content: 'summary_large_image',
+      },
+      {
+        name: 'twitter:title',
+        content: 'Jordan Winslow - Software Engineer Resume & Experience',
+      },
+      {
+        name: 'twitter:description',
+        content:
+          "Download Jordan Winslow's professional resume showcasing software engineering experience, technical skills, and achievements. View detailed work history, education, and expertise in React, TypeScript, and modern web technologies.",
+      },
+      {
+        name: 'twitter:image',
+        content: '/og-resume.png',
+      },
+    ],
+  }),
   component: Resume,
 })
 

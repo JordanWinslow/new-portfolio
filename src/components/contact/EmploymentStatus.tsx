@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 
-interface EmploymentStatusProps {
+export interface EmploymentStatusProps {
   isEmployed?: boolean
 }
 
@@ -34,6 +34,10 @@ export function EmploymentStatus({
       className="relative"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={() => setIsHovered(true)}
+      onTouchEnd={() => {
+        setTimeout(() => setIsHovered(false), 1000)
+      }}
     >
       <div className="relative bg-black/30 backdrop-blur-md border border-white/20 rounded-xl p-4 hover:bg-black/40 transition-all duration-300 group max-w-md mx-auto">
         {/* Pulsing notification light */}

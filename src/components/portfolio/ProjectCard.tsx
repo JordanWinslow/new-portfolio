@@ -1,4 +1,5 @@
 import { ArrowUpRight, Github, Play } from 'lucide-react'
+import { useState } from 'react'
 import type { IPortfolioItem } from '@/assets/data/portfolioItems'
 import { useResizeObserver } from '@/lib/utils'
 import { Button } from '../ui/Button'
@@ -27,28 +28,51 @@ export const ProjectCard = ({
     'gt',
   )
 
+  // Simple touch state management
+  const [isTouched, setIsTouched] = useState(false)
+
+  const handleTouchStart = () => {
+    setIsTouched(true)
+  }
+
+  const handleTouchEnd = () => {
+    // Keep the touched state for 2 seconds to allow button interaction
+    setTimeout(() => {
+      setIsTouched(false)
+    }, 2000)
+  }
+
   return (
     <div
       ref={cardRef}
-      className="group relative rounded-xl overflow-hidden border border-white/10 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm transform transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-[1.02] hover:-translate-y-2 hover:border-white/20 hover:bg-gradient-to-br hover:from-white/10 hover:to-white/15"
+      className={`group relative rounded-xl overflow-hidden border border-white/10 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm transform transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-[1.02] hover:-translate-y-2 hover:border-white/20 hover:bg-gradient-to-br hover:from-white/10 hover:to-white/15 active:scale-[0.98] touch-manipulation ${isTouched ? 'touch-active' : ''}`}
+      style={{ touchAction: 'manipulation' }}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       {/* Background gradient on hover */}
-      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-purple-500/0 via-pink-500/0 to-orange-500/0 group-hover:from-purple-500/10 group-hover:via-pink-500/10 group-hover:to-orange-500/10 transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] pointer-events-none" />
+      <div
+        className={`absolute inset-0 rounded-xl bg-gradient-to-br from-purple-500/0 via-pink-500/0 to-orange-500/0 ${isTouched ? 'from-purple-500/10 via-pink-500/10 to-orange-500/10' : 'group-hover:from-purple-500/10 group-hover:via-pink-500/10 group-hover:to-orange-500/10'} transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] pointer-events-none`}
+      />
 
       {/* Glow effect on hover */}
-      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-purple-500/0 to-pink-500/0 group-hover:from-purple-500/20 group-hover:to-pink-500/20 transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] pointer-events-none blur-xl" />
+      <div
+        className={`absolute inset-0 rounded-xl bg-gradient-to-br from-purple-500/0 to-pink-500/0 ${isTouched ? 'from-purple-500/20 to-pink-500/20' : 'group-hover:from-purple-500/20 group-hover:to-pink-500/20'} transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] pointer-events-none blur-xl`}
+      />
 
       <div className="aspect-video relative overflow-hidden">
         <img
           src={imageSrc}
           alt={title}
-          className="w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-110"
+          className={`w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${isTouched ? 'scale-110' : 'group-hover:scale-110'}`}
           loading="lazy"
         />
         <div
-          className={`absolute inset-0 bg-gradient-to-t from-black/90 ${variant === 'hoverToDisplay' ? 'to-black/90 sm:via-black/80 sm:to-black/10' : 'via-black/50 to-transparent'}  opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]`}
+          className={`absolute inset-0 bg-gradient-to-t from-black/90 ${variant === 'hoverToDisplay' ? 'to-black/90 sm:via-black/80 sm:to-black/10' : 'via-black/50 to-transparent'} transition-opacity duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${isTouched ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
         />
-        <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] transform translate-y-4 group-hover:translate-y-0">
+        <div
+          className={`absolute inset-0 flex flex-col justify-end p-6 transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] transform ${isTouched ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0'}`}
+        >
           {variant === 'hoverToDisplay' && (
             <>
               <h3 className="font-mohave text-xl font-bold text-white mb-2">
@@ -63,7 +87,8 @@ export const ProjectCard = ({
                   {techItems.map((tech) => (
                     <span
                       key={tech}
-                      className="cursor-pointer px-3 py-1 text-xs font-mono bg-white/10 text-white/90 rounded-full border border-white/20 hover:border-purple-400/50 transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+                      className="cursor-pointer px-3 py-1 text-xs font-mono bg-white/10 text-white/90 rounded-full border border-white/20 hover:border-purple-400/50 transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] touch-manipulation"
+                      style={{ touchAction: 'manipulation' }}
                     >
                       {tech}
                     </span>
@@ -79,6 +104,8 @@ export const ProjectCard = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => onLinkClick?.(githubLink)}
+                className="touch-manipulation"
+                style={{ touchAction: 'manipulation' }}
               >
                 <Button variant="secondary" Icon={<Github size={14} />}>
                   CODE
@@ -93,6 +120,8 @@ export const ProjectCard = ({
                   onVideoClick(videoLink, title)
                   onLinkClick?.(videoLink)
                 }}
+                className="touch-manipulation"
+                style={{ touchAction: 'manipulation' }}
               >
                 VIDEO
               </Button>
@@ -103,6 +132,8 @@ export const ProjectCard = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => onLinkClick?.(demoLink)}
+                className="touch-manipulation"
+                style={{ touchAction: 'manipulation' }}
               >
                 <Button variant="secondary" Icon={<ArrowUpRight size={14} />}>
                   DEMO
@@ -123,7 +154,8 @@ export const ProjectCard = ({
             {techItems.map((tech) => (
               <span
                 key={tech}
-                className="cursor-pointer px-3 py-1 text-xs font-mono bg-white/10 text-white/90 rounded-full border border-white/20 hover:border-purple-400/50 transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+                className="cursor-pointer px-3 py-1 text-xs font-mono bg-white/10 text-white/90 rounded-full border border-white/20 hover:border-purple-400/50 transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] touch-manipulation"
+                style={{ touchAction: 'manipulation' }}
               >
                 {tech}
               </span>

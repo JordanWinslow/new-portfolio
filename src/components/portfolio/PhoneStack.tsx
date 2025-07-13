@@ -114,7 +114,7 @@ export const PhoneStack: React.FC<PhoneStackProps> = ({
         flickedPhonesRef.current.add(phoneIndex)
       }
 
-      setSprings((index: number) => {
+      setSprings.start((index: number) => {
         if (phoneIndex !== index) return
 
         const isFlicked = flickedPhonesRef.current.has(index)
@@ -177,11 +177,18 @@ export const PhoneStack: React.FC<PhoneStackProps> = ({
 
         setTimeout(() => {
           flickedPhonesRef.current.clear()
-          setSprings((index: number) => getInitialPosition(index))
+          setSprings.start((index: number) => getInitialPosition(index))
         }, 600)
       }
     },
-    { filterTaps: true },
+    {
+      // Enable touch interactions on mobile
+      filterTaps: false,
+      // Prevent scrolling when dragging on mobile
+      preventScroll: true,
+      // Allow touch events
+      eventOptions: { passive: false },
+    },
   )
 
   return (
@@ -192,6 +199,7 @@ export const PhoneStack: React.FC<PhoneStackProps> = ({
         minHeight: phoneHeight * 0.75,
         minWidth: phoneWidth * 0.75,
         overflow: 'visible',
+        touchAction: 'none', // Prevent default touch behaviors
       }}
     >
       {springs.map(
@@ -211,6 +219,7 @@ export const PhoneStack: React.FC<PhoneStackProps> = ({
               {...bind(index)}
               style={{
                 transform: springTo([rot, scale], getTransform),
+                touchAction: 'none', // Prevent default touch behaviors
               }}
               className="phone-frame shadow-2xl cursor-grab active:cursor-grabbing"
             >

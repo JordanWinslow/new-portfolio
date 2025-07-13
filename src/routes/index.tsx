@@ -11,6 +11,73 @@ import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 const InteractiveBackground = lazy(() => import('@splinetool/react-spline'))
 
 export const Route = createFileRoute('/')({
+  head: () => ({
+    title: 'Jordan Winslow - Software Engineer & Frontend Expert',
+    meta: [
+      {
+        name: 'description',
+        content:
+          'Frontend software engineer specializing in React, TypeScript, and modern web technologies. Explore my interactive portfolio showcasing innovative projects and cutting-edge development skills.',
+      },
+      {
+        name: 'keywords',
+        content:
+          'software engineer, frontend developer, React, TypeScript, web development, portfolio, Jordan Winslow',
+      },
+      {
+        name: 'author',
+        content: 'Jordan Winslow',
+      },
+      // Open Graph tags
+      {
+        property: 'og:title',
+        content: 'Jordan Winslow - Software Engineer & Frontend Expert',
+      },
+      {
+        property: 'og:description',
+        content:
+          'Frontend software engineer specializing in React, TypeScript, and modern web technologies. Explore my interactive portfolio showcasing innovative projects and cutting-edge development skills.',
+      },
+      {
+        property: 'og:type',
+        content: 'website',
+      },
+      {
+        property: 'og:url',
+        content: 'https://jordanwinslow.dev',
+      },
+      {
+        property: 'og:image',
+        content: '/og-home.png',
+      },
+      {
+        property: 'og:image:width',
+        content: '1200',
+      },
+      {
+        property: 'og:image:height',
+        content: '630',
+      },
+      // Twitter Card tags
+      {
+        name: 'twitter:card',
+        content: 'summary_large_image',
+      },
+      {
+        name: 'twitter:title',
+        content: 'Jordan Winslow - Software Engineer & Frontend Expert',
+      },
+      {
+        name: 'twitter:description',
+        content:
+          'Frontend software engineer specializing in React, TypeScript, and modern web technologies. Explore my interactive portfolio showcasing innovative projects and cutting-edge development skills.',
+      },
+      {
+        name: 'twitter:image',
+        content: '/og-home.png',
+      },
+    ],
+  }),
   component: Home,
 })
 
@@ -27,7 +94,7 @@ function Home() {
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-black font-mohave">
-      <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-center">
+      <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-center spline-container">
         <Suspense
           fallback={
             <div className="flex items-center justify-center w-full h-full">
@@ -35,7 +102,13 @@ function Home() {
             </div>
           }
         >
-          <InteractiveBackground scene={homeAnimation} />
+          <InteractiveBackground
+            scene={homeAnimation}
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
+          />
         </Suspense>
       </div>
 
@@ -54,7 +127,8 @@ const PortfolioButton = () => (
       <div className="absolute w-40 h-40 rounded-full bg-white opacity-40 blur-3xl z-10" />
       <InternalLink
         to="/portfolio"
-        className="cursor-pointer pointer-events-auto w-20 h-20 flex items-center justify-center rounded-full border-2 border-white/90 bg-black/80 shadow-2xl transition-all duration-300 focus:outline-none z-20"
+        className="cursor-pointer pointer-events-auto w-20 h-20 flex items-center justify-center rounded-full border-2 border-white/90 bg-black/80 shadow-2xl transition-all duration-300 focus:outline-none z-20 touch-manipulation active:scale-95"
+        style={{ touchAction: 'manipulation' }}
         aria-label="View Portfolio"
       >
         <Code2 className="text-white w-10 h-10 drop-shadow-lg transition duration-200" />

@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 import { Facebook, Github, Linkedin, Mail, Twitter } from 'lucide-react'
-import { useState } from 'react'
 import { AchievementId } from '@/assets/data/achievements'
 import { useAchievements } from '@/components/achievements/AchievementsContext'
 
@@ -39,37 +38,32 @@ const contactMethods = [
 
 export function ContactMethodsGrid() {
   const { unlockAchievement } = useAchievements()
-  const [clickedSocialLinks, setClickedSocialLinks] = useState<Set<string>>(
-    new Set(),
-  )
 
   const handleEmailClick = () => {
     unlockAchievement(AchievementId.emailSender)
   }
 
-  const handleSocialLinkClick = (title: string) => {
-    if (title === 'Email') return // Skip email as it's handled separately
-
-    setClickedSocialLinks((prev) => {
-      const newSet = new Set(prev)
-      newSet.add(title)
-
-      // Unlock socialButterfly achievement when 3 unique social links are clicked
-      if (newSet.size >= 3) {
-        unlockAchievement(AchievementId.socialButterfly)
-      }
-
-      return newSet
-    })
+  const handleSocialLinkClick = (platform: string) => {
+    unlockAchievement(AchievementId.socialButterfly)
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 1.2, duration: 0.8 }}
-      className="mb-16"
-    >
+    <div className="space-y-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.2, duration: 0.6 }}
+        className="text-center"
+      >
+        <h2 className="font-mohave text-3xl font-bold text-white mb-4">
+          Get In Touch
+        </h2>
+        <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          I'm always open to discussing new opportunities, collaborations, or
+          just having a chat about technology and innovation.
+        </p>
+      </motion.div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 max-w-5xl mx-auto">
         {contactMethods.map((method, index) => {
           const Icon = method.icon
@@ -90,7 +84,8 @@ export function ContactMethodsGrid() {
                     ? handleEmailClick
                     : () => handleSocialLinkClick(method.title)
                 }
-                className="block relative bg-black/20 backdrop-blur-xl border border-white/10 rounded-xl p-4 hover:bg-black/30 transition-all duration-500 h-full overflow-hidden cursor-pointer"
+                className="block relative bg-black/20 backdrop-blur-xl border border-white/10 rounded-xl p-4 hover:bg-black/30 transition-all duration-500 h-full overflow-hidden cursor-pointer touch-manipulation"
+                style={{ touchAction: 'manipulation' }}
                 whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -103,18 +98,16 @@ export function ContactMethodsGrid() {
                   initial={false}
                 />
 
-                <div className="relative z-10 text-center h-full flex flex-col">
-                  <div className="flex-1">
-                    <motion.div
-                      className="mx-auto mb-3 w-12 h-12 rounded-xl bg-gradient-to-r from-purple-500/20 to-pink-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-white/10"
-                      whileHover={{ rotate: 5 }}
-                    >
-                      <Icon className="w-6 h-6 text-white" />
-                    </motion.div>
-                    <h3 className="font-mohave text-lg font-bold text-white mb-1">
+                {/* Content */}
+                <div className="relative z-10 flex flex-col items-center text-center space-y-3">
+                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-white/10 to-white/5 flex items-center justify-center border border-white/20 group-hover:border-white/40 transition-all duration-300">
+                    <Icon className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-white text-sm group-hover:text-white/90 transition-colors">
                       {method.title}
                     </h3>
-                    <p className="text-gray-400 text-xs leading-tight">
+                    <p className="text-gray-400 text-xs mt-1">
                       {method.description}
                     </p>
                   </div>
@@ -124,6 +117,6 @@ export function ContactMethodsGrid() {
           )
         })}
       </div>
-    </motion.div>
+    </div>
   )
 }

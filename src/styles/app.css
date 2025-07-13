@@ -496,3 +496,56 @@
   box-shadow: none;
   cursor: pointer;
 }
+
+/* Touch event handling for Spline and interactive components */
+.spline-container {
+  touch-action: pan-x pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent touchmove errors on interactive 3D components */
+.spline-container canvas {
+  touch-action: manipulation;
+}
+
+/* Enhanced touch handling for mobile devices */
+@media (pointer: coarse) {
+  .touch-friendly {
+    touch-action: manipulation;
+  }
+
+  /* Allow scrolling but prevent zoom on interactive elements */
+  .interactive-element {
+    touch-action: pan-x pan-y;
+  }
+}
+
+/* Prevent unwanted touch behaviors */
+.no-touch-zoom {
+  touch-action: manipulation;
+}
+
+/* Smooth scrolling for touch devices */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.touch-active {
+  transform: scale(1.02) translateY(-8px);
+}
+.touch-active .aspect-video img {
+  transform: scale(1.1);
+}
+.touch-active .aspect-video .absolute.inset-0.bg-gradient-to-t {
+  opacity: 1;
+}
+.touch-active .aspect-video .absolute.inset-0.flex {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Phone stack touch handling */
+.phone-frame { touch-action: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+.phone-frame * { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
