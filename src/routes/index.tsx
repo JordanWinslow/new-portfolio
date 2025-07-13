@@ -94,7 +94,7 @@ function Home() {
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-black font-mohave">
-      <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-center spline-container">
+      <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-center">
         <Suspense
           fallback={
             <div className="flex items-center justify-center w-full h-full">
@@ -127,8 +127,7 @@ const PortfolioButton = () => (
       <div className="absolute w-40 h-40 rounded-full bg-white opacity-40 blur-3xl z-10" />
       <InternalLink
         to="/portfolio"
-        className="cursor-pointer pointer-events-auto w-20 h-20 flex items-center justify-center rounded-full border-2 border-white/90 bg-black/80 shadow-2xl transition-all duration-300 focus:outline-none z-20 touch-manipulation active:scale-95"
-        style={{ touchAction: 'manipulation' }}
+        className="cursor-pointer pointer-events-auto w-20 h-20 flex items-center justify-center rounded-full border-2 border-white/90 bg-black/80 shadow-2xl transition-all duration-300 focus:outline-none z-20"
         aria-label="View Portfolio"
       >
         <Code2 className="text-white w-10 h-10 drop-shadow-lg transition duration-200" />

@@ -196,13 +196,13 @@ export function CallToAction({
           showCloseButton={false}
         >
           <div className="flex items-center justify-between border-b border-white/10 pb-4">
-            <h2 className="font-mohave text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-orange-500 bg-clip-text text-transparent uppercase">
+            <h2 className="font-mohave text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-orange-500 bg-clip-text text-transparent uppercase text-center sm:text-left flex-1 sm:flex-none">
               Start a Conversation
             </h2>
             <button
               type="button"
               onClick={handleClose}
-              className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+              className="p-2 hover:bg-white/10 rounded-lg transition-colors absolute right-0 sm:relative sm:right-auto"
               disabled={isSubmitting}
             >
               <X className="w-5 h-5 text-white" />

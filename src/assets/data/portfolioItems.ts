@@ -6,13 +6,15 @@ import pokeTeamImage from '@/assets/images/portfolio/poketeamdemo.gif'
 import theWatchersImage from '@/assets/images/portfolio/thewatchers.webp'
 
 export interface IPortfolioItem {
-  imageSrc: string
+  id: number
+  image: string
   title: string
   description: string
-  techItems: string[]
-  githubLink?: string
-  demoLink?: string
+  tech: string[]
+  github?: string
+  demo?: string
   videoLink?: string
+  yearCreated: number
 }
 
 export const portfolioItems = [
@@ -20,7 +22,7 @@ export const portfolioItems = [
     id: 1,
     title: 'Modern UI Horror RPG',
     description:
-      'Extremely complex project designed, programmed and animated from scratch. Please see the demo video!',
+      'A sophisticated game engine built from the ground up featuring advanced systems design, custom animation frameworks, and performance-optimized rendering. This project demonstrates deep technical expertise in game development architecture.',
     image: containmentBreachImage,
     videoLink: 'https://youtu.be/ckLU5tGdlTM?si=yBGFAIl2cy6taF_O',
     tech: [
@@ -30,54 +32,61 @@ export const portfolioItems = [
       'Desktop Applications',
       'Performance Optimization',
     ],
+    yearCreated: 2025,
   },
   {
     id: 2,
     title: 'Ecosystem Simulator',
     description:
-      'Build-your-own-framework TypeScript project created to teach students web & object oriented programming fundamentals.',
+      'A comprehensive TypeScript framework designed to teach object-oriented programming principles and web development fundamentals. Features modular architecture and real-time simulation capabilities.',
     image: ecosystemSimImage,
     github: 'https://github.com/JordanWinslow/TypeScript-Ecosystem-Game',
     demo: 'https://typescript-ecosystem-simulator.netlify.app/',
     tech: ['TypeScript', 'HTML', 'CSS', 'OOP', 'Performance Optimization'],
+    yearCreated: 2023,
   },
   {
     id: 3,
     title: 'PokeTeam',
     description:
-      'Responsive, mobile-first web app with infinite loading, local storage, & query caching',
+      'A modern, responsive web application featuring infinite scroll, intelligent caching strategies, and seamless mobile-first user experience. Demonstrates expertise in state management and API integration.',
     image: pokeTeamImage,
     github: 'https://github.com/JordanWinslow/poke-team',
     demo: 'https://poke-team.netlify.app/',
     tech: ['JavaScript', 'React', 'Redux', 'MaterialUI'],
+    yearCreated: 2019,
   },
   {
     id: 4,
     title: 'Git Finder',
-    description: 'Search application for github users I built 6 years ago',
+    description:
+      'A streamlined GitHub user search application showcasing clean React architecture and efficient API integration patterns.',
     image: gitFinderImage,
     github:
       'https://github.com/JordanWinslow/functional-react-github-user-finder',
     demo: 'https://functional-react-gitfinder.netlify.app/',
     tech: ['React', 'JavaScript', 'React Router', 'CSS'],
+    yearCreated: 2019,
   },
   {
     id: 5,
     title: 'Horror RPG Game',
     description:
-      'Short RPG I programmed & scored a long time ago with JavaScript tooling',
+      'A browser-based role-playing game featuring custom JavaScript tooling, immersive audio design, and interactive storytelling elements.',
     image: horrorRPG2Image,
     demo: 'https://demo.com',
     videoLink: 'https://youtu.be/Rf9wsKJSeII',
     tech: ['JavaScript', 'HTML', 'CSS'],
+    yearCreated: 2018,
   },
   {
     id: 6,
     title: 'Browser Based Visual Novel Game',
     description:
-      'Short VN I programmed & scored a long time ago with JavaScript tooling',
+      'An interactive visual novel featuring custom JavaScript frameworks, dynamic storytelling, and immersive audio-visual experiences.',
     image: theWatchersImage,
     demo: 'https://jordanwinslow.itch.io/the-watchers-browser',
     tech: ['JavaScript', 'HTML', 'CSS'],
+    yearCreated: 2017,
   },
 ]

@@ -7,6 +7,7 @@ import { BackgroundJourney } from '@/components/about/BackgroundJourney'
 import { LeadershipValues } from '@/components/about/LeadershipValues'
 import { PersonalInterests } from '@/components/about/PersonalInterests'
 import { useAchievements } from '@/components/achievements/AchievementsContext'
+import { CallToAction } from '@/components/contact/CallToAction'
 import { TechGridSection } from '@/components/techgrid/TechGridSection'
 
 export const Route = createFileRoute('/about')({
@@ -107,6 +108,16 @@ function About() {
 
         <section id="tech-section" ref={techSectionRef} className="mt-20">
           <TechGridSection />
+        </section>
+
+        <section className="mt-20">
+          <CallToAction
+            title="Ready to See My Professional Experience?"
+            description="I'm passionate about creating exceptional digital experiences and have worked on some incredible projects. View my detailed resume to see my technical expertise, achievements, and the innovative solutions I've delivered."
+            primaryButtonText="Get In Touch"
+            secondaryButtonText="View Resume"
+            secondaryButtonHref="/resume"
+          />
         </section>
       </div>
     </div>

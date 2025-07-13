@@ -2,13 +2,14 @@ import { ArrowUpRight, Github, Play } from 'lucide-react'
 import type { IPortfolioItem } from '@/assets/data/portfolioItems'
 
 export function ProjectListItem({
-  imageSrc,
+  image,
   title,
   description,
-  techItems,
-  githubLink,
-  demoLink,
+  tech,
+  github,
+  demo,
   videoLink,
+  yearCreated,
   onVideoClick,
   onLinkClick,
 }: IPortfolioItem & {
@@ -21,6 +22,13 @@ export function ProjectListItem({
       className="rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm p-6 flex flex-col md:flex-row gap-6 hover:border-white/20 hover:bg-gradient-to-br hover:from-white/10 hover:to-white/15 transition-all duration-300 hover-lift group relative active:scale-[0.98] touch-manipulation"
       style={{ touchAction: 'manipulation' }}
     >
+      {/* Year indicator */}
+      <div className="absolute top-4 right-4 z-20">
+        <div className="px-2 py-1 bg-black/40 backdrop-blur-sm border border-white/20 rounded-lg">
+          <span className="text-xs font-mono text-white/90">{yearCreated}</span>
+        </div>
+      </div>
+
       {/* Background gradient on hover */}
       <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-purple-500/0 via-pink-500/0 to-orange-500/0 group-hover:from-purple-500/10 group-hover:via-pink-500/10 group-hover:to-orange-500/10 transition-all duration-300 pointer-events-none" />
 
@@ -28,7 +36,7 @@ export function ProjectListItem({
       <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-purple-500/0 to-pink-500/0 group-hover:from-purple-500/20 group-hover:to-pink-500/20 transition-all duration-300 pointer-events-none blur-xl" />
       <div className="w-full md:w-64 h-48 md:h-auto relative overflow-hidden rounded-lg flex-shrink-0">
         <img
-          src={imageSrc}
+          src={image}
           alt={title}
           className="w-full h-full object-cover"
           loading="lazy"
@@ -40,7 +48,7 @@ export function ProjectListItem({
         </h3>
         <p className="text-gray-400 mb-4 line-clamp-3">{description}</p>
         <div className="flex flex-wrap gap-2 mb-4">
-          {techItems.map((tech) => (
+          {tech && tech.map((tech) => (
             <span
               key={tech}
               className="cursor-pointer px-2 py-1 text-xs font-mono bg-white/10 text-white/80 rounded border border-white/20 touch-manipulation"
@@ -51,12 +59,12 @@ export function ProjectListItem({
           ))}
         </div>
         <div className="flex gap-4">
-          {githubLink && (
+          {github && (
             <a
-              href={githubLink}
+              href={github}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => onLinkClick?.(githubLink)}
+              onClick={() => onLinkClick?.(github)}
               className="gradient-border-button flex items-center gap-2 touch-manipulation"
               style={{ touchAction: 'manipulation' }}
             >
@@ -78,12 +86,12 @@ export function ProjectListItem({
               VIDEO
             </button>
           )}
-          {demoLink && !videoLink && (
+          {demo && !videoLink && (
             <a
-              href={demoLink}
+              href={demo}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => onLinkClick?.(demoLink)}
+              onClick={() => onLinkClick?.(demo)}
               className="gradient-border-button flex items-center gap-2 touch-manipulation"
               style={{ touchAction: 'manipulation' }}
             >

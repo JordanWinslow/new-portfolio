@@ -7,6 +7,7 @@ import { useAchievements } from '@/components/achievements/AchievementsContext'
 import { CallToAction } from '@/components/contact/CallToAction'
 import { BackgroundDecorations } from '@/components/decorative/BackgroundDecorations'
 import { StarField } from '@/components/decorative/StarField'
+import { InternalLink } from '@/components/navigation/InternalLink'
 import type { LayoutType } from '@/components/portfolio/LayoutType'
 import PhoneStackShowcase from '@/components/portfolio/PhoneStackShowcase'
 import { PortfolioGrid } from '@/components/portfolio/PortfolioGrid'
@@ -95,6 +96,7 @@ function Portfolio() {
   const featuredWorkRef = useRef<HTMLElement>(null)
   const starfieldRef = useRef<HTMLDivElement>(null)
   const bottomRef = useRef<HTMLElement>(null)
+  const ndaTextRef = useRef<HTMLParagraphElement>(null)
 
   const scrollToRef = useScrollToRef()
 
@@ -229,7 +231,7 @@ function Portfolio() {
         >
           <motion.button
             type="button"
-            onClick={() => scrollToRef(portfolioRef)}
+            onClick={() => scrollToRef(ndaTextRef)}
             className="w-14 h-14 rounded-full flex items-center justify-center border-[3px] border-transparent bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 bg-clip-padding hover:scale-110 transition-transform duration-200 ease-in-out cursor-pointer"
             style={{
               background:
@@ -254,6 +256,23 @@ function Portfolio() {
       <div ref={starfieldRef} className="h-[3000px] relative">
         <StarField />
       </div>
+
+      <p
+        ref={ndaTextRef}
+        className="text-lg text-gray-300 max-w-3xl mx-auto relative z-50 px-8 py-12 text-center leading-relaxed"
+      >
+        While my most recent projects are under NDA, you can read about the
+        innovative features and technical solutions I've developed in my{' '}
+        <InternalLink
+          to="/resume"
+          className="text-orange-400 hover:text-orange-300 transition-colors underline decoration-orange-400/30 hover:decoration-orange-300/50"
+        >
+          resume
+        </InternalLink>
+        . Below you'll find a collection of side projects I created for fun that
+        demonstrate my expertise in modern frontend development and creative
+        problem-solving.
+      </p>
 
       <section ref={portfolioRef} className="px-2 sm:px-8 py-16 relative z-10">
         <div className="max-w-7xl sm:mx-auto">

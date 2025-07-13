@@ -7,13 +7,14 @@ import {
 } from '@/components/ui/Tooltip'
 
 export function ProjectTableRow({
-  imageSrc,
+  image,
   title,
   description,
-  techItems,
-  githubLink,
-  demoLink,
+  tech,
+  github,
+  demo,
   videoLink,
+  yearCreated,
   onVideoClick,
   onLinkClick,
 }: IPortfolioItem & {
@@ -25,13 +26,20 @@ export function ProjectTableRow({
       <td className="px-6 py-4 relative z-10">
         <div className="flex items-center gap-4">
           <img
-            src={imageSrc}
+            src={image}
             alt={title}
             className="w-12 h-12 rounded object-cover"
             loading="lazy"
           />
 
-          <span className="font-mohave font-semibold text-white">{title}</span>
+          <div className="flex flex-col">
+            <span className="font-mohave font-semibold text-white">
+              {title}
+            </span>
+            <span className="text-xs text-gray-400 font-mono">
+              {yearCreated}
+            </span>
+          </div>
         </div>
       </td>
 
@@ -48,30 +56,31 @@ export function ProjectTableRow({
 
       <td className="px-6 py-4 relative z-10">
         <div className="flex flex-wrap gap-1">
-          {techItems.slice(0, 3).map((tech) => (
-            <span
-              key={tech}
-              className="px-2 py-1 text-xs font-mono bg-white/10 text-white/90 rounded-full border border-white/20"
-            >
-              {tech}
-            </span>
-          ))}
+          {tech &&
+            tech.slice(0, 3).map((techItem: string) => (
+              <span
+                key={techItem}
+                className="px-2 py-1 text-xs font-mono bg-white/10 text-white/90 rounded-full border border-white/20"
+              >
+                {techItem}
+              </span>
+            ))}
 
-          {techItems.length > 3 && (
+          {tech && tech.length > 3 && (
             <span className="px-2 py-1 text-xs text-gray-400">
-              +{techItems.length - 3}
+              +{tech.length - 3}
             </span>
           )}
         </div>
       </td>
       <td className="px-6 py-4 relative z-10">
         <div className="flex gap-2">
-          {githubLink && (
+          {github && (
             <a
-              href={githubLink}
+              href={github}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => onLinkClick?.(githubLink)}
+              onClick={() => onLinkClick?.(github)}
               className="gradient-border-icon"
               title="View Code"
             >
@@ -93,12 +102,12 @@ export function ProjectTableRow({
             </button>
           )}
 
-          {demoLink && !videoLink && (
+          {demo && !videoLink && (
             <a
-              href={demoLink}
+              href={demo}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => onLinkClick?.(demoLink)}
+              onClick={() => onLinkClick?.(demo)}
               className="gradient-border-icon"
               title="Live Demo"
             >

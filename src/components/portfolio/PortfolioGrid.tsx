@@ -96,13 +96,7 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
               <ProjectCard
                 key={item.id}
                 variant="alwaysDisplay"
-                title={item.title}
-                description={item.description}
-                imageSrc={item.image}
-                techItems={item.tech}
-                githubLink={item.github}
-                demoLink={item.demo}
-                videoLink={item.videoLink}
+                {...item}
                 onVideoClick={handleVideoClick}
                 onLinkClick={checkForAchievement}
               />
@@ -127,13 +121,7 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
               <ProjectCard
                 key={item.id}
                 variant="hoverToDisplay"
-                title={item.title}
-                description={item.description}
-                imageSrc={item.image}
-                techItems={item.tech}
-                githubLink={item.github}
-                demoLink={item.demo}
-                videoLink={item.videoLink}
+                {...item}
                 onVideoClick={handleVideoClick}
                 onLinkClick={checkForAchievement}
               />
@@ -157,13 +145,7 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
             {portfolioItems.map((item) => (
               <ProjectListItem
                 key={item.id}
-                title={item.title}
-                description={item.description}
-                imageSrc={item.image}
-                techItems={item.tech}
-                githubLink={item.github}
-                demoLink={item.demo}
-                videoLink={item.videoLink}
+                {...item}
                 onVideoClick={handleVideoClick}
                 onLinkClick={checkForAchievement}
               />
@@ -207,13 +189,7 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
                   {portfolioItems.map((item) => (
                     <ProjectTableRow
                       key={item.id}
-                      title={item.title}
-                      description={item.description}
-                      imageSrc={item.image}
-                      techItems={item.tech}
-                      githubLink={item.github}
-                      demoLink={item.demo}
-                      videoLink={item.videoLink}
+                      {...item}
                       onVideoClick={handleVideoClick}
                       onLinkClick={checkForAchievement}
                     />
@@ -233,13 +209,7 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
                 {portfolioItems.map((item) => (
                   <ProjectAccordionItem
                     key={item.id}
-                    title={item.title}
-                    description={item.description}
-                    imageSrc={item.image}
-                    techItems={item.tech}
-                    githubLink={item.github}
-                    demoLink={item.demo}
-                    videoLink={item.videoLink}
+                    {...item}
                     onVideoClick={handleVideoClick}
                     onLinkClick={checkForAchievement}
                   />
