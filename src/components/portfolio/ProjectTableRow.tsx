@@ -1,4 +1,4 @@
-import { ArrowUpRight, Code2 } from 'lucide-react'
+import { ArrowUpRight, Code2, Play } from 'lucide-react'
 import type { IPortfolioItem } from '@/assets/data/portfolioItems'
 import {
   Tooltip,
@@ -13,7 +13,11 @@ export function ProjectTableRow({
   techItems,
   githubLink,
   demoLink,
-}: IPortfolioItem) {
+  videoLink,
+  onVideoClick,
+}: IPortfolioItem & {
+  onVideoClick?: (videoUrl: string, title: string) => void
+}) {
   return (
     <tr className="border-t border-white/10 hover:bg-gradient-to-r hover:from-white/5 hover:to-white/10 transition-all duration-300 relative group">
       {/* Background gradient on hover */}
@@ -72,7 +76,18 @@ export function ProjectTableRow({
             </a>
           )}
 
-          {demoLink && (
+          {videoLink && onVideoClick && (
+            <button
+              type="button"
+              onClick={() => onVideoClick(videoLink, title)}
+              className="gradient-border-icon"
+              title="Watch Video"
+            >
+              <Play size={16} />
+            </button>
+          )}
+
+          {demoLink && !videoLink && (
             <a
               href={demoLink}
               className="gradient-border-icon"

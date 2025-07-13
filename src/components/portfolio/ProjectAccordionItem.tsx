@@ -1,4 +1,4 @@
-import { ArrowUpRight, Github } from 'lucide-react'
+import { ArrowUpRight, Github, Play } from 'lucide-react'
 import type { IPortfolioItem } from '@/assets/data/portfolioItems'
 import {
   AccordionContent,
@@ -13,7 +13,11 @@ export function ProjectAccordionItem({
   techItems,
   githubLink,
   demoLink,
-}: IPortfolioItem) {
+  videoLink,
+  onVideoClick,
+}: IPortfolioItem & {
+  onVideoClick?: (videoUrl: string, title: string) => void
+}) {
   return (
     <AccordionItem
       value={title}
@@ -82,7 +86,18 @@ export function ProjectAccordionItem({
                 </a>
               )}
 
-              {demoLink && (
+              {videoLink && onVideoClick && (
+                <button
+                  type="button"
+                  onClick={() => onVideoClick(videoLink, title)}
+                  className="gradient-border-button flex items-center gap-2"
+                >
+                  <Play size={16} />
+                  VIDEO
+                </button>
+              )}
+
+              {demoLink && !videoLink && (
                 <a
                   href={demoLink}
                   className="gradient-border-button flex items-center gap-2"

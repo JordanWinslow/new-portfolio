@@ -9,6 +9,7 @@ export interface IPortfolioItem {
   techItems: string[]
   githubLink?: string
   demoLink?: string
+  videoLink?: string
 }
 
 export const portfolioItems = [
@@ -18,7 +19,7 @@ export const portfolioItems = [
     description:
       'Extremely complex project designed, programmed and animated from scratch. Please see the demo video!',
     image: containmentBreachImage,
-    demo: 'https://youtu.be/ckLU5tGdlTM?si=yBGFAIl2cy6taF_O',
+    videoLink: 'https://youtu.be/ckLU5tGdlTM?si=yBGFAIl2cy6taF_O',
     tech: [
       'GML',
       'Systems Design',

@@ -1,4 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { useEffect } from 'react'
+import { useAchievements } from '@/components/achievements/AchievementsContext'
 import { CallToAction } from '@/components/contact/CallToAction'
 import { ContactBackground } from '@/components/contact/ContactBackground'
 import { ContactHero } from '@/components/contact/ContactHero'
@@ -12,6 +14,12 @@ export const Route = createFileRoute('/contact')({
 const isEmployed = false
 
 function Contact() {
+  const { unlockAchievement } = useAchievements()
+
+  useEffect(() => {
+    unlockAchievement('contact-reacher')
+  }, [unlockAchievement])
+
   return (
     <div className="min-h-screen bg-black text-white relative overflow-x-hidden">
       {/* Animated Background with Floating Particles */}

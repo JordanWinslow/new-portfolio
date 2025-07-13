@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Download } from 'lucide-react'
-import { useState } from 'react'
-import { AppControlsHeader } from '@/components/navigation/AppControlsHeader'
+import { useEffect } from 'react'
+import { useAchievements } from '@/components/achievements/AchievementsContext'
 import { Badge } from '@/components/ui/Badge'
 import {
   Card,
@@ -16,9 +16,11 @@ export const Route = createFileRoute('/resume')({
 })
 
 function Resume() {
-  const [_visitedTabs, _setVisitedTabs] = useState<Set<string>>(
-    new Set(['experience']),
-  )
+  const { unlockAchievement } = useAchievements()
+
+  useEffect(() => {
+    unlockAchievement('resume-reader')
+  }, [unlockAchievement])
 
   const profile = {
     name: 'Jordan Winslow',
@@ -90,8 +92,6 @@ function Resume() {
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-x-hidden">
-      <AppControlsHeader />
-
       <div className="max-w-6xl mx-auto px-6 py-16">
         {/* Header */}
         <div className="text-center mb-16">

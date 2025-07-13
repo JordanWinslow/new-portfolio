@@ -1,4 +1,4 @@
-import { ArrowUpRight, Github } from 'lucide-react'
+import { ArrowUpRight, Github, Play } from 'lucide-react'
 import type { IPortfolioItem } from '@/assets/data/portfolioItems'
 
 export function ProjectListItem({
@@ -8,7 +8,11 @@ export function ProjectListItem({
   techItems,
   githubLink,
   demoLink,
-}: IPortfolioItem) {
+  videoLink,
+  onVideoClick,
+}: IPortfolioItem & {
+  onVideoClick?: (videoUrl: string, title: string) => void
+}) {
   return (
     <div className="rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm p-6 flex flex-col md:flex-row gap-6 hover:border-white/20 hover:bg-gradient-to-br hover:from-white/10 hover:to-white/15 transition-all duration-300 hover-lift group relative">
       {/* Background gradient on hover */}
@@ -49,7 +53,17 @@ export function ProjectListItem({
               GITHUB
             </a>
           )}
-          {demoLink && (
+          {videoLink && onVideoClick && (
+            <button
+              type="button"
+              onClick={() => onVideoClick(videoLink, title)}
+              className="gradient-border-button flex items-center gap-2"
+            >
+              <Play size={16} />
+              VIDEO
+            </button>
+          )}
+          {demoLink && !videoLink && (
             <a
               href={demoLink}
               className="gradient-border-button flex items-center gap-2"

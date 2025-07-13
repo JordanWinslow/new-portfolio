@@ -12,7 +12,22 @@ import {
 
 export function AchievementsButton() {
   const [isOpen, setIsOpen] = useState(false)
-  const { achievements, unlockedCount, totalPoints } = useAchievements()
+  const {
+    achievements,
+    unlockedCount,
+    totalPoints,
+    newAchievementsVisible,
+    markAchievementsAsViewed,
+  } = useAchievements()
+
+  // Mark achievements as viewed when modal opens
+  const handleOpenModal = () => {
+    setIsOpen(true)
+    markAchievementsAsViewed()
+  }
+
+  // Check if there are unviewed achievements
+  const unviewedCount = newAchievementsVisible
 
   const getRarityColor = (rarity: string) => {
     switch (rarity) {
@@ -50,129 +65,137 @@ export function AchievementsButton() {
     'exploration',
     'mastery',
     'social',
+    'easter-eggs',
   ]
+
+  // Convert achievements object to array for easier processing
+  const achievementsArray = Object.values(achievements)
 
   return (
     <>
       <Button
-        onClick={() => setIsOpen(true)}
+        onClick={handleOpenModal}
         className="fixed top-4 right-4 z-50 w-12 h-12 p-0 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-white/20 backdrop-blur-md hover:scale-110 transition-transform duration-300 group"
       >
         <Trophy className="w-6 h-6 text-white group-hover:text-yellow-400 transition-colors duration-300" />
-        {unlockedCount > 0 && (
+        {unviewedCount > 0 && (
           <Badge className="absolute -top-1 -right-1 w-5 h-5 p-0 text-xs bg-gradient-to-r from-purple-500 to-pink-500 border-0">
-            {unlockedCount}
+            {unviewedCount}
           </Badge>
         )}
       </Button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-black/95 backdrop-blur-md border-white/20 fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[9999] isolate">
-          <DialogHeader>
-            <DialogTitle className="font-mohave text-3xl font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-orange-500 bg-clip-text text-transparent uppercase tracking-wide">
+        <DialogContent className="max-w-4xl max-h-[80vh] bg-black/95 backdrop-blur-md border-white/20 fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[9999] isolate shadow-2xl flex flex-col w-[95vw] h-[90vh] md:w-auto md:h-auto md:max-h-[80vh] md:max-w-4xl">
+          {/* Fixed Header */}
+          <DialogHeader className="flex-shrink-0 bg-black/95 backdrop-blur-md border-b border-white/10 p-4 md:p-6 pb-4">
+            <DialogTitle className="font-mohave text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-orange-500 bg-clip-text text-transparent uppercase tracking-wide">
               Achievements
             </DialogTitle>
-            <div className="flex items-center gap-4 mt-4">
-              <div className="flex items-center gap-2">
-                <Trophy className="w-5 h-5 text-yellow-400" />
-                <span className="text-white font-semibold">
-                  {unlockedCount} / {achievements.length} Unlocked
+            <div className="flex items-center gap-2 md:gap-4 mt-2 md:mt-4 flex-wrap">
+              <div className="flex items-center gap-1 md:gap-2">
+                <Trophy className="w-4 h-4 md:w-5 md:h-5 text-yellow-400" />
+                <span className="text-white font-semibold text-sm md:text-base">
+                  {unlockedCount} / {achievementsArray.length} Unlocked
                 </span>
               </div>
-              <div className="flex items-center gap-2">
-                <Star className="w-5 h-5 text-purple-400" />
-                <span className="text-white font-semibold">
+              <div className="flex items-center gap-1 md:gap-2">
+                <Star className="w-4 h-4 md:w-5 md:h-5 text-purple-400" />
+                <span className="text-white font-semibold text-sm md:text-base">
                   {totalPoints} Points
                 </span>
               </div>
             </div>
           </DialogHeader>
 
-          <div className="space-y-8">
-            {categories.map((category) => {
-              const categoryAchievements = achievements.filter(
-                (a) => a.category === category,
-              )
-              const unlockedInCategory = categoryAchievements.filter(
-                (a) => a.unlocked,
-              ).length
+          {/* Scrollable Content */}
+          <div className="flex-1 overflow-y-auto p-4 md:p-6 pt-4">
+            <div className="space-y-6 md:space-y-8">
+              {categories.map((category) => {
+                const categoryAchievements = achievementsArray.filter(
+                  (a) => a.category === category,
+                )
+                const unlockedInCategory = categoryAchievements.filter(
+                  (a) => a.unlocked,
+                ).length
 
-              return (
-                <div key={category} className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-mohave text-xl font-bold text-white uppercase tracking-wide">
-                      {category.charAt(0).toUpperCase() + category.slice(1)}
-                    </h3>
-                    <span className="text-gray-400">
-                      {unlockedInCategory} / {categoryAchievements.length}
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {categoryAchievements.map((achievement) => (
-                      <div
-                        key={achievement.id}
-                        className={`relative p-4 rounded-lg border transition-all duration-300 ${
-                          achievement.unlocked
-                            ? 'border-white/30 bg-white/5 hover:bg-white/10'
-                            : 'border-white/10 bg-white/2 opacity-60'
-                        }`}
-                      >
-                        <div className="flex items-start gap-3">
-                          <div
-                            className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                              achievement.unlocked
-                                ? 'bg-gradient-to-r from-purple-500 to-pink-500'
-                                : 'bg-gray-600'
-                            }`}
-                          >
-                            {achievement.unlocked ? (
-                              <achievement.icon className="w-5 h-5 text-white" />
-                            ) : (
-                              <Trophy className="w-5 h-5 text-gray-400" />
-                            )}
-                          </div>
-                          <div className="flex-1 min-w-0 pr-12">
-                            <div className="flex items-center gap-2 mb-2 flex-wrap">
-                              <h4 className="font-semibold text-white text-sm">
-                                {achievement.title}
-                              </h4>
-                              <Badge
-                                variant="outline"
-                                className={`text-xs ${getRarityColor(achievement.rarity)}`}
-                              >
-                                {getRarityIcon(achievement.rarity)}
-                                <span className="ml-1">
-                                  {achievement.rarity}
-                                </span>
-                              </Badge>
+                return (
+                  <div key={category} className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-mohave text-lg md:text-xl font-bold text-white uppercase tracking-wide">
+                        {category.charAt(0).toUpperCase() + category.slice(1)}
+                      </h3>
+                      <span className="text-gray-400 text-sm md:text-base">
+                        {unlockedInCategory} / {categoryAchievements.length}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4">
+                      {categoryAchievements.map((achievement) => (
+                        <div
+                          key={achievement.id}
+                          className={`relative p-3 md:p-4 rounded-lg border transition-all duration-300 ${
+                            achievement.unlocked
+                              ? 'border-white/30 bg-white/5 hover:bg-white/10'
+                              : 'border-white/10 bg-white/2 opacity-60'
+                          }`}
+                        >
+                          <div className="flex items-start gap-2 md:gap-3">
+                            <div
+                              className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+                                achievement.unlocked
+                                  ? 'bg-gradient-to-r from-purple-500 to-pink-500'
+                                  : 'bg-gray-600'
+                              }`}
+                            >
+                              {achievement.unlocked ? (
+                                <achievement.icon className="w-4 h-4 md:w-5 md:h-5 text-white" />
+                              ) : (
+                                <Trophy className="w-4 h-4 md:w-5 md:h-5 text-gray-400" />
+                              )}
                             </div>
-                            <p className="text-sm text-gray-300 mb-3 leading-relaxed">
-                              {achievement.description}
-                            </p>
-                            <div className="text-xs text-gray-400 leading-relaxed">
-                              {achievement.unlockCondition}
-                            </div>
-                            {achievement.unlocked && achievement.unlockedAt && (
-                              <div className="mt-2 text-xs text-green-400">
-                                Unlocked:{' '}
-                                {achievement.unlockedAt.toLocaleDateString()}
+                            <div className="flex-1 min-w-0 pr-8 md:pr-12">
+                              <div className="flex items-center gap-1 md:gap-2 mb-1 md:mb-2 flex-wrap">
+                                <h4 className="font-semibold text-white text-xs md:text-sm">
+                                  {achievement.title}
+                                </h4>
+                                <Badge
+                                  variant="outline"
+                                  className={`text-xs ${getRarityColor(achievement.rarity)}`}
+                                >
+                                  {getRarityIcon(achievement.rarity)}
+                                  <span className="ml-1 hidden sm:inline">
+                                    {achievement.rarity}
+                                  </span>
+                                </Badge>
                               </div>
-                            )}
+                              <p className="text-xs md:text-sm text-gray-300 mb-2 md:mb-3 leading-relaxed">
+                                {achievement.description}
+                              </p>
+                              <div className="text-xs text-gray-400 leading-relaxed">
+                                {achievement.unlockCondition}
+                              </div>
+                              {achievement.unlocked &&
+                                achievement.unlockedAt && (
+                                  <div className="mt-1 md:mt-2 text-xs text-green-400">
+                                    Unlocked:{' '}
+                                    {achievement.unlockedAt.toLocaleDateString()}
+                                  </div>
+                                )}
+                            </div>
+                          </div>
+
+                          <div className="absolute bottom-2 md:bottom-3 right-2 md:right-3">
+                            <Badge className="bg-purple-500/20 border-purple-500/50 text-purple-300 text-xs px-1 md:px-2 py-0.5 md:py-1">
+                              {achievement.points} pts
+                            </Badge>
                           </div>
                         </div>
-
-                        {/* Points badge in bottom right */}
-                        <div className="absolute bottom-3 right-3">
-                          <Badge className="bg-purple-500/20 border-purple-500/50 text-purple-300 text-xs px-2 py-1">
-                            {achievement.points} pts
-                          </Badge>
-                        </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )
-            })}
+                )
+              })}
+            </div>
           </div>
         </DialogContent>
       </Dialog>

@@ -1,4 +1,4 @@
-import { ArrowUpRight, Github } from 'lucide-react'
+import { ArrowUpRight, Github, Play } from 'lucide-react'
 import type { IPortfolioItem } from '@/assets/data/portfolioItems'
 import { useResizeObserver } from '@/lib/utils'
 import { Button } from '../ui/Button'
@@ -11,8 +11,11 @@ export const ProjectCard = ({
   techItems,
   githubLink,
   demoLink,
+  videoLink,
+  onVideoClick,
 }: IPortfolioItem & {
   variant: 'hoverToDisplay' | 'alwaysDisplay'
+  onVideoClick?: (videoUrl: string, title: string) => void
 }) => {
   // Not enough room to display title, description and tech badges under 500px so I have decided to hide the
   // tech badges under 500px as this was the simplest solution.
@@ -75,7 +78,16 @@ export const ProjectCard = ({
                 </Button>
               </a>
             )}
-            {demoLink && (
+            {videoLink && onVideoClick && (
+              <Button
+                variant="secondary"
+                Icon={<Play size={14} />}
+                onClick={() => onVideoClick(videoLink, title)}
+              >
+                VIDEO
+              </Button>
+            )}
+            {demoLink && !videoLink && (
               <a href={demoLink} target="_blank" rel="noopener noreferrer">
                 <Button variant="secondary" Icon={<ArrowUpRight size={14} />}>
                   DEMO

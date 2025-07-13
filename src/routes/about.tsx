@@ -1,19 +1,25 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { motion } from 'framer-motion'
-import { useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { techItems } from '@/assets/data/techItems'
 import { AboutHero } from '@/components/about/AboutHero'
 import { AboutTechFilters } from '@/components/about/AboutTechFilters'
 import { BackgroundJourney } from '@/components/about/BackgroundJourney'
 import { LeadershipValues } from '@/components/about/LeadershipValues'
 import { PersonalInterests } from '@/components/about/PersonalInterests'
+import { useAchievements } from '@/components/achievements/AchievementsContext'
 
 export const Route = createFileRoute('/about')({
   component: About,
 })
 
 function About() {
+  const { unlockAchievement } = useAchievements()
   const techSectionRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    unlockAchievement('about-discoverer')
+  }, [unlockAchievement])
 
   return (
     <div className="min-h-screen bg-black text-white font-inter relative overflow-x-hidden">

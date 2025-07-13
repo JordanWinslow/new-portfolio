@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { motion } from 'framer-motion'
 import { ArrowDown } from 'lucide-react'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useAchievements } from '@/components/achievements/AchievementsContext'
 import { CallToAction } from '@/components/contact/CallToAction'
 import { BackgroundDecorations } from '@/components/decorative/BackgroundDecorations'
@@ -28,6 +28,10 @@ function Portfolio() {
 
   const scrollToRef = useScrollToRef()
 
+  useEffect(() => {
+    unlockAchievement('portfolio-explorer')
+  }, [unlockAchievement])
+
   const isPortfolioVisible = useIntersectionObserver(portfolioRef, {
     threshold: 0,
     rootMargin: '-60% 0px -40% 0px',
@@ -53,7 +57,7 @@ function Portfolio() {
 
       // Check if all layouts have been used
       if (newUsed.size >= 3) {
-        unlockAchievement('layout_explorer')
+        unlockAchievement('layout-explorer')
       }
 
       return newUsed

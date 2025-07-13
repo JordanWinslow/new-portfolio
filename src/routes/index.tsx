@@ -1,6 +1,8 @@
 import InteractiveBackground from '@splinetool/react-spline'
 import { createFileRoute } from '@tanstack/react-router'
 import { Code2 } from 'lucide-react'
+import { useEffect } from 'react'
+import { useAchievements } from '@/components/achievements/AchievementsContext'
 import { InternalLink } from '@/components/navigation/InternalLink'
 import { Fade } from '@/components/ui/Fade'
 
@@ -9,8 +11,11 @@ export const Route = createFileRoute('/')({
 })
 
 function Home() {
-  // TODO achievements
-  // const { unlockAchievement } = useAchievements()
+  const { unlockAchievement } = useAchievements()
+
+  useEffect(() => {
+    unlockAchievement('first-steps')
+  }, [unlockAchievement])
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-black font-mohave">
