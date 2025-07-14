@@ -4,14 +4,12 @@ import { TechGrid } from './TechGrid'
 interface TechGridSectionProps {
   title?: string
   description?: string
-  interactive?: boolean
   className?: string
 }
 
 export function TechGridSection({
   title = 'Technology Expertise',
   description = 'Below is a component I made to help you identify whether or not I am familiar with the particular technologies you use. Feel free to search for a specific technology or sort the grid with the filters.',
-  interactive = true,
   className = '',
 }: TechGridSectionProps) {
   return (
@@ -39,8 +37,9 @@ export function TechGridSection({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.4 }}
+        viewport={{ once: true }}
       >
-        <TechGrid interactive={interactive} />
+        <TechGrid />
       </motion.div>
     </section>
   )

@@ -614,7 +614,7 @@ async function loadVirtualModule(id) {
     case VIRTUAL_MODULES.routeTree:
       return await Promise.resolve().then(() => routeTree_gen);
     case VIRTUAL_MODULES.startManifest:
-      return await import('./_tanstack-start-manifest_v-keWf-RRB.mjs');
+      return await import('./_tanstack-start-manifest_v-C8p3ZtVW.mjs');
     case VIRTUAL_MODULES.serverFnManifest:
       return await import('./_tanstack-start-server-fn-manifest_v-DtgTK7xl.mjs');
     default:
@@ -1751,7 +1751,10 @@ function Dialog({
 }) {
   useEffect(() => {
     if (open) {
-      document.documentElement.style.scrollbarGutter = "stable";
+      const hasScrollbar = document.documentElement.scrollHeight > document.documentElement.clientHeight;
+      if (hasScrollbar) {
+        document.documentElement.style.scrollbarGutter = "stable";
+      }
       document.documentElement.style.overflow = "hidden";
     } else {
       document.documentElement.style.scrollbarGutter = "";
@@ -1897,7 +1900,7 @@ function AchievementsDialog({
   totalPoints
 }) {
   const achievementsArray = Object.values(achievements2);
-  return /* @__PURE__ */ jsx(Dialog, { open: isOpen, onOpenChange, children: /* @__PURE__ */ jsxs(DialogContent, { className: "max-w-4xl max-h-[80vh] bg-black/95 backdrop-blur-md border-white/20 fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[9999] isolate shadow-2xl flex flex-col w-[95vw] h-[90vh] md:w-auto md:h-auto md:max-h-[80vh] md:max-w-4xl", children: [
+  return /* @__PURE__ */ jsx(Dialog, { open: isOpen, onOpenChange, children: /* @__PURE__ */ jsxs(DialogContent, { className: "max-w-4xl max-h-[80vh] bg-black/95 backdrop-blur-md border-white/20 shadow-2xl flex flex-col w-[95vw] h-[90vh] md:w-auto md:h-auto md:max-h-[80vh] md:max-w-4xl", children: [
     /* @__PURE__ */ jsxs(DialogHeader, { className: "flex-shrink-0 p-4 md:p-0 border-b border-white/10 pb-4", children: [
       /* @__PURE__ */ jsx(DialogTitle, { className: "font-mohave text-xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-orange-500 bg-clip-text text-transparent uppercase tracking-wide", children: "Achievements" }),
       /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 flex-wrap", children: [
@@ -2464,7 +2467,7 @@ const Toaster = ({ ...props }) => {
     }
   );
 };
-const appCss = "/assets/app-Ciwks2HL.css";
+const appCss = "/assets/app-z9xdk-20.css";
 const Route$5 = createRootRoute({
   head: () => ({
     meta: [{
@@ -2478,6 +2481,10 @@ const Route$5 = createRootRoute({
     links: [{
       rel: "stylesheet",
       href: appCss
+    }, {
+      rel: "icon",
+      type: "image/svg+xml",
+      href: "/JWIcon.svg"
     }]
   }),
   component: RootComponent
@@ -2511,22 +2518,337 @@ function RootDocument({
 }
 const $$splitComponentImporter$4 = () => import('./resume-CoHoTcm2.mjs');
 const Route$4 = createFileRoute("/resume")({
+  head: () => ({
+    title: "Jordan Winslow - Software Engineer Resume & Experience",
+    meta: [
+      {
+        name: "description",
+        content: "Download Jordan Winslow's professional resume showcasing software engineering experience, technical skills, and achievements. View detailed work history, education, and expertise in React, TypeScript, and modern web technologies."
+      },
+      {
+        name: "keywords",
+        content: "Jordan Winslow resume, software engineer resume, frontend developer CV, React developer experience, TypeScript skills, web development resume"
+      },
+      {
+        name: "author",
+        content: "Jordan Winslow"
+      },
+      // Open Graph tags
+      {
+        property: "og:title",
+        content: "Jordan Winslow - Software Engineer Resume & Experience"
+      },
+      {
+        property: "og:description",
+        content: "Download Jordan Winslow's professional resume showcasing software engineering experience, technical skills, and achievements. View detailed work history, education, and expertise in React, TypeScript, and modern web technologies."
+      },
+      {
+        property: "og:type",
+        content: "website"
+      },
+      {
+        property: "og:url",
+        content: "https://jordanwinslow.dev/resume"
+      },
+      {
+        property: "og:image",
+        content: "/og-resume.png"
+      },
+      {
+        property: "og:image:width",
+        content: "1200"
+      },
+      {
+        property: "og:image:height",
+        content: "630"
+      },
+      // Twitter Card tags
+      {
+        name: "twitter:card",
+        content: "summary_large_image"
+      },
+      {
+        name: "twitter:title",
+        content: "Jordan Winslow - Software Engineer Resume & Experience"
+      },
+      {
+        name: "twitter:description",
+        content: "Download Jordan Winslow's professional resume showcasing software engineering experience, technical skills, and achievements. View detailed work history, education, and expertise in React, TypeScript, and modern web technologies."
+      },
+      {
+        name: "twitter:image",
+        content: "/og-resume.png"
+      }
+    ]
+  }),
   component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
-const $$splitComponentImporter$3 = () => import('./portfolio-BhS_-CMV.mjs');
+const $$splitComponentImporter$3 = () => import('./portfolio-C_0lbGTf.mjs');
 const Route$3 = createFileRoute("/portfolio")({
+  head: () => ({
+    title: "Portfolio - Jordan Winslow's Software Engineering Projects",
+    meta: [
+      {
+        name: "description",
+        content: "Explore Jordan Winslow's portfolio of innovative software projects. From React applications to full-stack solutions, discover cutting-edge web development projects with live demos and source code."
+      },
+      {
+        name: "keywords",
+        content: "portfolio, software projects, React applications, web development, Jordan Winslow projects, frontend development, full-stack development"
+      },
+      {
+        name: "author",
+        content: "Jordan Winslow"
+      },
+      // Open Graph tags
+      {
+        property: "og:title",
+        content: "Portfolio - Jordan Winslow's Software Engineering Projects"
+      },
+      {
+        property: "og:description",
+        content: "Explore Jordan Winslow's portfolio of innovative software projects. From React applications to full-stack solutions, discover cutting-edge web development projects with live demos and source code."
+      },
+      {
+        property: "og:type",
+        content: "website"
+      },
+      {
+        property: "og:url",
+        content: "https://jordanwinslow.dev/portfolio"
+      },
+      {
+        property: "og:image",
+        content: "/og-portfolio.png"
+      },
+      {
+        property: "og:image:width",
+        content: "1200"
+      },
+      {
+        property: "og:image:height",
+        content: "630"
+      },
+      // Twitter Card tags
+      {
+        name: "twitter:card",
+        content: "summary_large_image"
+      },
+      {
+        name: "twitter:title",
+        content: "Portfolio - Jordan Winslow's Software Engineering Projects"
+      },
+      {
+        name: "twitter:description",
+        content: "Explore Jordan Winslow's portfolio of innovative software projects. From React applications to full-stack solutions, discover cutting-edge web development projects with live demos and source code."
+      },
+      {
+        name: "twitter:image",
+        content: "/og-portfolio.png"
+      }
+    ]
+  }),
   component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
-const $$splitComponentImporter$2 = () => import('./contact-Cq54nbdN.mjs');
+const $$splitComponentImporter$2 = () => import('./contact-DtxvM6uu.mjs');
 const Route$2 = createFileRoute("/contact")({
+  head: () => ({
+    title: "Contact Jordan Winslow - Software Engineer & Frontend Developer",
+    meta: [
+      {
+        name: "description",
+        content: "Get in touch with Jordan Winslow for software engineering opportunities, project collaborations, or technical consulting. Available for freelance work and full-time positions in frontend development."
+      },
+      {
+        name: "keywords",
+        content: "contact Jordan Winslow, software engineer contact, frontend developer hire, React developer, web development services, freelance developer"
+      },
+      {
+        name: "author",
+        content: "Jordan Winslow"
+      },
+      // Open Graph tags
+      {
+        property: "og:title",
+        content: "Contact Jordan Winslow - Software Engineer & Frontend Developer"
+      },
+      {
+        property: "og:description",
+        content: "Get in touch with Jordan Winslow for software engineering opportunities, project collaborations, or technical consulting. Available for freelance work and full-time positions in frontend development."
+      },
+      {
+        property: "og:type",
+        content: "website"
+      },
+      {
+        property: "og:url",
+        content: "https://jordanwinslow.dev/contact"
+      },
+      {
+        property: "og:image",
+        content: "/og-contact.png"
+      },
+      {
+        property: "og:image:width",
+        content: "1200"
+      },
+      {
+        property: "og:image:height",
+        content: "630"
+      },
+      // Twitter Card tags
+      {
+        name: "twitter:card",
+        content: "summary_large_image"
+      },
+      {
+        name: "twitter:title",
+        content: "Contact Jordan Winslow - Software Engineer & Frontend Developer"
+      },
+      {
+        name: "twitter:description",
+        content: "Get in touch with Jordan Winslow for software engineering opportunities, project collaborations, or technical consulting. Available for freelance work and full-time positions in frontend development."
+      },
+      {
+        name: "twitter:image",
+        content: "/og-contact.png"
+      }
+    ]
+  }),
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import('./about-CRxFh5r6.mjs');
+const $$splitComponentImporter$1 = () => import('./about-nslMWroO.mjs');
 const Route$1 = createFileRoute("/about")({
+  head: () => ({
+    title: "About Jordan Winslow - Software Engineer Background & Journey",
+    meta: [
+      {
+        name: "description",
+        content: "Learn about Jordan Winslow's journey as a software engineer, from early programming experiences to leadership roles. Discover my technical expertise, values, and passion for creating exceptional digital experiences."
+      },
+      {
+        name: "keywords",
+        content: "Jordan Winslow, software engineer background, programming journey, technical expertise, leadership, React developer, frontend engineer"
+      },
+      {
+        name: "author",
+        content: "Jordan Winslow"
+      },
+      // Open Graph tags
+      {
+        property: "og:title",
+        content: "About Jordan Winslow - Software Engineer Background & Journey"
+      },
+      {
+        property: "og:description",
+        content: "Learn about Jordan Winslow's journey as a software engineer, from early programming experiences to leadership roles. Discover my technical expertise, values, and passion for creating exceptional digital experiences."
+      },
+      {
+        property: "og:type",
+        content: "website"
+      },
+      {
+        property: "og:url",
+        content: "https://jordanwinslow.dev/about"
+      },
+      {
+        property: "og:image",
+        content: "/og-about.png"
+      },
+      {
+        property: "og:image:width",
+        content: "1200"
+      },
+      {
+        property: "og:image:height",
+        content: "630"
+      },
+      // Twitter Card tags
+      {
+        name: "twitter:card",
+        content: "summary_large_image"
+      },
+      {
+        name: "twitter:title",
+        content: "About Jordan Winslow - Software Engineer Background & Journey"
+      },
+      {
+        name: "twitter:description",
+        content: "Learn about Jordan Winslow's journey as a software engineer, from early programming experiences to leadership roles. Discover my technical expertise, values, and passion for creating exceptional digital experiences."
+      },
+      {
+        name: "twitter:image",
+        content: "/og-about.png"
+      }
+    ]
+  }),
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import('./index-Bn1AM9fB.mjs');
+const $$splitComponentImporter = () => import('./index-DM9n7SRv.mjs');
 const Route = createFileRoute("/")({
+  head: () => ({
+    title: "Jordan Winslow - Software Engineer & Frontend Expert",
+    meta: [
+      {
+        name: "description",
+        content: "Frontend software engineer specializing in React, TypeScript, and modern web technologies. Explore my interactive portfolio showcasing innovative projects and cutting-edge development skills."
+      },
+      {
+        name: "keywords",
+        content: "software engineer, frontend developer, React, TypeScript, web development, portfolio, Jordan Winslow"
+      },
+      {
+        name: "author",
+        content: "Jordan Winslow"
+      },
+      // Open Graph tags
+      {
+        property: "og:title",
+        content: "Jordan Winslow - Software Engineer & Frontend Expert"
+      },
+      {
+        property: "og:description",
+        content: "Frontend software engineer specializing in React, TypeScript, and modern web technologies. Explore my interactive portfolio showcasing innovative projects and cutting-edge development skills."
+      },
+      {
+        property: "og:type",
+        content: "website"
+      },
+      {
+        property: "og:url",
+        content: "https://jordanwinslow.dev"
+      },
+      {
+        property: "og:image",
+        content: "/og-home.png"
+      },
+      {
+        property: "og:image:width",
+        content: "1200"
+      },
+      {
+        property: "og:image:height",
+        content: "630"
+      },
+      // Twitter Card tags
+      {
+        name: "twitter:card",
+        content: "summary_large_image"
+      },
+      {
+        name: "twitter:title",
+        content: "Jordan Winslow - Software Engineer & Frontend Expert"
+      },
+      {
+        name: "twitter:description",
+        content: "Frontend software engineer specializing in React, TypeScript, and modern web technologies. Explore my interactive portfolio showcasing innovative projects and cutting-edge development skills."
+      },
+      {
+        name: "twitter:image",
+        content: "/og-home.png"
+      }
+    ]
+  }),
   component: lazyRouteComponent($$splitComponentImporter, "component")
 });
 const ResumeRoute = Route$4.update({
@@ -2581,5 +2903,5 @@ const serverEntry = defineEventHandler(function(event) {
   return serverEntry$1({ request });
 });
 
-export { AchievementId as A, Button as B, Dialog as D, Fade as F, InternalLink as I, useResizeObserver as a, useScrollToRef as b, cn as c, useIntersectionObserver as d, serverEntry as default, DialogContent as e, Badge as f, useAchievements as u };
+export { AchievementId as A, Button as B, Dialog as D, Fade as F, InternalLink as I, useResizeObserver as a, useScrollToRef as b, cn as c, useIntersectionObserver as d, serverEntry as default, Badge as e, DialogContent as f, useAchievements as u };
 //# sourceMappingURL=ssr.mjs.map
