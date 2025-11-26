@@ -1,9 +1,10 @@
 import containmentBreachImage from '@/assets/images/portfolio/containment-breach.gif'
 import ecosystemSimImage from '@/assets/images/portfolio/ecosystem.gif'
-import gitFinderImage from '@/assets/images/portfolio/Gitfinder.jpg'
+//import gitFinderImage from '@/assets/images/portfolio/Gitfinder.jpg'
 import horrorRPG2Image from '@/assets/images/portfolio/horrorRPG2.webp'
 import pokeTeamImage from '@/assets/images/portfolio/poketeamdemo.gif'
 import theWatchersImage from '@/assets/images/portfolio/thewatchers.webp'
+import voteOnAnythingImage from '@/assets/images/portfolio/voteonanythingdemo.gif'
 
 export interface IPortfolioItem {
   id: number
@@ -18,6 +19,23 @@ export interface IPortfolioItem {
 }
 
 export const portfolioItems = [
+  {
+    id: 0,
+    title: 'Vote On Anything',
+    description:
+      'A full-stack opinion polling platform built from scratch. Features Twitter SSO, Cloudflare Turnstile bot protection, type-safe APIs with tRPC, real-time data visualization and complex relational data models.',
+    image: voteOnAnythingImage,
+    demo: 'https://voteonanything.com',
+    tech: [
+      'Next.js 15',
+      'TypeScript',
+      'tRPC',
+      'Drizzle ORM',
+      'Cloudflare Workers',
+      'OAuth',
+    ],
+    yearCreated: 2025,
+  },
   {
     id: 1,
     title: 'Modern UI Horror RPG',
@@ -56,18 +74,18 @@ export const portfolioItems = [
     tech: ['JavaScript', 'React', 'Redux', 'MaterialUI'],
     yearCreated: 2019,
   },
-  {
-    id: 4,
-    title: 'Git Finder',
-    description:
-      'A streamlined GitHub user search application showcasing clean React architecture and efficient API integration patterns.',
-    image: gitFinderImage,
-    github:
-      'https://github.com/JordanWinslow/functional-react-github-user-finder',
-    demo: 'https://functional-react-gitfinder.netlify.app/',
-    tech: ['React', 'JavaScript', 'React Router', 'CSS'],
-    yearCreated: 2019,
-  },
+  // {
+  //   id: 4,
+  //   title: 'Git Finder',
+  //   description:
+  //     'A streamlined GitHub user search application showcasing clean React architecture and efficient API integration patterns.',
+  //   image: gitFinderImage,
+  //   github:
+  //     'https://github.com/JordanWinslow/functional-react-github-user-finder',
+  //   demo: 'https://functional-react-gitfinder.netlify.app/',
+  //   tech: ['React', 'JavaScript', 'React Router', 'CSS'],
+  //   yearCreated: 2019,
+  // },
   {
     id: 5,
     title: 'Horror RPG Game',
