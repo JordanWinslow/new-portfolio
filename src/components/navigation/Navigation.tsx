@@ -90,6 +90,13 @@ interface NavigationProps {
   isScrolled?: boolean
 }
 
+// Radix's NavigationMenu opens/closes triggers and content on hover by
+// default. Preventing the default here stops that hover behavior so the
+// menu only opens/closes on click or tap.
+const preventHoverToggle = (event: React.PointerEvent) => {
+  event.preventDefault()
+}
+
 export function Navigation({ isScrolled = false }: NavigationProps) {
   const location = useLocation()
   const currentPath = location.pathname
@@ -116,6 +123,8 @@ export function Navigation({ isScrolled = false }: NavigationProps) {
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger
+            onPointerMove={preventHoverToggle}
+            onPointerLeave={preventHoverToggle}
             className={cn(
               'font-mohave font-semibold text-sm tracking-wide',
               isScrolled && 'rounded-tl-none rounded-tr-none rounded-bl-none',
@@ -124,6 +133,8 @@ export function Navigation({ isScrolled = false }: NavigationProps) {
             Navigation
           </NavigationMenuTrigger>
           <NavigationMenuContent
+            onPointerEnter={preventHoverToggle}
+            onPointerLeave={preventHoverToggle}
             className={cn(isScrolled && '!rounded-tl-none !rounded-bl-none')}
           >
             <ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
