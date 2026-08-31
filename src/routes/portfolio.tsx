@@ -8,6 +8,7 @@ import { CallToAction } from '@/components/contact/CallToAction'
 import { BackgroundDecorations } from '@/components/decorative/BackgroundDecorations'
 import { StarField } from '@/components/decorative/StarField'
 import { InternalLink } from '@/components/navigation/InternalLink'
+import FigmaDesignSystemSection from '@/components/portfolio/FigmaDesignSystemSection'
 import type { LayoutType } from '@/components/portfolio/LayoutType'
 import PhoneStackShowcase from '@/components/portfolio/PhoneStackShowcase'
 import { PortfolioGrid } from '@/components/portfolio/PortfolioGrid'
@@ -296,6 +297,10 @@ function Portfolio() {
 
       <section className="my-40">
         <PhoneStackShowcase />
+      </section>
+
+      <section className="my-40">
+        <FigmaDesignSystemSection />
       </section>
 
       <section className="my-40">
