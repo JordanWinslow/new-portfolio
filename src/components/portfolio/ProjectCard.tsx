@@ -14,6 +14,7 @@ export const ProjectCard = ({
   github,
   demo,
   videoLink,
+  showDemoWithVideo,
   onVideoClick,
   onLinkClick,
 }: IPortfolioItem & {
@@ -129,7 +130,7 @@ export const ProjectCard = ({
                 VIDEO
               </Button>
             )}
-            {demo && !videoLink && (
+            {demo && (!videoLink || showDemoWithVideo) && (
               <a
                 href={demo}
                 target="_blank"

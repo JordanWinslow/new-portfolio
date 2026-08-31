@@ -14,6 +14,7 @@ export function ProjectTableRow({
   github,
   demo,
   videoLink,
+  showDemoWithVideo,
   yearCreated,
   onVideoClick,
   onLinkClick,
@@ -102,7 +103,7 @@ export function ProjectTableRow({
             </button>
           )}
 
-          {demo && !videoLink && (
+          {demo && (!videoLink || showDemoWithVideo) && (
             <a
               href={demo}
               target="_blank"

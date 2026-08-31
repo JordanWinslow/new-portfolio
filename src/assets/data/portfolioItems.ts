@@ -15,6 +15,10 @@ export interface IPortfolioItem {
   github?: string
   demo?: string
   videoLink?: string
+  // Opt-in override to show the DEMO button alongside VIDEO when both are set.
+  // Defaults to false, preserving existing behavior for items where demo is
+  // hidden while a videoLink is present.
+  showDemoWithVideo?: boolean
   yearCreated: number
 }
 
@@ -42,7 +46,9 @@ export const portfolioItems = [
     description:
       'A sophisticated game engine built from the ground up featuring advanced systems design, custom animation frameworks, and performance-optimized rendering. This project demonstrates deep technical expertise in game development architecture.',
     image: containmentBreachImage,
-    videoLink: 'https://youtu.be/ckLU5tGdlTM?si=yBGFAIl2cy6taF_O',
+    demo: 'https://LiminalFoundationGames.com',
+    videoLink: 'https://youtu.be/iaC9YpJQjuM',
+    showDemoWithVideo: true,
     tech: [
       'GML',
       'Systems Design',

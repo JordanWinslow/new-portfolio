@@ -14,6 +14,7 @@ export function ProjectAccordionItem({
   github,
   demo,
   videoLink,
+  showDemoWithVideo,
   yearCreated,
   onVideoClick,
   onLinkClick,
@@ -113,7 +114,7 @@ export function ProjectAccordionItem({
                 </button>
               )}
 
-              {demo && !videoLink && (
+              {demo && (!videoLink || showDemoWithVideo) && (
                 <a
                   href={demo}
                   target="_blank"
