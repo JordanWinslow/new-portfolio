@@ -2,6 +2,7 @@ import containmentBreachImage from '@/assets/images/portfolio/containment-breach
 import ecosystemSimImage from '@/assets/images/portfolio/ecosystem.gif'
 //import gitFinderImage from '@/assets/images/portfolio/Gitfinder.jpg'
 import horrorRPG2Image from '@/assets/images/portfolio/horrorRPG2.webp'
+import johnnyCastawayImage from '@/assets/images/portfolio/johnny-castaway-dinner.webp'
 import pokeTeamImage from '@/assets/images/portfolio/poketeamdemo.gif'
 import theWatchersImage from '@/assets/images/portfolio/thewatchers.webp'
 import voteOnAnythingImage from '@/assets/images/portfolio/voteonanythingdemo.gif'
@@ -23,6 +24,16 @@ export interface IPortfolioItem {
 }
 
 export const portfolioItems = [
+  {
+    id: 7,
+    title: 'Johnny Castaway: Reborn',
+    description:
+      'A browser-based love letter to my favorite childhood screensaver. A deterministic island simulation brings together branching stories, illustrated animation, persistent saves, offline support, and optional on-device AI with validated choices and an authored rules fallback.',
+    image: johnnyCastawayImage,
+    demo: 'https://johnnycastaway.fyi',
+    tech: ['TypeScript', 'PixiJS', 'WebAssembly', 'wllama', 'IndexedDB', 'Vite'],
+    yearCreated: 2026,
+  },
   {
     id: 0,
     title: 'Vote On Anything',

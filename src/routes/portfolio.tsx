@@ -3,12 +3,14 @@ import { motion } from 'framer-motion'
 import { ArrowDown } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { AchievementId } from '@/assets/data/achievements'
+import { portfolioItems } from '@/assets/data/portfolioItems'
 import { useAchievements } from '@/components/achievements/AchievementsContext'
 import { CallToAction } from '@/components/contact/CallToAction'
 import { BackgroundDecorations } from '@/components/decorative/BackgroundDecorations'
 import { StarField } from '@/components/decorative/StarField'
 import { InternalLink } from '@/components/navigation/InternalLink'
 import FigmaDesignSystemSection from '@/components/portfolio/FigmaDesignSystemSection'
+import JohnnyCastawayShowcase from '@/components/portfolio/JohnnyCastawayShowcase'
 import type { LayoutType } from '@/components/portfolio/LayoutType'
 import PhoneStackShowcase from '@/components/portfolio/PhoneStackShowcase'
 import { PortfolioGrid } from '@/components/portfolio/PortfolioGrid'
@@ -202,8 +204,9 @@ function Portfolio() {
             </p>
 
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              Below you can view 6 side-projects I have worked on along with
-              demos and source code. There are also easter eggs hidden in this
+              Below you can view {portfolioItems.length} side projects I have
+              worked on, with demos and source code where available. There are
+              also easter eggs hidden in this
               application that you can unlock by experimenting with the UI!
             </p>
 
@@ -294,6 +297,10 @@ function Portfolio() {
           />
         </motion.div>
       )}
+
+      <div className="my-24 px-4 sm:px-8">
+        <JohnnyCastawayShowcase />
+      </div>
 
       <section className="my-40">
         <PhoneStackShowcase />
