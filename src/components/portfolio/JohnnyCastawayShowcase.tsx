@@ -1,5 +1,4 @@
 import { ArrowUpRight, Pause, Play } from 'lucide-react'
-import { useState, useSyncExternalStore } from 'react'
 import danceImage from '@/assets/images/portfolio/johnny-castaway-dance.webp'
 import posterImage from '@/assets/images/portfolio/johnny-castaway-poster.webp'
 import gameplayImage from '@/assets/images/portfolio/johnny-castaway-scenes.gif'
@@ -7,16 +6,7 @@ import sharkImage from '@/assets/images/portfolio/johnny-castaway-shark.webp'
 import shipImage from '@/assets/images/portfolio/johnny-castaway-ship.webp'
 import stormImage from '@/assets/images/portfolio/johnny-castaway-storm.webp'
 import { ProjectImage } from './ProjectImage'
-
-const motionQuery = '(prefers-reduced-motion: reduce)'
-const getMotionPreference = () => window.matchMedia(motionQuery).matches
-// Server and initial hydration both show the still; autoplay starts after hydration.
-const getServerMotionPreference = () => true
-function subscribeToMotionPreference(onChange: () => void) {
-  const query = window.matchMedia(motionQuery)
-  query.addEventListener('change', onChange)
-  return () => query.removeEventListener('change', onChange)
-}
+import { useProjectAnimation } from './useProjectAnimation'
 
 const scenes = [
   {
@@ -65,13 +55,8 @@ const engineeringNotes = [
 ]
 
 export default function JohnnyCastawayShowcase() {
-  const reduceMotion = useSyncExternalStore(
-    subscribeToMotionPreference,
-    getMotionPreference,
-    getServerMotionPreference,
-  )
-  const [manuallyPaused, setManuallyPaused] = useState<boolean | null>(null)
-  const paused = manuallyPaused ?? reduceMotion
+  const { paused, respectReducedMotion, toggle, pause } =
+    useProjectAnimation(gameplayImage)
 
   return (
     <section
@@ -107,20 +92,24 @@ export default function JohnnyCastawayShowcase() {
 
         <figure className="overflow-hidden rounded-2xl border border-white/20 bg-black/40">
           <ProjectImage
+            key={paused ? posterImage : gameplayImage}
             src={paused ? posterImage : gameplayImage}
             stillSrc={posterImage}
-            respectReducedMotion={manuallyPaused !== false}
+            respectReducedMotion={respectReducedMotion}
             alt="Animated gameplay from Johnny Castaway: Reborn, moving between island life and unexpected encounters"
             width={768}
             height={432}
             loading="lazy"
             className="w-full h-auto"
+            onError={() => {
+              if (!paused) pause()
+            }}
           />
           <figcaption className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 text-sm text-gray-300">
             <span>Six scenes captured directly from the screensaver.</span>
             <button
               type="button"
-              onClick={() => setManuallyPaused(!paused)}
+              onClick={toggle}
               className="inline-flex items-center gap-2 rounded-md border border-white/20 px-3 py-2 text-white hover:border-orange-400 hover:text-orange-300 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-400"
               aria-label={
                 paused ? 'Play gameplay animation' : 'Pause gameplay animation'

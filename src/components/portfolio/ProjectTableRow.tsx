@@ -119,7 +119,6 @@ export function ProjectTableRow({
           )}
         </div>
       </td>
-      <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-pink-500/0 to-orange-500/0 group-hover:from-purple-500/5 group-hover:via-pink-500/5 group-hover:to-orange-500/5 transition-all duration-300 pointer-events-none" />
     </tr>
   )
 }

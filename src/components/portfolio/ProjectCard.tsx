@@ -3,7 +3,7 @@ import { useState } from 'react'
 import type { IPortfolioItem } from '@/assets/data/portfolioItems'
 import { useResizeObserver } from '@/lib/utils'
 import { Button } from '../ui/Button'
-import { ProjectImage } from './ProjectImage'
+import { ProjectPreview } from './ProjectPreview'
 
 export const ProjectCard = ({
   variant,
@@ -67,9 +67,10 @@ export const ProjectCard = ({
       />
 
       <div className="aspect-video relative overflow-hidden">
-        <ProjectImage
+        <ProjectPreview
           src={image}
           stillSrc={stillImage}
+          projectTitle={title}
           alt={imageAlt ?? title}
           className={`w-full h-full ${stillImage ? 'object-contain bg-black/40' : `object-cover transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${isTouched ? 'scale-110' : 'group-hover:scale-110'}`}`}
           loading="lazy"
@@ -79,7 +80,7 @@ export const ProjectCard = ({
           className={`absolute inset-0 bg-gradient-to-t from-black/95 via-black/80 via-black/60 to-black/20 sm:from-black/90 sm:via-black/70 sm:to-black/30 transition-opacity duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${isTouched ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
         />
         <div
-          className={`absolute inset-0 flex flex-col justify-end p-6 transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] transform ${isTouched ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0'}`}
+          className={`absolute inset-0 flex flex-col justify-end p-6 transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] transform ${isTouched ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0'} ${stillImage ? 'focus-within:opacity-100 focus-within:translate-y-0 focus-within:bg-black/80' : ''}`}
         >
           {variant === 'hoverToDisplay' && (
             <>

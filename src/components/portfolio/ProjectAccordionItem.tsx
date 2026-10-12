@@ -6,6 +6,7 @@ import {
   AccordionTrigger,
 } from '../ui/Accordion'
 import { ProjectImage } from './ProjectImage'
+import { ProjectPreview } from './ProjectPreview'
 
 export function ProjectAccordionItem({
   image,
@@ -53,9 +54,10 @@ export function ProjectAccordionItem({
       <AccordionContent className="px-6 pb-6 bg-gradient-to-br from-white/2 to-white/5">
         <div className="space-y-6">
           <div className="w-full h-48 relative overflow-hidden rounded-lg">
-            <ProjectImage
+            <ProjectPreview
               src={image}
               stillSrc={stillImage}
+              projectTitle={title}
               alt={imageAlt ?? title}
               className={`w-full h-full ${stillImage ? 'object-contain bg-black/40' : 'object-cover'}`}
               loading="lazy"
