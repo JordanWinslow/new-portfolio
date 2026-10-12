@@ -3,11 +3,14 @@ import { useState } from 'react'
 import type { IPortfolioItem } from '@/assets/data/portfolioItems'
 import { useResizeObserver } from '@/lib/utils'
 import { Button } from '../ui/Button'
+import { ProjectImage } from './ProjectImage'
 
 export const ProjectCard = ({
   variant,
   yearCreated,
   image,
+  stillImage,
+  imageAlt,
   title,
   description,
   tech,
@@ -64,10 +67,11 @@ export const ProjectCard = ({
       />
 
       <div className="aspect-video relative overflow-hidden">
-        <img
+        <ProjectImage
           src={image}
-          alt={title}
-          className={`w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${isTouched ? 'scale-110' : 'group-hover:scale-110'}`}
+          stillSrc={stillImage}
+          alt={imageAlt ?? title}
+          className={`w-full h-full ${stillImage ? 'object-contain bg-black/40' : `object-cover transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${isTouched ? 'scale-110' : 'group-hover:scale-110'}`}`}
           loading="lazy"
         />
         {/* Black gradient overlay for text readability */}

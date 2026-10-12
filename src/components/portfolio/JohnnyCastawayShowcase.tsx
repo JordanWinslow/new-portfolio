@@ -1,30 +1,78 @@
-import { ArrowUpRight } from 'lucide-react'
-import johnnyCastawayImage from '@/assets/images/portfolio/johnny-castaway-island.webp'
+import { ArrowUpRight, Pause, Play } from 'lucide-react'
+import { useState, useSyncExternalStore } from 'react'
+import danceImage from '@/assets/images/portfolio/johnny-castaway-dance.webp'
+import posterImage from '@/assets/images/portfolio/johnny-castaway-poster.webp'
+import gameplayImage from '@/assets/images/portfolio/johnny-castaway-scenes.gif'
+import sharkImage from '@/assets/images/portfolio/johnny-castaway-shark.webp'
+import shipImage from '@/assets/images/portfolio/johnny-castaway-ship.webp'
+import stormImage from '@/assets/images/portfolio/johnny-castaway-storm.webp'
+import { ProjectImage } from './ProjectImage'
+
+const motionQuery = '(prefers-reduced-motion: reduce)'
+const getMotionPreference = () => window.matchMedia(motionQuery).matches
+// Server and initial hydration both show the still; autoplay starts after hydration.
+const getServerMotionPreference = () => true
+function subscribeToMotionPreference(onChange: () => void) {
+  const query = window.matchMedia(motionQuery)
+  query.addEventListener('change', onChange)
+  return () => query.removeEventListener('change', onChange)
+}
+
+const scenes = [
+  {
+    image: danceImage,
+    title: 'An evening with Mary',
+    alt: 'Johnny and Mary together by the water during their evening date',
+  },
+  {
+    image: sharkImage,
+    title: 'Trouble in the lagoon',
+    alt: 'Johnny encounters a shark in the water beside his island',
+  },
+  {
+    image: stormImage,
+    title: 'Weather worth watching',
+    alt: 'Stormy weather over Johnny’s island and the surrounding sea',
+  },
+  {
+    image: shipImage,
+    title: 'A reason to wave',
+    alt: 'An enormous ship passes Johnny’s tiny island',
+  },
+]
 
 const engineeringNotes = [
   {
     title: 'A simulation that can be replayed',
     detail:
-      'I separated the deterministic TypeScript simulation from the PixiJS renderer. Seeded islands, needs, weather, day/night cycles, and story state can run without a canvas, making long headless soak runs useful for checking balance and investigating edge cases.',
+      'The deterministic TypeScript simulation runs independently of PixiJS. Seeded islands and headless soak runs make it possible to replay bugs and check how stories, needs, and weather interact.',
   },
   {
     title: 'Keeping the story and animation in sync',
     detail:
-      'A caption only works if Johnny actually performs it. Authored actions connect each thought, attempt, and result to a pose, hand prop, and target. Staged story arcs and dedicated sprite review tools help keep the narration, object placement, and illustrated scene coherent.',
+      'Each authored action connects thoughts and results to actual poses, props, and destinations. Dedicated scene tools help check that Johnny does what the caption says.',
   },
   {
     title: 'Local AI with a dependable fallback',
     detail:
-      'Optional Qwen inference runs on the device through wllama and WebAssembly. Model choices are validated against supported actions and story branches; authored rules keep the island running when AI is unavailable or slow. The model adds personality without replacing the simulation.',
+      'Optional Qwen inference runs locally through wllama and WebAssembly. It adds personality through validated choices and thoughts; authored rules keep the island running when the model is unavailable.',
   },
   {
     title: 'An island that survives the next visit',
     detail:
-      'Saved islands, an IndexedDB journal, recoverable backups, and offline web caching let a small browser experience build history over time. After the first complete online visit, the island can run offline. Optional AI needs a separate model download before it can run locally.',
+      'Persistent islands, an IndexedDB journal, and recoverable backups give every camp a history. Offline caching keeps the island available after its first complete visit; local AI has a separate model download.',
   },
 ]
 
 export default function JohnnyCastawayShowcase() {
+  const reduceMotion = useSyncExternalStore(
+    subscribeToMotionPreference,
+    getMotionPreference,
+    getServerMotionPreference,
+  )
+  const [manuallyPaused, setManuallyPaused] = useState<boolean | null>(null)
+  const paused = manuallyPaused ?? reduceMotion
+
   return (
     <section
       id="johnny-castaway-reborn"
@@ -43,30 +91,72 @@ export default function JohnnyCastawayShowcase() {
             Johnny Castaway: Reborn
           </h2>
           <p className="text-lg text-gray-300 leading-relaxed">
-            My love letter to the screensaver I grew up watching. I created this
-            unofficial browser reimagining at Liminal Foundation Games, turning
-            a tiny island into an ongoing illustrated life: Johnny forages,
-            builds a camp, weathers storms, and stumbles into strange
-            encounters. The challenge was making that life feel spontaneous
-            while keeping its many systems consistent.
+            My love letter to the screensaver I grew up with. Johnny builds a
+            camp, makes unlikely friends, and gets into trouble while you watch.
           </p>
+          <a
+            href="https://johnnycastaway.fyi/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex items-center gap-2 rounded-lg bg-purple-600 px-4 py-2.5 font-semibold text-white hover:bg-purple-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-purple-400"
+          >
+            Visit the island
+            <ArrowUpRight size={18} aria-hidden="true" />
+          </a>
         </div>
 
-        <figure>
-          <img
-            src={johnnyCastawayImage}
-            alt="Johnny on his illustrated island beneath storm clouds, with a thought bubble and browser controls for settings, journal, and fullscreen"
-            width={1264}
-            height={735}
+        <figure className="overflow-hidden rounded-2xl border border-white/20 bg-black/40">
+          <ProjectImage
+            src={paused ? posterImage : gameplayImage}
+            stillSrc={posterImage}
+            respectReducedMotion={manuallyPaused !== false}
+            alt="Animated gameplay from Johnny Castaway: Reborn, moving between island life and unexpected encounters"
+            width={768}
+            height={432}
             loading="lazy"
-            decoding="async"
-            className="w-full h-auto rounded-xl border border-white/20"
+            className="w-full h-auto"
           />
-          <figcaption className="mt-3 text-sm text-gray-400 leading-relaxed">
-            A real in-app screenshot. Risograph-style artwork supports a living
-            island with changing weather, lighting, wildlife, and camp layouts.
+          <figcaption className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 text-sm text-gray-300">
+            <span>Six scenes captured directly from the screensaver.</span>
+            <button
+              type="button"
+              onClick={() => setManuallyPaused(!paused)}
+              className="inline-flex items-center gap-2 rounded-md border border-white/20 px-3 py-2 text-white hover:border-orange-400 hover:text-orange-300 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-400"
+              aria-label={
+                paused ? 'Play gameplay animation' : 'Pause gameplay animation'
+              }
+            >
+              {paused ? (
+                <Play size={14} aria-hidden="true" />
+              ) : (
+                <Pause size={14} aria-hidden="true" />
+              )}
+              {paused ? 'Play animation' : 'Pause animation'}
+            </button>
           </figcaption>
         </figure>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          {scenes.map(({ image, title, alt }) => (
+            <figure
+              key={title}
+              className="overflow-hidden rounded-xl border border-white/10 bg-white/[0.03]"
+            >
+              <img
+                src={image}
+                alt={alt}
+                width={960}
+                height={540}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-auto"
+              />
+              <figcaption className="px-4 py-3 font-mohave text-lg text-white">
+                {title}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
 
         <div className="grid gap-8 md:grid-cols-2">
           {engineeringNotes.map(({ title, detail }) => (
@@ -79,17 +169,9 @@ export default function JohnnyCastawayShowcase() {
           ))}
         </div>
 
-        <p className="text-gray-300 leading-relaxed border-t border-white/10 pt-8">
-          Familiar inspirations include a mermaid visit, messages in bottles,
-          Suzy's letter and reunion, a dinner dance, and the office dream with a
-          parachute return. New systems add editable personalities, seeded
-          camps, branching stories, a persistent journal, and optional local AI
-          thoughts.
-        </p>
-
         <div className="flex flex-wrap gap-4">
           <a
-            href="https://johnnycastaway.fyi"
+            href="https://johnnycastaway.fyi/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-lg bg-purple-600 px-5 py-3 font-semibold text-white hover:bg-purple-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-purple-400"

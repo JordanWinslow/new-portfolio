@@ -1,8 +1,11 @@
 import { ArrowUpRight, Github, Play } from 'lucide-react'
 import type { IPortfolioItem } from '@/assets/data/portfolioItems'
+import { ProjectImage } from './ProjectImage'
 
 export function ProjectListItem({
   image,
+  stillImage,
+  imageAlt,
   title,
   description,
   tech,
@@ -36,10 +39,11 @@ export function ProjectListItem({
       {/* Glow effect on hover */}
       <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-purple-500/0 to-pink-500/0 group-hover:from-purple-500/20 group-hover:to-pink-500/20 transition-all duration-300 pointer-events-none blur-xl" />
       <div className="w-full md:w-64 h-48 md:h-auto relative overflow-hidden rounded-lg flex-shrink-0">
-        <img
+        <ProjectImage
           src={image}
-          alt={title}
-          className="w-full h-full object-cover"
+          stillSrc={stillImage}
+          alt={imageAlt ?? title}
+          className={`w-full h-full ${stillImage ? 'object-contain bg-black/40' : 'object-cover'}`}
           loading="lazy"
         />
       </div>
@@ -49,15 +53,16 @@ export function ProjectListItem({
         </h3>
         <p className="text-gray-400 mb-4 line-clamp-3">{description}</p>
         <div className="flex flex-wrap gap-2 mb-4">
-          {tech && tech.map((tech) => (
-            <span
-              key={tech}
-              className="cursor-pointer px-2 py-1 text-xs font-mono bg-white/10 text-white/80 rounded border border-white/20 touch-manipulation"
-              style={{ touchAction: 'manipulation' }}
-            >
-              {tech}
-            </span>
-          ))}
+          {tech &&
+            tech.map((tech) => (
+              <span
+                key={tech}
+                className="cursor-pointer px-2 py-1 text-xs font-mono bg-white/10 text-white/80 rounded border border-white/20 touch-manipulation"
+                style={{ touchAction: 'manipulation' }}
+              >
+                {tech}
+              </span>
+            ))}
         </div>
         <div className="flex gap-4">
           {github && (

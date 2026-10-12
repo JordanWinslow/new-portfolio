@@ -5,9 +5,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '../ui/Accordion'
+import { ProjectImage } from './ProjectImage'
 
 export function ProjectAccordionItem({
   image,
+  stillImage,
+  imageAlt,
   title,
   description,
   tech,
@@ -31,8 +34,8 @@ export function ProjectAccordionItem({
         {/* Background gradient on hover */}
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-pink-500/0 to-orange-500/0 group-hover:from-purple-500/5 group-hover:via-pink-500/5 group-hover:to-orange-500/5 transition-all duration-300 pointer-events-none" />
         <div className="flex items-center gap-4 w-full relative z-10">
-          <img
-            src={image}
+          <ProjectImage
+            src={stillImage ?? image}
             alt={title}
             className="w-12 h-12 rounded object-cover flex-shrink-0"
             loading="lazy"
@@ -50,10 +53,11 @@ export function ProjectAccordionItem({
       <AccordionContent className="px-6 pb-6 bg-gradient-to-br from-white/2 to-white/5">
         <div className="space-y-6">
           <div className="w-full h-48 relative overflow-hidden rounded-lg">
-            <img
+            <ProjectImage
               src={image}
-              alt={title}
-              className="w-full h-full object-cover"
+              stillSrc={stillImage}
+              alt={imageAlt ?? title}
+              className={`w-full h-full ${stillImage ? 'object-contain bg-black/40' : 'object-cover'}`}
               loading="lazy"
             />
           </div>

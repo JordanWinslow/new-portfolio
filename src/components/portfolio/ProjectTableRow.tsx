@@ -5,9 +5,11 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/Tooltip'
+import { ProjectImage } from './ProjectImage'
 
 export function ProjectTableRow({
   image,
+  stillImage,
   title,
   description,
   tech,
@@ -26,8 +28,8 @@ export function ProjectTableRow({
     <tr className="border-t border-white/10 hover:bg-gradient-to-r hover:from-white/5 hover:to-white/10 transition-all duration-300 relative group">
       <td className="px-6 py-4 relative z-10">
         <div className="flex items-center gap-4">
-          <img
-            src={image}
+          <ProjectImage
+            src={stillImage ?? image}
             alt={title}
             className="w-12 h-12 rounded object-cover"
             loading="lazy"
