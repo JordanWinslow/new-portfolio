@@ -31,7 +31,7 @@ export const portfolioItems = [
     id: 7,
     title: 'Johnny Castaway: Reborn',
     description:
-      'An illustrated island that keeps surprising you. My childhood screensaver, reimagined with branching stories, changing weather, persistent camps, and optional on-device AI—all running in the browser.',
+      'A love letter to my favorite childhood screensaver, rebuilt with a deterministic simulation engine, personality-driven behavior, branching stories, and dynamic weather and lighting. PixiJS rendering, persistent journals and optional WebAssembly AI run entirely on the client, including offline.',
     image: johnnyCastawayImage,
     stillImage: johnnyCastawayPoster,
     imageAlt:
