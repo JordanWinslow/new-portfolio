@@ -54,17 +54,16 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
     )
   }, [clickedLinks])
 
+  useEffect(() => {
+    if (clickedLinks.size >= 4) unlockAchievement(AchievementId.projectExplorer)
+  }, [clickedLinks, unlockAchievement])
+
   const checkForAchievement = (link: string) => {
     if (!link) return
 
     setClickedLinks((prev) => {
       const newSet = new Set(prev)
       newSet.add(link)
-
-      // Check if we have 4 unique links
-      if (newSet.size >= 4) {
-        unlockAchievement(AchievementId.projectExplorer)
-      }
 
       return newSet
     })
@@ -102,14 +101,16 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
               />
             ))}
           </div>
-          <Suspense fallback={null}>
-            <VideoModal
-              isOpen={videoModalState.isOpen}
-              onClose={handleVideoClose}
-              videoUrl={videoModalState.videoUrl}
-              title={videoModalState.title}
-            />
-          </Suspense>
+          {videoModalState.isOpen && (
+            <Suspense fallback={null}>
+              <VideoModal
+                isOpen={videoModalState.isOpen}
+                onClose={handleVideoClose}
+                videoUrl={videoModalState.videoUrl}
+                title={videoModalState.title}
+              />
+            </Suspense>
+          )}
         </>
       )
 
@@ -127,14 +128,16 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
               />
             ))}
           </div>
-          <Suspense fallback={null}>
-            <VideoModal
-              isOpen={videoModalState.isOpen}
-              onClose={handleVideoClose}
-              videoUrl={videoModalState.videoUrl}
-              title={videoModalState.title}
-            />
-          </Suspense>
+          {videoModalState.isOpen && (
+            <Suspense fallback={null}>
+              <VideoModal
+                isOpen={videoModalState.isOpen}
+                onClose={handleVideoClose}
+                videoUrl={videoModalState.videoUrl}
+                title={videoModalState.title}
+              />
+            </Suspense>
+          )}
         </>
       )
 
@@ -151,14 +154,16 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
               />
             ))}
           </div>
-          <Suspense fallback={null}>
-            <VideoModal
-              isOpen={videoModalState.isOpen}
-              onClose={handleVideoClose}
-              videoUrl={videoModalState.videoUrl}
-              title={videoModalState.title}
-            />
-          </Suspense>
+          {videoModalState.isOpen && (
+            <Suspense fallback={null}>
+              <VideoModal
+                isOpen={videoModalState.isOpen}
+                onClose={handleVideoClose}
+                videoUrl={videoModalState.videoUrl}
+                title={videoModalState.title}
+              />
+            </Suspense>
+          )}
         </>
       )
 
@@ -217,14 +222,16 @@ export function PortfolioGrid({ layout }: IPortfolioGridProps) {
               </Accordion>
             </div>
           </div>
-          <Suspense fallback={null}>
-            <VideoModal
-              isOpen={videoModalState.isOpen}
-              onClose={handleVideoClose}
-              videoUrl={videoModalState.videoUrl}
-              title={videoModalState.title}
-            />
-          </Suspense>
+          {videoModalState.isOpen && (
+            <Suspense fallback={null}>
+              <VideoModal
+                isOpen={videoModalState.isOpen}
+                onClose={handleVideoClose}
+                videoUrl={videoModalState.videoUrl}
+                title={videoModalState.title}
+              />
+            </Suspense>
+          )}
         </>
       )
     default:

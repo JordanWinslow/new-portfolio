@@ -16,6 +16,7 @@ export const ProjectCard = ({
   tech,
   github,
   demo,
+  about,
   videoLink,
   showDemoWithVideo,
   onVideoClick,
@@ -135,6 +136,18 @@ export const ProjectCard = ({
                 VIDEO
               </Button>
             )}
+            {about && variant === 'hoverToDisplay' && (
+              <a
+                href={about}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => onLinkClick?.(about)}
+                className="text-orange-300 underline underline-offset-4 hover:text-orange-200"
+                aria-label={`About ${title}: technology and project details`}
+              >
+                About
+              </a>
+            )}
             {demo && (!videoLink || showDemoWithVideo) && (
               <a
                 href={demo}
@@ -158,6 +171,18 @@ export const ProjectCard = ({
             {title}
           </h3>
           <p className="text-gray-400 text-md mb-4">{description}</p>
+          {about && (
+            <a
+              href={about}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => onLinkClick?.(about)}
+              className="mb-4 inline-block text-orange-300 underline underline-offset-4 hover:text-orange-200"
+              aria-label={`About ${title}: technology and project details`}
+            >
+              About the project and technology
+            </a>
+          )}
           <div className="flex flex-wrap gap-2">
             {tech?.map((tech) => (
               <span

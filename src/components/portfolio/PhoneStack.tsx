@@ -235,6 +235,7 @@ export const PhoneStack: React.FC<PhoneStackProps> = ({
               >
                 <img
                   src={images[index]}
+                  decoding="async"
                   alt={`Phone ${index + 1}`}
                   className="object-cover shadow-lg"
                   style={{

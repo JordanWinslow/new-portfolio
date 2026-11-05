@@ -37,7 +37,6 @@ function AnimatedPreview({
   return (
     <>
       <ProjectImage
-        key={paused ? stillSrc : src}
         {...props}
         src={paused ? stillSrc : src}
         stillSrc={stillSrc}

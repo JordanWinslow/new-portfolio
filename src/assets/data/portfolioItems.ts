@@ -1,12 +1,18 @@
 import containmentBreachImage from '@/assets/images/portfolio/containment-breach.gif'
+import containmentBreachImagePoster from '@/assets/images/portfolio/containment-breach-still.webp'
 import ecosystemSimImage from '@/assets/images/portfolio/ecosystem.gif'
+import ecosystemSimImagePoster from '@/assets/images/portfolio/ecosystem-still.webp'
 //import gitFinderImage from '@/assets/images/portfolio/Gitfinder.jpg'
-import horrorRPG2Image from '@/assets/images/portfolio/horrorRPG2.webp'
-import johnnyCastawayPoster from '@/assets/images/portfolio/johnny-castaway-poster.webp'
-import johnnyCastawayImage from '@/assets/images/portfolio/johnny-castaway-scenes.gif'
-import pokeTeamImage from '@/assets/images/portfolio/poketeamdemo.gif'
-import theWatchersImage from '@/assets/images/portfolio/thewatchers.webp'
-import voteOnAnythingImage from '@/assets/images/portfolio/voteonanythingdemo.gif'
+import horrorRPG2Image from '@/assets/images/portfolio/horrorRPG2-animated.webp'
+import horrorRPG2ImagePoster from '@/assets/images/portfolio/horrorRPG2-still.webp'
+import johnnyCastawayImage from '@/assets/images/portfolio/johnny-castaway-scenes-animated.webp'
+import johnnyCastawayPoster from '@/assets/images/portfolio/johnny-castaway-scenes-still.webp'
+import pokeTeamImage from '@/assets/images/portfolio/poketeamdemo-animated.webp'
+import pokeTeamImagePoster from '@/assets/images/portfolio/poketeamdemo-still.webp'
+import theWatchersImage from '@/assets/images/portfolio/thewatchers-animated.webp'
+import theWatchersImagePoster from '@/assets/images/portfolio/thewatchers-still.webp'
+import voteOnAnythingImage from '@/assets/images/portfolio/voteonanythingdemo-animated.webp'
+import voteOnAnythingImagePoster from '@/assets/images/portfolio/voteonanythingdemo-still.webp'
 
 export interface IPortfolioItem {
   id: number
@@ -18,6 +24,7 @@ export interface IPortfolioItem {
   tech: string[]
   github?: string
   demo?: string
+  about?: string
   videoLink?: string
   // Opt-in override to show the DEMO button alongside VIDEO when both are set.
   // Defaults to false, preserving existing behavior for items where demo is
@@ -31,12 +38,13 @@ export const portfolioItems = [
     id: 7,
     title: 'Johnny Castaway: Reborn',
     description:
-      'A love letter to my favorite childhood screensaver, rebuilt with a deterministic simulation engine, personality-driven behavior, branching stories, and dynamic weather and lighting. PixiJS rendering, persistent journals and optional WebAssembly AI run entirely on the client, including offline.',
+      'An unofficial remake of the 1992 screensaver with a deterministic simulation engine, personality-driven behavior, branching stories, and dynamic weather and lighting. PixiJS rendering, persistent journals and optional WebAssembly AI run entirely on the client, including offline.',
     image: johnnyCastawayImage,
     stillImage: johnnyCastawayPoster,
     imageAlt:
       'Animated gameplay from Johnny Castaway: Reborn, showing life on the island and its unexpected encounters',
     demo: 'https://johnnycastaway.fyi/',
+    about: 'https://johnnycastaway.fyi/about.html#technology',
     tech: [
       'TypeScript',
       'PixiJS',
@@ -53,6 +61,7 @@ export const portfolioItems = [
     description:
       'A full-stack opinion polling platform built from scratch. Features Twitter SSO, Cloudflare Turnstile bot protection, type-safe APIs with tRPC, real-time data visualization and complex relational data models.',
     image: voteOnAnythingImage,
+    stillImage: voteOnAnythingImagePoster,
     demo: 'https://voteonanything.com',
     tech: [
       'Next.js 15',
@@ -70,6 +79,7 @@ export const portfolioItems = [
     description:
       'A sophisticated game engine built from the ground up featuring advanced systems design, custom animation frameworks, and performance-optimized rendering. This project demonstrates deep technical expertise in game development architecture.',
     image: containmentBreachImage,
+    stillImage: containmentBreachImagePoster,
     demo: 'https://LiminalFoundationGames.com',
     videoLink: 'https://youtu.be/iaC9YpJQjuM',
     showDemoWithVideo: true,
@@ -88,6 +98,7 @@ export const portfolioItems = [
     description:
       'A comprehensive TypeScript framework designed to teach object-oriented programming principles and web development fundamentals. Features modular architecture and real-time simulation capabilities.',
     image: ecosystemSimImage,
+    stillImage: ecosystemSimImagePoster,
     github: 'https://github.com/JordanWinslow/TypeScript-Ecosystem-Game',
     demo: 'https://typescript-ecosystem-simulator.netlify.app/',
     tech: ['TypeScript', 'HTML', 'CSS', 'OOP', 'Performance Optimization'],
@@ -99,6 +110,7 @@ export const portfolioItems = [
     description:
       'A modern, responsive web application featuring infinite scroll, intelligent caching strategies, and seamless mobile-first user experience. Demonstrates expertise in state management and API integration.',
     image: pokeTeamImage,
+    stillImage: pokeTeamImagePoster,
     github: 'https://github.com/JordanWinslow/poke-team',
     demo: 'https://poke-team.netlify.app/',
     tech: ['JavaScript', 'React', 'Redux', 'MaterialUI'],
@@ -122,6 +134,7 @@ export const portfolioItems = [
     description:
       'A browser-based role-playing game featuring custom JavaScript tooling, immersive audio design, and interactive storytelling elements.',
     image: horrorRPG2Image,
+    stillImage: horrorRPG2ImagePoster,
     demo: 'https://demo.com',
     videoLink: 'https://youtu.be/Rf9wsKJSeII',
     tech: ['JavaScript', 'HTML', 'CSS'],
@@ -133,6 +146,7 @@ export const portfolioItems = [
     description:
       'An interactive visual novel featuring custom JavaScript frameworks, dynamic storytelling, and immersive audio-visual experiences.',
     image: theWatchersImage,
+    stillImage: theWatchersImagePoster,
     demo: 'https://jordanwinslow.itch.io/the-watchers-browser',
     tech: ['JavaScript', 'HTML', 'CSS'],
     yearCreated: 2017,

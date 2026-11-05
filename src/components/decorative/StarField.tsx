@@ -14,7 +14,7 @@ interface Star {
   duration: number
 }
 
-export function StarField() {
+export function StarField({ active = true }: { active?: boolean }) {
   const [stars, setStars] = useState<Star[]>([])
   const { unlockAchievement } = useAchievements()
 
@@ -194,6 +194,7 @@ export function StarField() {
             left: `${star.x}%`,
             transform: 'translate(-50%, -50%)',
             ...getAnimationStyle(star.animation, star.delay, star.duration),
+            animationPlayState: active ? 'running' : 'paused',
           }}
         >
           {getStarSymbol(star.type)}

@@ -12,23 +12,25 @@ export function useIntersectionObserver(
 ) {
   const [isIntersecting, setIsIntersecting] = useState(false)
 
+  const { root = null, rootMargin = '0px', threshold = 0 } = options
+  const thresholdKey = JSON.stringify(threshold)
   useEffect(() => {
     const element = ref.current
     if (!element) return
 
-    const observer = new IntersectionObserver((entries) => {
-      const entry = entries[0]
-      if (entry) {
-        setIsIntersecting(entry.isIntersecting)
-      }
-    }, options)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0]
+        if (entry) {
+          setIsIntersecting(entry.isIntersecting)
+        }
+      },
+      { root, rootMargin, threshold: JSON.parse(thresholdKey) },
+    )
 
     observer.observe(element)
-
-    return () => {
-      observer.unobserve(element)
-    }
-  }, [ref, options])
+    return () => observer.disconnect()
+  }, [ref, root, rootMargin, thresholdKey])
 
   return isIntersecting
 }

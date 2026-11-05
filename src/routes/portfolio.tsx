@@ -1,22 +1,42 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { motion } from 'framer-motion'
 import { ArrowDown } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { lazy, useEffect, useRef, useState } from 'react'
 import { AchievementId } from '@/assets/data/achievements'
 import { portfolioItems } from '@/assets/data/portfolioItems'
 import { useAchievements } from '@/components/achievements/AchievementsContext'
-import { CallToAction } from '@/components/contact/CallToAction'
 import { BackgroundDecorations } from '@/components/decorative/BackgroundDecorations'
 import { StarField } from '@/components/decorative/StarField'
 import { InternalLink } from '@/components/navigation/InternalLink'
-import FigmaDesignSystemSection from '@/components/portfolio/FigmaDesignSystemSection'
-import JohnnyCastawayShowcase from '@/components/portfolio/JohnnyCastawayShowcase'
+import { DeferredSection } from '@/components/portfolio/DeferredSection'
 import type { LayoutType } from '@/components/portfolio/LayoutType'
-import PhoneStackShowcase from '@/components/portfolio/PhoneStackShowcase'
-import { PortfolioGrid } from '@/components/portfolio/PortfolioGrid'
 import { PortfolioLayoutControls } from '@/components/portfolio/PortfolioLayoutControls'
-import { TechGridSection } from '@/components/techgrid/TechGridSection'
 import { useIntersectionObserver, useScrollToRef } from '@/lib/utils'
+
+const CallToAction = lazy(() =>
+  import('@/components/contact/CallToAction').then((m) => ({
+    default: m.CallToAction,
+  })),
+)
+
+const FigmaDesignSystemSection = lazy(
+  () => import('@/components/portfolio/FigmaDesignSystemSection'),
+)
+
+const PhoneStackShowcase = lazy(
+  () => import('@/components/portfolio/PhoneStackShowcase'),
+)
+const PortfolioGrid = lazy(() =>
+  import('@/components/portfolio/PortfolioGrid').then((m) => ({
+    default: m.PortfolioGrid,
+  })),
+)
+
+const TechGridSection = lazy(() =>
+  import('@/components/techgrid/TechGridSection').then((m) => ({
+    default: m.TechGridSection,
+  })),
+)
 
 export const Route = createFileRoute('/portfolio')({
   head: () => ({
@@ -92,7 +112,7 @@ export const Route = createFileRoute('/portfolio')({
 function Portfolio() {
   const { unlockAchievement } = useAchievements()
   const [layout, setLayout] = useState<LayoutType>('grid')
-  const [_usedLayouts, setUsedLayouts] = useState<Set<LayoutType>>(
+  const [usedLayouts, setUsedLayouts] = useState<Set<LayoutType>>(
     new Set(['grid']),
   )
   const portfolioRef = useRef<HTMLDivElement>(null)
@@ -122,16 +142,22 @@ function Portfolio() {
     rootMargin: '-500px 0px 0px 0px',
   })
 
+  const isStarfieldOnscreen = useIntersectionObserver(starfieldRef)
+
   const isBottomVisible = useIntersectionObserver(bottomRef, {
     threshold: 0,
     rootMargin: '0px 0px -100px 0px',
   })
 
-  if (isBottomVisible) {
-    unlockAchievement(AchievementId.scrollMaster)
-  }
+  useEffect(() => {
+    if (isBottomVisible) unlockAchievement(AchievementId.scrollMaster)
+  }, [isBottomVisible, unlockAchievement])
 
   const shouldShowScrollButton = isFeaturedWorkVisible || isStarfieldVisible
+
+  useEffect(() => {
+    if (usedLayouts.size >= 4) unlockAchievement(AchievementId.layoutExplorer)
+  }, [usedLayouts, unlockAchievement])
 
   const handleLayoutChange = (updatedLayout: LayoutType) => {
     setLayout(updatedLayout)
@@ -139,10 +165,6 @@ function Portfolio() {
     setUsedLayouts((prev) => {
       const newUsed = new Set(prev)
       newUsed.add(updatedLayout)
-
-      if (newUsed.size >= 4) {
-        unlockAchievement(AchievementId.layoutExplorer)
-      }
 
       return newUsed
     })
@@ -206,8 +228,8 @@ function Portfolio() {
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
               Below you can view {portfolioItems.length} side projects I have
               worked on, with demos and source code where available. There are
-              also easter eggs hidden in this
-              application that you can unlock by experimenting with the UI!
+              also easter eggs hidden in this application that you can unlock by
+              experimenting with the UI!
             </p>
 
             <p className="text-md italic text-gray-300 max-w-2xl mx-auto">
@@ -258,7 +280,9 @@ function Portfolio() {
       )}
 
       <div ref={starfieldRef} className="h-[3000px] relative">
-        <StarField />
+        <DeferredSection label="Star field" placeholderClassName="h-[3000px]">
+          <StarField active={isStarfieldOnscreen} />
+        </DeferredSection>
       </div>
 
       <p
@@ -280,7 +304,12 @@ function Portfolio() {
 
       <section ref={portfolioRef} className="px-2 sm:px-8 py-16 relative z-10">
         <div className="max-w-7xl sm:mx-auto">
-          <PortfolioGrid layout={layout} />
+          <DeferredSection
+            label="Projects"
+            placeholderClassName="h-[3400px] md:h-[1800px] lg:h-[1400px]"
+          >
+            <PortfolioGrid layout={layout} />
+          </DeferredSection>
         </div>
       </section>
 
@@ -298,39 +327,51 @@ function Portfolio() {
         </motion.div>
       )}
 
-      <div className="my-24 px-4 sm:px-8">
-        <JohnnyCastawayShowcase />
-      </div>
-
       <section className="my-40">
-        <PhoneStackShowcase />
+        <DeferredSection
+          label="Interactive phone stack"
+          placeholderClassName="h-[1100px] lg:h-[700px]"
+        >
+          <PhoneStackShowcase />
+        </DeferredSection>
       </section>
 
       <section className="my-40">
-        <FigmaDesignSystemSection />
+        <DeferredSection
+          label="Figma design work"
+          placeholderClassName="h-[600px]"
+        >
+          <FigmaDesignSystemSection />
+        </DeferredSection>
       </section>
 
       <section className="my-40">
         <div className="px-6 py-16 relative z-10">
           <div className="max-w-6xl mx-auto">
-            <TechGridSection
-              title="Technologies I Work With"
-              description="Here are the technologies I'm proficient in. Feel free to explore and filter by category or experience level."
-              interactive={true}
-            />
+            <DeferredSection
+              label="Technologies"
+              placeholderClassName="h-[800px]"
+            >
+              <TechGridSection
+                title="Technologies I Work With"
+                description="Here are the technologies I'm proficient in. Feel free to explore and filter by category or experience level."
+              />
+            </DeferredSection>
           </div>
         </div>
       </section>
 
       <section ref={bottomRef} className="px-6 py-16 relative z-10">
         <div className="max-w-6xl mx-auto">
-          <CallToAction
-            title="Ready to Start Your Next Project?"
-            description="I'm passionate about creating exceptional digital experiences. Let's discuss how we can bring your vision to life with cutting-edge technology and innovative design."
-            primaryButtonText="Get In Touch"
-            secondaryButtonText="Learn More About Me"
-            secondaryButtonHref="/about"
-          />
+          <DeferredSection label="Contact" placeholderClassName="h-[350px]">
+            <CallToAction
+              title="Ready to Start Your Next Project?"
+              description="I'm passionate about creating exceptional digital experiences. Let's discuss how we can bring your vision to life with cutting-edge technology and innovative design."
+              primaryButtonText="Get In Touch"
+              secondaryButtonText="Learn More About Me"
+              secondaryButtonHref="/about"
+            />
+          </DeferredSection>
         </div>
       </section>
 

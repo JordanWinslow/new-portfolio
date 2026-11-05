@@ -11,6 +11,7 @@ export function ProjectListItem({
   tech,
   github,
   demo,
+  about,
   videoLink,
   showDemoWithVideo,
   yearCreated,
@@ -92,6 +93,18 @@ export function ProjectListItem({
               <Play size={16} />
               VIDEO
             </button>
+          )}
+          {about && (
+            <a
+              href={about}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => onLinkClick?.(about)}
+              className="text-orange-300 underline underline-offset-4 hover:text-orange-200"
+              aria-label={`About ${title}: technology and project details`}
+            >
+              About
+            </a>
           )}
           {demo && (!videoLink || showDemoWithVideo) && (
             <a

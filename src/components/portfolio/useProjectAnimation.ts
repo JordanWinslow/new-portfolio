@@ -18,13 +18,17 @@ function subscribeToPlayback(onChange: () => void) {
   return () => listeners.delete(onChange)
 }
 
-/** A pause applies to every preview of the same animation on the page. */
-export function useProjectAnimation(src: string) {
-  const reduceMotion = useSyncExternalStore(
+export function useReducedMotionPreference() {
+  return useSyncExternalStore(
     subscribeToMotionPreference,
     getMotionPreference,
     getServerMotionPreference,
   )
+}
+
+/** A pause applies to every preview of the same animation on the page. */
+export function useProjectAnimation(src: string) {
+  const reduceMotion = useReducedMotionPreference()
   const getPlayback = useCallback(() => playback.get(src) ?? null, [src])
   const manuallyPaused = useSyncExternalStore(
     subscribeToPlayback,
